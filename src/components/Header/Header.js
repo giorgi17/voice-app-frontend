@@ -20,7 +20,9 @@ const header = () => (
             <a href="#contact">Contact</a>
             <a href="#about">About</a>
             <a href="#" onClick={myFunction} className="icon" onClick={myFunction}>
-                <i className="fa fa-bars"></i>
+            <span className="material-icons">
+                menu
+            </span>
             </a>
         </nav>
 );

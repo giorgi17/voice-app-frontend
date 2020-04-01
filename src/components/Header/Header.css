@@ -41,6 +41,22 @@
       float: right;
       display: block;
     }
+    
+    .topnav a:hover {
+      border-bottom: 3px solid transparent;
+      background-color: #03fc24;
+      color: #003547;
+    }
+
+    .topnav a.active {
+      border-bottom: 3px solid transparent;
+    }
+
+    .topnav .icon {
+      border-bottom: 3px solid transparent !important;
+    }
+
+    
   }
   
   /* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */

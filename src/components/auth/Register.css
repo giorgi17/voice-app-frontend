@@ -1,0 +1,23 @@
+.register-form {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 450px;
+    margin: auto;
+}
+
+.register-form .register-inputs {
+    margin: 6px;
+    padding: 0.4rem;
+    box-sizing: border-box;
+    justify-content: center;
+    flex: 1 1 350px;
+  }
+
+.register-form-login-link a {
+    text-decoration: none;
+    color: #003447;
+}
+
+.register-form-login-link a:hover {
+    text-decoration: underline;
+}
