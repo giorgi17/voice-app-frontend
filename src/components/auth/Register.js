@@ -60,13 +60,13 @@ return (
 
     <React.Fragment>
         <Header />
-        <form className="register-form" noValidate autoComplete="off">
+        <form className="register-form" autoComplete="off">
           <h1 className="register-inputs">Register</h1>
-          <TextField id="register-name" className="register-inputs" type="text" label="Name" />
-          <TextField id="register-email" className="register-inputs" type="email" label="Email" />
-          <TextField id="register-password" className="register-inputs" type="password" label="Password" />
-          <TextField id="register-confirm-password" className="register-inputs" type="password" label=" Confirm Password" />
-          <Button variant="contained" type="submit" className="register-inputs" color="primary">Submit</Button>
+          <TextField id="register-name" required className="register-inputs" type="text" label="Name" />
+          <TextField id="register-email" required className="register-inputs" type="email" label="Email" />
+          <TextField id="register-password" required className="register-inputs" type="password" label="Password" />
+          <TextField id="register-confirm-password" required className="register-inputs" type="password" label=" Confirm Password" />
+          <Button variant="contained" type="submit" value="Submit" className="register-inputs" color="primary">Submit</Button>
           <p className="register-form-login-link">
             Already have an account? <Link to="/login">Log in</Link>
           </p>

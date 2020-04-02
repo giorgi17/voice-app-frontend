@@ -59,10 +59,10 @@ render() {
 return (
       <React.Fragment>
         <Header />
-        <form className="login-form" noValidate autoComplete="off">
+        <form className="login-form" autoComplete="off">
           <h1 className="login-inputs">Login</h1>
-          <TextField id="login-email" className="login-inputs" type="email" label="Email" />
-          <TextField id="login-password" className="login-inputs" type="password" label="Passord" />
+          <TextField id="login-email" required className="login-inputs" type="email" label="Email" />
+          <TextField id="login-password" required className="login-inputs" type="password" label="Passord" />
           <Button variant="contained" type="submit" className="login-inputs" color="primary">Submit</Button>
           <p className="login-form-register-link">
               Don't have an account? <Link to="/register">Register</Link>
