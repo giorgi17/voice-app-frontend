@@ -6,6 +6,7 @@ import { registerUser } from "../../actions/authActions";
 import classnames from "classnames";
 
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 import Header from '../Header/Header';
 import './Register.css';
@@ -65,6 +66,7 @@ return (
           <TextField id="register-email" className="register-inputs" type="email" label="Email" />
           <TextField id="register-password" className="register-inputs" type="password" label="Password" />
           <TextField id="register-confirm-password" className="register-inputs" type="password" label=" Confirm Password" />
+          <Button variant="contained" type="submit" className="register-inputs" color="primary">Submit</Button>
           <p className="register-form-login-link">
             Already have an account? <Link to="/login">Log in</Link>
           </p>

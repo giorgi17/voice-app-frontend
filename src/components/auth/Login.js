@@ -6,6 +6,7 @@ import { loginUser } from "../../actions/authActions";
 import classnames from "classnames";
 
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 import Header from '../Header/Header';
 import './Login.css';
@@ -62,6 +63,7 @@ return (
           <h1 className="login-inputs">Login</h1>
           <TextField id="login-email" className="login-inputs" type="email" label="Email" />
           <TextField id="login-password" className="login-inputs" type="password" label="Passord" />
+          <Button variant="contained" type="submit" className="login-inputs" color="primary">Submit</Button>
           <p className="login-form-register-link">
               Don't have an account? <Link to="/register">Register</Link>
           </p>
