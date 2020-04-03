@@ -50,7 +50,6 @@ function App() {
           <main>
             {/* <Route path="/messages/" component={AllMessagesPage} /> */}
             {/* <Route path="/new-message/" component={NewMessagePage} /> */}
-            {/* <h1>SHIT</h1> */}
             {/* <Navbar /> */}
             {/* {Header} */}
 
@@ -58,7 +57,7 @@ function App() {
               Hello World
             </Button> */}
             
-            <Route exact path="/" component={Header} />
+            <Route exact path="/" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
 
