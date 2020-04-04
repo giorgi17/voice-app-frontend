@@ -7,6 +7,7 @@ import './Dashboard.css';
 import Header from '../Header/Header';
 import SearchBar from '../layout/SearchBar/SearchBar';
 import Posts from './Posts/Posts';
+import ContentContainer from './ContentContainer/ContentContainer';
 
 class Dashboard extends Component {
   onLogoutClick = e => {
@@ -19,7 +20,9 @@ return (
       <React.Fragment>
         <Header authenticated={true} logoutMethod={this.onLogoutClick} />
         <SearchBar />
-        <Posts />
+        <ContentContainer>
+          <Posts />
+        </ContentContainer>
       </React.Fragment>
     );
   }

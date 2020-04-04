@@ -1,0 +1,10 @@
+.content-container {
+    background: #fff;
+    border-radius: 2px;
+    display: inline-block;
+    height: 100vh;
+    margin: 2vw;
+    position: relative;
+    width: 95vw;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}

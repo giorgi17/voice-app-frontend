@@ -11,7 +11,7 @@
   position: relative;
 }
 
-input[type="text"] {
+#wrap input[type="text"] {
   height: 50px;
   font-size: 35px;
   display: inline-block;
@@ -33,11 +33,11 @@ input[type="text"] {
   cursor: pointer;
 }
 
-input[type="text"]:focus:hover {
+#wrap input[type="text"]:focus:hover {
   border-bottom: 1px solid #BBB;
 }
 
-input[type="text"]:focus {
+#wrap input[type="text"]:focus {
   body {
     background: rgba(0,0,0,0.5);
   }
@@ -48,7 +48,8 @@ input[type="text"]:focus {
   cursor: text;
   margin-right: 40px;
 }
-input[type="submit"] {
+
+#wrap input[type="submit"] {
   height: 47px;
   width: 43px;
   display: inline-block;
@@ -68,7 +69,7 @@ input[type="submit"] {
   padding-left: 50px;
 }
 
-input[type="submit"]:hover {
+#wrap input[type="submit"]:hover {
   opacity: 0.8;
 }
 
@@ -78,12 +79,12 @@ input[type="submit"]:hover {
     margin: 5px 5px 20px;
   }
 
-  input[type="text"] {
+  #wrap input[type="text"] {
     height: 40px;
     font-size: 15px;
   }
 
-  input[type="text"]:focus {
+  #wrap input[type="text"]:focus {
     width: 80vw;
   }
 }
@@ -100,10 +101,4 @@ input[type="submit"]:hover {
   background-color: rgba(0,0,0,0.5);
   z-index: 1;
   cursor: pointer;
-}
-
-.search-container {
-  min-width: 63px;
-  height: 50px;
-  z-index: 1;
 }
