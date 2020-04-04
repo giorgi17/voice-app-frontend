@@ -75,7 +75,7 @@ return (
 
     <React.Fragment>
         <Header />
-        <form className="register-form" autoComplete="off" onSubmit={this.onSubmit}>
+        <form className="register-form" autoComplete="on" onSubmit={this.onSubmit}>
           <h1 className="register-inputs">Register</h1>
 
           <TextField id="register-name" required name="name"

@@ -67,7 +67,7 @@ render() {
 return (
       <React.Fragment>
         <Header />
-        <form className="login-form" autoComplete="off" onSubmit={this.onSubmit}>
+        <form className="login-form" autoComplete="on" onSubmit={this.onSubmit}>
           <h1 className="login-inputs">Login</h1>
           <TextField id="login-email" required name="email"
             {...input_errors_email} className="login-inputs"
@@ -76,7 +76,7 @@ return (
 
           <TextField id="login-password" required name="password"
             {...input_errors_password} className="login-inputs"
-             type="password" label="Password"
+             type="password" label="Password" helperText={errors.password || errors.passwordincorrect}
              onChange={this.onChange} value={this.state.password} />
 
           <Button variant="contained" type="submit" className="login-inputs" color="primary">Submit</Button>
