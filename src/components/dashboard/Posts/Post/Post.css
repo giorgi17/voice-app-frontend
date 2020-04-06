@@ -2,10 +2,10 @@
     background: #fff;
     border-radius: 2px;
     display: inline-block;
-    min-height: 40%;
+    min-height: 220px;
     margin: 2vw;
     position: relative;
-    width: 50%;
+    width: 300px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
@@ -16,4 +16,118 @@
 
 .single-post:hover {
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.user-post-image-wrapper {
+    display: inline-block;
+    width: 100%;
+    height: 120px;
+    position: relative;
+}
+
+.user-post-image-wrapper img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.user-post-profile-image-wrapper {
+    display: inline-block;
+    border-radius: 50%;
+    border: 2px solid #fff9f9;
+    width: 70px;
+    height: 70px;
+    margin: 20px;
+    position: absolute;
+    top: 80px;
+    left: -10px;
+}
+
+.user-post-profile-image-wrapper img {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.user-post-username {
+    position: absolute;
+    top: 130px;
+    left: 90px;
+    cursor: pointer;
+}
+
+.user-post-viewer-options {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+    position: absolute;
+    top: 180px;
+}
+
+.user-post-viewer-options span{
+    cursor: pointer;
+    margin: 10px;
+}
+
+.user-post-play-and-time {
+    width: 100px;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: black;
+    opacity: 0.5;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.user-post-play-and-time:hover {
+    opacity: 0.8;  
+    transition: opacity 0.4s;
+}
+
+.user-post-play-and-time .user-post-play-button {
+    color: white;
+    font-size: 50px;
+    text-align: center;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.user-post-play-and-time .user-post-play-button:hover { 
+    opacity: 1;
+    transition: opacity 0.4s;
+}
+
+.user-post-video-time {
+    color: white;
+}
+
+.user-post-info {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 120px;
+}
+
+.user-post-info span {
+    margin: 5px 8px 0px 10px;
+    font-weight: 500;
+}
+
+.single-post hr {
+    width: 90%;
+    margin: 5px auto 20px;
+}
+
+.user-post-description {
+    margin: 0px 10px 30px;
 }
