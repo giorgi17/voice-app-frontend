@@ -33,8 +33,10 @@ class RecordVoice extends Component {
     render () {
         return (
             <React.Fragment>
-            <div id="record-voice-container" className="menu-item" onClick={() => startRecording(this.state, this.changeFileName, this.deviceNotFound, this.deviceFound, this.changeRecording)} >
-                <span className="material-icons" >
+            <div id="record-voice-container" 
+                className={`menu-item ${this.props.isRecordVoiceActive ? "active" : ""}`}
+                onClick={() => {startRecording(this.state, this.changeFileName, this.deviceNotFound, this.deviceFound, this.changeRecording); this.props.onClick("recordVoice")}} >
+                <span className={`material-icons record-voice-icon ${this.props.isRecordVoiceActive ? "active" : ""}`} >
                     mic
                 </span>
             </div>

@@ -2,7 +2,7 @@
     background: #fff;
     border-radius: 2px;
     display: inline-block;
-    height: 100vh;
+    min-height: 230px;
     margin: 2vw;
     position: relative;
     width: 95vw;
