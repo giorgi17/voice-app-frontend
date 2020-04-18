@@ -43,8 +43,8 @@ class Menu extends Component {
             <div className="menu-container">
                 <div className="menu-items-container">
                     <RecordVoice onClick={this.setMenuIconActive} isRecordVoiceActive={this.state.activeIcons.recordVoice} />
-                    <Profile onClick={this.setMenuIconActive} isProfileVoiceActive={this.state.activeIcons.profile} changeDisplayedContent={this.changeDisplayedContent} />
-                    <Notifications onClick={this.setMenuIconActive} isNotificationVoiceActive={this.state.activeIcons.notification} changeDisplayedContent={this.changeDisplayedContent} />
+                    <Profile onClick={this.setMenuIconActive} isProfileActive={this.state.activeIcons.profile} changeDisplayedContent={this.changeDisplayedContent} />
+                    <Notifications onClick={this.setMenuIconActive} isNotificationActive={this.state.activeIcons.notification} changeDisplayedContent={this.changeDisplayedContent} />
                 </div>
                 <div ref={this.menuContentRef} className="menu-content-display-container" >
                     {this.state.contentToDisplay}
