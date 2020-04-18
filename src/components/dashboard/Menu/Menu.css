@@ -2,7 +2,6 @@
     background: #fff;
     border-radius: 2px;
     display: inline-block;
-    /* height: 80%; */
     min-height: 230px;
     margin: 2%;
     position: relative;
@@ -61,5 +60,4 @@
 .menu-content-display-container {
     width: 100%;
     min-height: 230px;
-    background-color: red;
 }

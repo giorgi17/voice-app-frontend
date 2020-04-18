@@ -1,0 +1,10 @@
+.notifications-view-container {
+    background: #fff;
+    border-radius: 2px;
+    display: inline-block;
+    min-height: 230px;
+    margin: 2%;
+    position: relative;
+    width: 96%;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}

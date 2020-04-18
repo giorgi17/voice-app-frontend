@@ -1,0 +1,35 @@
+.ReactCrop__crop-selection {
+    max-height: 91px;
+    max-width: 91px;
+}
+
+#cropped_image_preview {
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 10px;
+}
+
+#cropped_image_file_input {
+    margin: 10px;
+}
+
+.profile-edit-picture-cropper-alert {
+    width: 100%;
+    margin: 5px;
+}
+
+#profile-edit-picture-cropper-warning {
+    display: none;
+}
+
+#profile-edit-picture-cropper-error {
+    display: none;
+}
+
+#profile-edit-picture-cropper-error-uploading {
+    display: none;
+}
+
+#profile-edit-picture-cropper-error-wrong-extension {
+    display: none;
+}

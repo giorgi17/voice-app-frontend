@@ -1,0 +1,90 @@
+.profile-view-container {
+    background: #fff;
+    border-radius: 2px;
+    display: inline-block;
+    min-height: 230px;
+    margin: 2%;
+    position: relative;
+    width: 96%;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.profile-view-image-wrapper {
+    display: inline-block;
+    border-radius: 50%;
+    border: 2px solid #fff9f9;
+    width: 70px;
+    height: 70px;
+    margin: 20px;
+}
+
+.profile-view-image-wrapper img {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.profile-view-image-wrapper img:hover {
+   opacity: 0.8;
+   transition: opacity 0.4s;
+}
+
+.profile-view-container hr {
+    width: 90%;
+    margin: 5px auto 20px;
+}
+
+.profile-view-activity-info-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.profile-view-activity-info h6, h4 {
+    margin: 0;
+    font-weight: 1000;
+    background-image: linear-gradient(45deg, #a09696, rgb(88, 166, 194));
+    /* Set the background size and repeat properties. */
+    background-size: 100%;
+    background-repeat: repeat;
+
+    /* Use the text as a mask for the background. */
+    /* This will show the gradient as a text color rather than element bg. */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+}
+
+.profile-view-activity-info h6 { 
+    font-size: 14px;
+}
+
+.profile-view-activity-info {
+    margin: 5px 8px 20px 20px;
+    text-align: center;
+}
+
+#profile-view-edit-container {
+    margin: 20px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    border-radius: 50%;
+    background-color: rgb(199, 182, 182);
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#profile-view-edit-container:hover {
+    background-color: rgb(240, 226, 226);
+    transition: background-color 0.4s;
+}
+
+.profile-view-edit {
+    padding-top: 6px;
+}

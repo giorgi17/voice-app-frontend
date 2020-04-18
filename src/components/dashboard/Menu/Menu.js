@@ -8,15 +8,18 @@ class Menu extends Component {
 
     constructor() {
         super();
+        this.menuContentRef = React.createRef();
         this.state = {
             activeIcons: {
                 recordVoice: false,
                 profile: false,
                 notification: false
-            }
+            },
+            contentToDisplay: null
         };
       }    
 
+    // Switching icon styles to "active" and displaying specific menu content on clicking icon
     setMenuIconActive = (iconName) => {
         const stateCopy = {...this.state.activeIcons};
         for (var key in stateCopy) {
@@ -31,15 +34,21 @@ class Menu extends Component {
         this.setState({activeIcons: {...stateCopy}});
     }
 
+    changeDisplayedContent = (newContent) => {
+        this.setState({contentToDisplay: newContent});
+    }
+
     render () {
         return (
             <div className="menu-container">
                 <div className="menu-items-container">
                     <RecordVoice onClick={this.setMenuIconActive} isRecordVoiceActive={this.state.activeIcons.recordVoice} />
-                    <Profile onClick={this.setMenuIconActive} isProfileVoiceActive={this.state.activeIcons.profile} />
-                    <Notifications onClick={this.setMenuIconActive} isNotificationVoiceActive={this.state.activeIcons.notification} />
+                    <Profile onClick={this.setMenuIconActive} isProfileVoiceActive={this.state.activeIcons.profile} changeDisplayedContent={this.changeDisplayedContent} />
+                    <Notifications onClick={this.setMenuIconActive} isNotificationVoiceActive={this.state.activeIcons.notification} changeDisplayedContent={this.changeDisplayedContent} />
                 </div>
-                <div className="menu-content-display-container" onClick={(e) => this.setMenuIconActive(e)}></div>
+                <div ref={this.menuContentRef} className="menu-content-display-container" >
+                    {this.state.contentToDisplay}
+                </div>
             </div>
         );
     }

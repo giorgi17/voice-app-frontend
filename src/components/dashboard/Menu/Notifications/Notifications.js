@@ -1,4 +1,5 @@
 import React from 'react';
+import NotificationsView from './NotificationsView/NotificationsView';
 
 const Notifications = (props) => {
 
@@ -22,7 +23,7 @@ const Notifications = (props) => {
     return (
         <div id="notifications-container" 
             className={`menu-item ${props.isNotificationVoiceActive ? "active" : ""}`}
-            onClick={() => props.onClick("notification")}
+            onClick={() => {props.onClick("notification"); props.changeDisplayedContent(<NotificationsView></NotificationsView>)}}
         >
             {notificationsIcon}
         </div>
