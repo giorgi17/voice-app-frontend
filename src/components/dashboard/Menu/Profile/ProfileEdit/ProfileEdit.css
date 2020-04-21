@@ -140,6 +140,19 @@
     padding: 5px;
 }
 
+.profile-edit-activity-info-alert {
+    width: 100%;
+    margin: 5px;
+}
+
+#profile-edit-activity-info-success {
+    display: none;
+}
+
+#profile-edit-activity-info-error {
+    display: none;
+}
+
 /* #profile-edit-picture-cropper-container div {
 
 } */

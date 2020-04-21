@@ -16,6 +16,8 @@ class ProfileImageCrop extends Component {
         this.gifWontBeCroppedRef = React.createRef();
         this.imageNotSetRef = React.createRef();
         this.imageWrongExtensionRef = React.createRef();
+        this.imageUploadSuccessRef = React.createRef();
+        this.imageUploadErrorRef = React.createRef();
         this.state = {
             image: null,
             pixelCrop: null,
@@ -86,21 +88,16 @@ class ProfileImageCrop extends Component {
       axios
         .post("/api/restricted-users/update-user-avatar-picture", form)
         .then(res => {
-            console.log("RESPONSE - " + res);
-            console.log(res.data);
-            // this.setState({userData: {
-            //     ...this.state.userData,
-            //     errors: {}
-            // }});
+            // console.log("RESPONSE - " + res);
+            // console.log(res.data);
+            this.imageUploadSuccessRef.current.style.display = 'flex';
+            this.imageUploadErrorRef.current.style.display = 'none';
         }) 
         .catch(err => {
-            console.log("ERROR RESPONSE - " + err);
-            console.log(err);
-            // let newErrors = err.response.data;
-            // this.setState({userData: {
-            //     ...this.state.userData,
-            //     errors: newErrors
-            // }});
+            // console.log("ERROR RESPONSE - " + err);
+            // console.log(err);
+            this.imageUploadSuccessRef.current.style.display = 'none';
+            this.imageUploadErrorRef.current.style.display = 'flex';
         });
     }
 
@@ -223,6 +220,8 @@ class ProfileImageCrop extends Component {
 
     onImageLoaded = image => {
         this.setState({image: image});
+        this.imageUploadSuccessRef.current.style.display = 'none';
+        this.imageUploadErrorRef.current.style.display = 'none';
     }
 
     onCropComplete = async (crop, pixelCrop) => {
@@ -269,6 +268,16 @@ class ProfileImageCrop extends Component {
               <Alert severity="error" id="profile-edit-picture-cropper-error-wrong-extension" className="profile-edit-picture-cropper-alert" ref={this.imageWrongExtensionRef}>
                 <AlertTitle>Error</AlertTitle>
                 Please only choose png, jpeg, jpg or gif.
+              </Alert>
+
+              <Alert severity="success" id="profile-edit-picture-cropper-success" className="profile-edit-picture-cropper-alert" ref={this.imageUploadSuccessRef}>
+                <AlertTitle>Success</AlertTitle>
+                Successfully uploaded new profile image.
+              </Alert>
+
+              <Alert severity="error" id="profile-edit-picture-cropper-error-while-upload" className="profile-edit-picture-cropper-alert" ref={this.imageUploadErrorRef}>
+                <AlertTitle>Error</AlertTitle>
+                Error while uploading image.
               </Alert>
 
               <Button variant="contained" type="submit" id="profile-edit-picture-cropper-button"

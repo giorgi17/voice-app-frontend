@@ -33,3 +33,11 @@
 #profile-edit-picture-cropper-error-wrong-extension {
     display: none;
 }
+
+#profile-edit-picture-cropper-success {
+    display: none;
+}
+
+#profile-edit-picture-cropper-error-while-upload {
+    display: none;
+}

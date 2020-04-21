@@ -6,12 +6,15 @@ import Button from '@material-ui/core/Button';
 import { connect } from "react-redux";
 import axios from 'axios'; 
 import ProfileImageCrop from './ProfileImageCrop/ProfileImageCrop';
+import { Alert, AlertTitle } from '@material-ui/lab';
 
 class ProfileEdit extends Component {
     constructor(props) {
         super(props);
         this.cropperDisplayRef = React.createRef();
         this.changePasswordRef = React.createRef();
+        this.profileInfoUpdateSuccessRef = React.createRef();
+        this.profileInfoUpdateErrorRef = React.createRef();      
         this.state = {
             visibility1: 'visibility',
             visibility2: 'visibility',
@@ -45,6 +48,9 @@ class ProfileEdit extends Component {
                 ...this.state.userData,
                 errors: {}
             }});
+            // Check if error message is open and close if it is and show success message instead
+            this.profileInfoUpdateSuccessRef.current.style.display = 'flex';
+            this.profileInfoUpdateErrorRef.current.style.display = 'none';
         }) 
         .catch(err => {
             let newErrors = err.response.data;
@@ -52,6 +58,9 @@ class ProfileEdit extends Component {
                 ...this.state.userData,
                 errors: newErrors
             }});
+            // Check if success message is open and close if it is and show error message instead
+            this.profileInfoUpdateSuccessRef.current.style.display = 'none';
+            this.profileInfoUpdateErrorRef.current.style.display = 'flex';
         });
     };
 
@@ -159,7 +168,7 @@ class ProfileEdit extends Component {
         if (errors.newPassword2)
           input_errors_newPassword2['error'] = true;
 
-          console.log(this.state.userData.avatarImage);
+          
         return (
             <div className="profile-edit-container">
                 <div id="profile-edit-go-back-container" onClick={() => this.props.changeDisplayedContent(<ProfileView changeDisplayedContent={this.props.changeDisplayedContent} ></ProfileView>)}>
@@ -190,7 +199,7 @@ class ProfileEdit extends Component {
                     <TextField id="profile-edit-activity-info-email" required name="email"
                     className="profile-edit-activity-info-inputs" type="email"
                     label="Email" disabled
-                     value={this.state.userData.email} />
+                    value={this.state.userData.email} />
     
                     <Button variant="contained" type="submit" onClick={this.changePasswordDisplay} id="profile-edit-activity-info-change-password-button"
                     className="profile-edit-activity-info-inputs" color="primary">Change password</Button>
@@ -223,6 +232,16 @@ class ProfileEdit extends Component {
                         <Button variant="contained" type="submit" id="profile-edit-activity-info-change-password-submit" onClick={this.onChangePasswordSubmit}
                         className="profile-edit-activity-info-inputs" color="primary">Update password</Button>
                     </div>
+
+                    <Alert severity="success" id="profile-edit-activity-info-success" className="profile-edit-activity-info-alert" ref={this.profileInfoUpdateSuccessRef}>
+                        <AlertTitle>Success</AlertTitle>
+                        Successfully changed user information.
+                    </Alert>
+
+                    <Alert severity="error" id="profile-edit-activity-info-error" className="profile-edit-activity-info-alert" ref={this.profileInfoUpdateErrorRef}>
+                        <AlertTitle>Error</AlertTitle>
+                        Error occured while changing user information.
+                    </Alert>
 
                     <Button variant="contained" type="submit" onClick={this.onChangeUserDataSubmit}
                     className="profile-edit-activity-info-inputs" color="primary">Update</Button>
