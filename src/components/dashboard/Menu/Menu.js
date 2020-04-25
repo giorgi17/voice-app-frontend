@@ -42,7 +42,7 @@ class Menu extends Component {
         return (
             <div className="menu-container">
                 <div className="menu-items-container">
-                    <RecordVoice onClick={this.setMenuIconActive} isRecordVoiceActive={this.state.activeIcons.recordVoice} />
+                    <RecordVoice onClick={this.setMenuIconActive} isRecordVoiceActive={this.state.activeIcons.recordVoice} changeDisplayedContent={this.changeDisplayedContent}/>
                     <Profile onClick={this.setMenuIconActive} isProfileActive={this.state.activeIcons.profile} changeDisplayedContent={this.changeDisplayedContent} />
                     <Notifications onClick={this.setMenuIconActive} isNotificationActive={this.state.activeIcons.notification} changeDisplayedContent={this.changeDisplayedContent} />
                 </div>
