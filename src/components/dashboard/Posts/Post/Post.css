@@ -64,8 +64,9 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     width: 100%;
-    position: absolute;
-    top: 180px;
+    margin-top: 50px;
+    /* position: absolute;
+    top: 180px; */
 }
 
 .user-post-viewer-options span{
@@ -115,7 +116,7 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     width: 100%;
-    margin-top: 120px;
+    margin-top: 50px;
 }
 
 .user-post-info span {
@@ -130,4 +131,10 @@
 
 .user-post-description {
     margin: 0px 10px 30px;
+    word-wrap: break-word;
+}
+
+#user-post-player-container {
+    display: inline-block;
+    margin-top: 20px;
 }
