@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import './Post.css';
 import Player from '../../Menu/RecordVoice/Player/Player';
+import UserModal from './UserModal/UserModal';
 
 class Post extends Component {
     constructor() {
         super();
         this.playerRef = React.createRef();
         this.state = {
-            player: null
+            player: null,
+            modalOpen: false,
+            modal: null
         }
     }
     
@@ -19,9 +22,20 @@ class Post extends Component {
             </div>)});
     }
     
+    openModal = () => {
+        const modal = (<UserModal modalOpen={this.state.modalOpen} closeModal={this.closeModal}
+            post_id={this.props.post_id}></UserModal>);
+        this.setState({modal: modal});
+    }
+
+    closeModal = () => {
+        this.setState({modal: null});
+    }
+
     render() {
         return (
             <div className="single-post">
+                {this.state.modal}
                 <div className="user-post-image-wrapper">
                     <div className="user-post-play-and-time" ref={this.playerRef}>
                         <span className="material-icons user-post-play-button" onClick={this.playAudio}>
@@ -32,11 +46,11 @@ class Post extends Component {
                     <img src={this.props.picture}></img>
                 </div>
     
-                <div className="user-post-profile-image-wrapper">
+                <div className="user-post-profile-image-wrapper" onClick={this.openModal}>
                     <img src={this.props.profile_picture} />
                 </div>
     
-                <strong className="user-post-username">{this.props.user_name}</strong>
+                <strong className="user-post-username" onClick={this.openModal}>{this.props.user_name}</strong>
     
                 <div className="user-post-viewer-options">
                     <span className="material-icons like">

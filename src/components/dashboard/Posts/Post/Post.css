@@ -41,6 +41,11 @@
     position: absolute;
     top: 80px;
     left: -10px;
+    transition: opacity 0.4s;
+}
+
+.user-post-profile-image-wrapper:hover {
+    opacity: 0.8;
 }
 
 .user-post-profile-image-wrapper img {
@@ -56,6 +61,11 @@
     top: 130px;
     left: 90px;
     cursor: pointer;
+    transition: opacity 0.4s;
+}
+
+.user-post-username:hover {
+    opacity: 0.6;
 }
 
 .user-post-viewer-options {

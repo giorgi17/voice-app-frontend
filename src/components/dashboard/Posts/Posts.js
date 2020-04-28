@@ -8,7 +8,7 @@ class Posts extends Component {
     constructor() {
         super();
     }
-
+    
     state = {
         posts: [],
         page: 0,
@@ -18,14 +18,11 @@ class Posts extends Component {
     // Fetch more posts from database according to page number
     fetchMoreData = () => {
         axios.get("/api/restricted-users/get-posts-with-page/?page=" + this.state.page).then(response => {
-            console.log(response);
-            console.log(response.data);
             if (response.data.length > 0) {
                 this.setState({
                     posts: this.state.posts.concat(response.data),
                     page: this.state.page + 10
                 });
-                console.log("this is data " + this.state['posts'][0]);
             } else {
                 this.setState({
                     hasMore: false
@@ -42,7 +39,6 @@ class Posts extends Component {
     render() {
         return (
             <div className="posts-container">
-
                  <InfiniteScroll
                         height="100%"
                         dataLength={this.state.posts.length}
@@ -58,7 +54,9 @@ class Posts extends Component {
                         
                         {/* Display fetched posts */}
                          {this.state.posts.map((data, index) => (
-                            <Post   picture={data.picture}
+                            <Post   
+                                    post_id={data._id}
+                                    picture={data.picture}
                                     audio={data.sound}
                                     description={data.description}
                                     audio_duration={data.audio_duration}
