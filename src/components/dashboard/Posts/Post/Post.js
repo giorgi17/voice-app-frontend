@@ -9,7 +9,6 @@ class Post extends Component {
         this.playerRef = React.createRef();
         this.state = {
             player: null,
-            modalOpen: false,
             modal: null
         }
     }
@@ -23,7 +22,7 @@ class Post extends Component {
     }
     
     openModal = () => {
-        const modal = (<UserModal modalOpen={this.state.modalOpen} closeModal={this.closeModal}
+        const modal = (<UserModal closeModal={this.closeModal}
             post_id={this.props.post_id}></UserModal>);
         this.setState({modal: modal});
     }

@@ -10,17 +10,16 @@ class UserModal extends Component {
         super();
         this.userPostModalRef = React.createRef();
         this.userPostModalCloseButtonRef = React.createRef();
-    }
-
-    state = {
-        postAuthorData: {
-            avatarImage: null,
-            email: null,
-            name: null
-        },
-        posts: [],
-        page: 0,
-        hasMore: true
+        this.state = {
+            postAuthorData: {
+                avatarImage: null,
+                email: null,
+                name: null
+            },
+            posts: [],
+            page: 0,
+            hasMore: true
+        }
     }
 
     // When the user clicks on <span> (x), close the modal
@@ -30,7 +29,14 @@ class UserModal extends Component {
 
     // Fetch information of certain user
     getUserInfo = () => {
-        axios.post("/api/restricted-users/get-post-author-user-data", {id: this.props.post_id}).then(response => {
+        let dataToSend = {};
+        // If user profile is opened through search send 'user_id' else send 'id' for post id
+        if (this.props.post_id)
+            dataToSend.id = this.props.post_id;
+        else if (this.props.user_id)
+            dataToSend.user_id = this.props.user_id;
+
+        axios.post("/api/restricted-users/get-post-author-user-data", dataToSend).then(response => {
             this.setState({postAuthorData: response.data});
         }).catch( err => {
             console.log(err);
@@ -39,8 +45,16 @@ class UserModal extends Component {
 
     // Fetch posts of post author
     getUserPosts = () => {
-        axios.post("/api/restricted-users/get-post-author-user-posts",
-             {id: this.props.post_id, page: this.state.page}).then(response => {
+        let dataToSend = {};
+        // If user profile is opened through search send 'user_id' else send 'id' for post id
+        if (this.props.post_id)
+            dataToSend.id = this.props.post_id;
+        else if (this.props.user_id)
+            dataToSend.user_id = this.props.user_id;
+
+        dataToSend.page = this.state.page;
+
+        axios.post("/api/restricted-users/get-post-author-user-posts", dataToSend).then(response => {
                 if (response.data.length > 0) {
                     this.setState({
                         posts: this.state.posts.concat(response.data),
@@ -51,6 +65,8 @@ class UserModal extends Component {
                         hasMore: false
                     });
                 }
+        }).catch(e => {
+            console.log(e.message);
         });
     }
 
