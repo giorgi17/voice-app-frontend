@@ -8,7 +8,9 @@
   height: 30px;
   float: right;
   padding: 0;
-  position: relative;
+  position: absolute;
+  right: 0px;
+  top: 90px;
 }
 
 #wrap input[type="text"] {
@@ -19,7 +21,6 @@
   font-weight: 100;
   border: none;
   outline: none;
-  // color: #555;
   color: white;
   padding: 3px;
   padding-right: 60px;
@@ -89,7 +90,7 @@
   // }
 
   #user-search-results {
-    top: 115px !important;
+    top: 145px !important;
     right: 45px !important;
   }
 }
@@ -105,12 +106,11 @@
   bottom: 0;
   background-color: rgba(0,0,0,0.5);
   z-index: 1;
-  cursor: pointer;
 }
 
 #user-search-results {
   position: absolute;
-  top: 125px;
+  top: 165px;
   right: 75px;
   background-color: white;
   min-height: 200px;
