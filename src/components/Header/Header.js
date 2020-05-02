@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../../logo.svg';
 import './Header.css';
-import {NavLink} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import Logo from '../../img/logos/white_logo_transparent_background.png';
 
 class header extends Component {
@@ -38,7 +38,7 @@ class header extends Component {
             <React.Fragment>
                 <div id="top-nav-overlay" ref={this.backdropRef} onClick={this.backdropClose}></div>
                 <nav className="topnav" id="myTopnav">
-                    <a href="#home" id="site-logo-link"><img src={Logo} id="site-logo" /></a>
+                    <Link to="/" id="site-logo-link"><img src={Logo} id="site-logo" /></Link>
                     <a href="#home" className="active">Home</a>
                     <a href="#news">News</a>
                     <a href="#contact">Contact</a>
@@ -49,6 +49,8 @@ class header extends Component {
                     </span>
                     </a>
                     { (this.props.authenticated) ? <a id="logout" onClick={this.props.logoutMethod}>Logout</a> : null }
+                    { (!this.props.authenticated) ? <Link to="/register" id="topnav-register-button">Register</Link> : null }
+                    { (!this.props.authenticated) ? <Link to="/login" id="topnav-login-button">Login</Link> : null }
                 </nav>
             </React.Fragment>);
     }

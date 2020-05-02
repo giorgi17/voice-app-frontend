@@ -1,0 +1,66 @@
+body {
+    background-color: rgb(232, 235, 102) !important;
+}
+
+.welcome-page-wrapper {
+    margin-top: 100px;
+    height: 100%;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    position: absolute;
+    top: 0px;
+
+}
+
+.welcome-page-first-image-wrapper {
+    width: 100%;
+}
+
+.welcome-page-first-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.welcome-page-content-wrapper {
+    background-color: #4e4c4c;
+    min-height: 300px;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 50px;
+    z-index: 3;
+    position: relative;
+    bottom: 2%;
+    border-radius: 15%;
+    box-shadow: 0 44px 48px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.welcome-page-content-features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background-color: white;
+}
+
+.welcome-page-content-features-feature-wrapper {
+    text-align: center;
+    padding: 10px;
+    max-width: 200px;
+}
+
+.welcome-page-content-features-feature-wrapper span {
+    font-size: 50px;
+}
+
+
+.welcome-page-content-features-feature-wrapper p:first-of-type {
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.welcome-page-content-features-feature-wrapper p {
+    font-size: 25px;
+}
+

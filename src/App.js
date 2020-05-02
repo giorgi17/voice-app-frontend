@@ -7,6 +7,7 @@ import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
+import Welcome from './components/Welcome/Welcome';
 // import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { Provider } from "react-redux";
@@ -57,7 +58,8 @@ function App() {
               Hello World
             </Button> */}
             
-            <Route exact path="/" component={Login} />
+            {/* <Route exact path="/" component={Login} /> */}
+            <Route exact path="/" component={Welcome} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
 

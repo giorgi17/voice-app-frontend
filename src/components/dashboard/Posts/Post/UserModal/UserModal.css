@@ -2,7 +2,7 @@
 .user-post-modal {
     display: block; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 3; /* Sit on top */
+    z-index: 6; /* Sit on top */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -15,8 +15,6 @@
   /* Modal Content/Box */
   .user-post-modal-content {
     background-color: #fefefe;
-    /* 15% from the top and centered */
-    /* margin: 10% auto;  */
     margin: 2vw;
     padding: 20px;
     border: 1px solid #888;
