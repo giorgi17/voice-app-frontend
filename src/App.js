@@ -8,6 +8,7 @@ import { setCurrentUser, logoutUser } from "./actions/authActions";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
 import Welcome from './components/Welcome/Welcome';
+import About from './components/About/About';
 // import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { Provider } from "react-redux";
@@ -60,6 +61,7 @@ function App() {
             
             {/* <Route exact path="/" component={Login} /> */}
             <Route exact path="/" component={Welcome} />
+            <Route exact path="/about" component={About} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
 

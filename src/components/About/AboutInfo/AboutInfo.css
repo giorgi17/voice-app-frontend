@@ -1,0 +1,27 @@
+.about-page-info {
+    width: 90%;
+    margin: 5%;
+    min-height: 300px;
+    background-color: white;
+    box-shadow: 0px 0px 80px 0px rgba(0,0,0,0.15);
+    text-align: center;
+    padding: 2%;
+}
+
+@media screen and (max-width: 600px) {
+    .about-page-info {
+        width: 100%;
+        margin: 0;
+    }
+}
+
+.about-page-info h4 {
+    color: black !important;
+    font-weight: 600;
+}
+
+.about-page-info p {
+    font-size: 20px;
+    margin-left: 10%;
+    margin-right: 10%;
+}

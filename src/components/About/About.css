@@ -1,0 +1,40 @@
+.about-page-wrapper {
+    width: 100%;
+    height: 300px;
+    position: absolute;
+    top: 83px; 
+}
+
+.about-page-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.about-page-wrapper h1 {
+    color: white;
+    font-weight: 700;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    line-height: 300px;
+    margin:0;
+    text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+    .about-page-wrapper {
+        height: 200px; 
+    }
+
+    .about-page-wrapper h1 {
+        line-height: 200px;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .about-page-wrapper h1 {
+        line-height: normal;
+        margin-top: 10%;
+    }
+}

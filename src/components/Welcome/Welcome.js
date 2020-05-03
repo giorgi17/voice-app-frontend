@@ -3,6 +3,7 @@ import FirstWelcomeImage from '../../img/welcomePage.png';
 import { connect } from "react-redux";
 import './Welcome.css';
 import Header from '../Header/Header';
+import AboutInfo from '../About/AboutInfo/AboutInfo';
 
 class Welcome extends Component {
 
@@ -56,6 +57,7 @@ class Welcome extends Component {
                             </div>
                         </div>
                     </div>
+                    <AboutInfo></AboutInfo>
                 </div>
             </React.Fragment>
         );

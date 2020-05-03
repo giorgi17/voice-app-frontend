@@ -39,10 +39,10 @@ class header extends Component {
                 <div id="top-nav-overlay" ref={this.backdropRef} onClick={this.backdropClose}></div>
                 <nav className="topnav" id="myTopnav">
                     <Link to="/" id="site-logo-link"><img src={Logo} id="site-logo" /></Link>
-                    <a href="#home" className="active">Home</a>
+                    <Link to="/" className="active">Home</Link>
                     <a href="#news">News</a>
                     <a href="#contact">Contact</a>
-                    <a href="#about">About</a>
+                    <Link to="/about">About</Link>
                     <a href="#" onClick={this.myFunction} className="icon" ref={this.responsiveMenuIconRef}>
                     <span className="material-icons">
                         menu
