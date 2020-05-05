@@ -89,7 +89,7 @@ class UserModal extends Component {
         else if (this.props.user_id)
             dataToSend.user_id = this.props.user_id;
 
-        axios.post("/api/restricted-users/get-post-author-user-data", dataToSend).then(async response => {
+        axios.post("/api/restricted-users/get-post-author-user-data", dataToSend).then(response => {
             this.setState({postAuthorData: response.data});
             this.getFollowingInfo();   
         }).catch( err => {

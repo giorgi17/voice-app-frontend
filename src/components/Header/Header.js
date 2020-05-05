@@ -10,13 +10,6 @@ class header extends Component {
         super();
         this.backdropRef = React.createRef();
         this.responsiveMenuIconRef = React.createRef();
-        this.state = {
-            activeIcons: {
-                home: false,
-                contact: false,
-                about: false
-            }
-        };
     }
 
     myFunction = () => {
