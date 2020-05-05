@@ -55,7 +55,7 @@ class UserModal extends Component {
     // Fetch following information of certain user
     getFollowingInfo = () => {
         // Check if profile belongs to logged in user and if so, don't show follow button
-        if (!this.state.postAuthorData.user_id && 
+        if (!this.state.postAuthorData.user_id || 
             this.state.postAuthorData.user_id === this.props.auth.user.id) {
                 return;
         } 
