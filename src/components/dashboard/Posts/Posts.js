@@ -3,6 +3,7 @@ import './Posts.css';
 import Post from './Post/Post';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { connect } from "react-redux";
 
 class Posts extends Component {
     constructor() {
@@ -17,7 +18,10 @@ class Posts extends Component {
 
     // Fetch more posts from database according to page number
     fetchMoreData = () => {
-        axios.get("/api/restricted-users/get-posts-with-page/?page=" + this.state.page).then(response => {
+        console.log("/api/restricted-users/get-posts-with-page/?page=" + this.state.page
+        + "&user_id=" + this.props.auth.user.id);
+        axios.get("/api/restricted-users/get-posts-with-page/?page=" + this.state.page
+                 + "&user_id=" + this.props.auth.user.id).then(response => {
             if (response.data.length > 0) {
                 this.setState({
                     posts: this.state.posts.concat(response.data),
@@ -62,6 +66,8 @@ class Posts extends Component {
                                     audio_duration={data.audio_duration}
                                     profile_picture={data.profile_picture}
                                     user_name={data.user_name}
+                                    liked={data.liked}
+                                    disliked={data.disliked}
                                     key={data._id}></Post>
                         ))}
 
@@ -71,4 +77,10 @@ class Posts extends Component {
     }
 } 
 
-export default Posts;
+const mapStateToProps = state => ({
+    auth: state.auth
+});
+
+export default connect(
+    mapStateToProps
+  )(Posts);

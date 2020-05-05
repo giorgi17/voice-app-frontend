@@ -29,3 +29,19 @@
         width: 50%;
     } */
 }
+
+.like:hover {
+    color: rgb(79, 148, 243);
+}
+
+.liked {
+    color: rgb(79, 148, 243);
+}
+
+.dislike:hover {
+    color: rgb(79, 148, 243);
+}
+
+.disliked {
+    color: rgb(79, 148, 243);
+}

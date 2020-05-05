@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './Post.css';
 import Player from '../../Menu/RecordVoice/Player/Player';
 import UserModal from './UserModal/UserModal';
+import axios from 'axios';
+import { connect } from "react-redux";
 
 class Post extends Component {
     constructor() {
@@ -9,10 +11,43 @@ class Post extends Component {
         this.playerRef = React.createRef();
         this.state = {
             player: null,
-            modal: null
+            modal: null,
+            liked: false,
+            disliked: false
         }
     }
     
+    // Perform disliking the post
+    dislikePost = () => {
+        let dataToSend = {};
+
+        // Send post id and user id to dislike
+        dataToSend.post_id = this.props.post_id;
+        dataToSend.user_id = this.props.auth.user.id;
+
+        axios.post("/api/restricted-users/post-dislike", dataToSend).then(response => {
+            this.setState({disliked: response.data.disliked, liked: false});
+        }).catch( err => {
+            console.log(err);
+        });
+    }
+
+    // Perform liking the post
+    likePost = () => {
+        let dataToSend = {};
+
+        // Send post id and user id to like
+        dataToSend.post_id = this.props.post_id;
+        dataToSend.user_id = this.props.auth.user.id;
+
+        axios.post("/api/restricted-users/post-like", dataToSend).then(response => {
+            this.setState({liked: response.data.liked, disliked: false});
+            console.log(response.data);
+        }).catch( err => {
+            console.log(err);
+        });
+    }
+
     playAudio = () => {
         this.playerRef.current.style.display = 'none';
         this.setState({player: (
@@ -29,6 +64,10 @@ class Post extends Component {
 
     closeModal = () => {
         this.setState({modal: null});
+    }
+
+    componentDidMount() {
+        this.setState({liked: this.props.liked, disliked: this.props.disliked});
     }
 
     render() {
@@ -52,10 +91,12 @@ class Post extends Component {
                 <strong className="user-post-username" onClick={this.openModal}>{this.props.user_name}</strong>
     
                 <div className="user-post-viewer-options">
-                    <span className="material-icons like">
+                    <span className={`material-icons like ${this.state.liked ? "liked" : ""}`}
+                        onClick={this.likePost}>
                         thumb_up
                     </span>
-                    <span className="material-icons dislike">
+                    <span className={`material-icons dislike ${this.state.disliked ? "disliked" : ""}`}
+                        onClick={this.dislikePost}>
                         thumb_down
                     </span>
                     <span className="material-icons comment">
@@ -84,4 +125,10 @@ class Post extends Component {
     
 };
 
-export default Post;
+const mapStateToProps = state => ({
+    auth: state.auth
+});
+
+export default connect(
+    mapStateToProps
+  )(Post);
