@@ -4,27 +4,80 @@ import { connect } from "react-redux";
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Post from '../Post';
+import UserActivityInfo from '../../../Menu/Profile/ProfileView/UserActivityInfo/UserActivityInfo';
+import Button from '@material-ui/core/Button';
 
 class UserModal extends Component {
     constructor() {
         super();
         this.userPostModalRef = React.createRef();
         this.userPostModalCloseButtonRef = React.createRef();
+        this.followButtonRef = React.createRef();
         this.state = {
             postAuthorData: {
                 avatarImage: null,
                 email: null,
-                name: null
+                name: null,
+                user_id: null
             },
             posts: [],
             page: 0,
-            hasMore: true
+            hasMore: true,
+            following: true
         }
     }
 
     // When the user clicks on <span> (x), close the modal
     modalClose = () => {
         this.props.closeModal();
+    }
+
+    // Perform following or unfollowing on certain user
+    followOrUnfollow = () => {
+        let dataToSend = {};
+
+        // If user profile is opened through search send 'user_id' else send 'id' for post id
+        if (this.props.post_id)
+            dataToSend.id = this.props.post_id;
+        else if (this.props.user_id)
+            dataToSend.user_id = this.props.user_id;
+
+        // Send user id to follow or unfollow
+        dataToSend.current_user_id = this.props.auth.user.id;
+
+        axios.post("/api/restricted-users/follow-or-unfollow", dataToSend).then(response => {
+            this.setState({following: response.data.following});
+        }).catch( err => {
+            console.log(err);
+        });
+    }
+
+    // Fetch following information of certain user
+    getFollowingInfo = () => {
+        // Check if profile belongs to logged in user and if so, don't show follow button
+        if (this.state.postAuthorData.user_id && 
+            this.state.postAuthorData.user_id !== this.props.auth.user.id) {
+                this.followButtonRef.current.style.display = 'block';
+        } else {
+            return;
+        }
+
+        let dataToSend = {};
+
+        // If user profile is opened through search send 'user_id' else send 'id' for post id
+        if (this.props.post_id)
+            dataToSend.id = this.props.post_id;
+        else if (this.props.user_id)
+            dataToSend.user_id = this.props.user_id;
+
+        // Send user id to determine wether he is following this user or not
+        dataToSend.current_user_id = this.props.auth.user.id;
+
+        axios.post("/api/restricted-users/get-user-following-data", dataToSend).then(response => {
+            this.setState({following: response.data.following});
+        }).catch( err => {
+            console.log(err);
+        });
     }
 
     // Fetch information of certain user
@@ -36,8 +89,9 @@ class UserModal extends Component {
         else if (this.props.user_id)
             dataToSend.user_id = this.props.user_id;
 
-        axios.post("/api/restricted-users/get-post-author-user-data", dataToSend).then(response => {
+        axios.post("/api/restricted-users/get-post-author-user-data", dataToSend).then(async response => {
             this.setState({postAuthorData: response.data});
+            this.getFollowingInfo();   
         }).catch( err => {
             console.log(err);
         });
@@ -100,6 +154,15 @@ class UserModal extends Component {
                         <div className="user-post-modal-profile-email">
                         <strong>Email:</strong> {this.state.postAuthorData.email}
                         </div>
+                    </div>
+
+                    <UserActivityInfo></UserActivityInfo>
+                    <div className="user-post-modal-follow-button" ref={this.followButtonRef}>
+                        <Button variant="contained" 
+                        color={`${this.state.following ? "secondary" : "primary"}`}
+                        onClick={this.followOrUnfollow} >
+                            {this.state.following ? 'Unfollow' : 'Follow'}
+                        </Button>
                     </div>
 
                     <hr></hr>

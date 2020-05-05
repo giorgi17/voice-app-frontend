@@ -75,7 +75,7 @@ render() {
 return (
 
     <React.Fragment>
-        <Header />
+        <Header registerActive={true} />
         
         <form className="register-form" autoComplete="on" onSubmit={this.onSubmit}>
           <h1 className="register-inputs">Register</h1> 

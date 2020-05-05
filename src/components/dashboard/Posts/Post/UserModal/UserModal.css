@@ -69,3 +69,8 @@
   /* display: inline-block; */
   /* height: 20px; */
 }
+
+.user-post-modal-follow-button {
+  display: none;
+  margin-bottom: 20px;
+}

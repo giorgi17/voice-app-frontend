@@ -15,7 +15,7 @@ const About = props => {
 
     return (
         <React.Fragment>
-            <Header authenticated={props.auth.isAuthenticated} logoutMethod={onLogoutClick} />
+            <Header authenticated={props.auth.isAuthenticated} logoutMethod={onLogoutClick} aboutActive={true} />
             <div className="about-page-wrapper">
                 <img src={AboutImage} />
                 <h1>ABOUT VOX</h1>

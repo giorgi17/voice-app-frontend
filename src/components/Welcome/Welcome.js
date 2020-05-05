@@ -17,7 +17,7 @@ class Welcome extends Component {
     render() {
         return (
             <React.Fragment>
-                <Header authenticated={false} logoutMethod={this.onLogoutClick} />
+                <Header authenticated={false} logoutMethod={this.onLogoutClick} homeActive={true} />
                 <div className="welcome-page-wrapper">
                     <div className="welcome-page-first-image-wrapper">
                         <img src={FirstWelcomeImage} className="welcome-page-first-image"/>

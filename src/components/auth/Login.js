@@ -66,7 +66,7 @@ render() {
 
 return (
       <React.Fragment>
-        <Header />
+        <Header loginActive={true} />
         <form className="login-form" autoComplete="on" onSubmit={this.onSubmit}>
           <h1 className="login-inputs">Login</h1>
           <TextField id="login-email" required name="email"

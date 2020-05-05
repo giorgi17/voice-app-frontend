@@ -3,6 +3,7 @@ import './ProfileView.css';
 import ProfileEdit from '../ProfileEdit/ProfileEdit';
 import { connect } from "react-redux";
 import axios from 'axios';
+import UserActivityInfo from './UserActivityInfo/UserActivityInfo';
 
 class ProfileView extends Component {
 
@@ -37,37 +38,11 @@ class ProfileView extends Component {
                         edit
                     </span>
                 </div>
+
+                <UserActivityInfo></UserActivityInfo>
     
                 <hr></hr>
-                <div className="profile-view-activity-info-wrapper">
-                    <div className="profile-view-activity-info">
-                        <h4>1</h4>  <h6>POSTS</h6>
-                    </div>
-    
-                    <div className="profile-view-activity-info">
-                        <h4>17</h4>  <h6>FOLLOWERS</h6>
-                    </div>
-    
-                    <div className="profile-view-activity-info">
-                        <h4>201</h4>  <h6>FOLLOWING</h6>
-                    </div>
-    
-                    <div className="profile-view-activity-info">
-                        <h4>1340</h4>  <h6>LIKES</h6>
-                    </div>
-    
-                    <div className="profile-view-activity-info">
-                        <h4>231</h4>  <h6>DISLIKES</h6>
-                    </div>
-    
-                    <div className="profile-view-activity-info">
-                        <h4>193</h4>  <h6>COMMENTS</h6>
-                    </div>
-    
-                    <div className="profile-view-activity-info">
-                        <h4>130,123</h4>  <h6>VIEWS</h6>
-                    </div>
-                </div>
+                
     
             </div>
         );

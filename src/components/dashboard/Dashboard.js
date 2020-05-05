@@ -18,7 +18,7 @@ render() {
     const { user } = this.props.auth;
 return (
       <React.Fragment>
-        <Header authenticated={true} logoutMethod={this.onLogoutClick} />
+        <Header authenticated={true} logoutMethod={this.onLogoutClick} homeActive={true} />
         <SearchBar />
         <ContentContainer>
           <Posts />
