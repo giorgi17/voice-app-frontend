@@ -18,8 +18,6 @@ class Posts extends Component {
 
     // Fetch more posts from database according to page number
     fetchMoreData = () => {
-        console.log("/api/restricted-users/get-posts-with-page/?page=" + this.state.page
-        + "&user_id=" + this.props.auth.user.id);
         axios.get("/api/restricted-users/get-posts-with-page/?page=" + this.state.page
                  + "&user_id=" + this.props.auth.user.id).then(response => {
             if (response.data.length > 0) {
