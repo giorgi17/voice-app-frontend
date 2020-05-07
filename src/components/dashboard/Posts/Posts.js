@@ -62,6 +62,7 @@ class Posts extends Component {
                                     audio={data.sound}
                                     description={data.description}
                                     audio_duration={data.audio_duration}
+                                    post_author_id={data.user_id}
                                     profile_picture={data.profile_picture}
                                     user_name={data.user_name}
                                     liked={data.liked}

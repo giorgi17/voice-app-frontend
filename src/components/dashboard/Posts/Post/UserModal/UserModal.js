@@ -42,8 +42,9 @@ class UserModal extends Component {
         else if (this.props.user_id)
             dataToSend.user_id = this.props.user_id;
 
-        // Send user id to follow or unfollow
+        // Send logged in user id and username to follow or unfollow
         dataToSend.current_user_id = this.props.auth.user.id;
+        dataToSend.current_user_name = this.props.auth.user.name;
 
         axios.post("/api/restricted-users/follow-or-unfollow", dataToSend).then(response => {
             this.setState({following: response.data.following});

@@ -8,3 +8,13 @@
     width: 96%;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
+
+.notifications-view-container .infinite-scroll-component {
+    display: inline-block;
+    height: 500px !important;
+    width: 100%;
+}
+
+.notifications-view-container .infinite-scroll-component h4 {
+    text-align: center;
+}

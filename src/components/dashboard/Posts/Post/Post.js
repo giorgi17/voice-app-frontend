@@ -24,6 +24,8 @@ class Post extends Component {
         // Send post id and user id to dislike
         dataToSend.post_id = this.props.post_id;
         dataToSend.user_id = this.props.auth.user.id;
+        dataToSend.current_user_name = this.props.auth.user.name;
+        dataToSend.post_author_id = this.props.post_author_id;
 
         axios.post("/api/restricted-users/post-dislike", dataToSend).then(response => {
             this.setState({disliked: response.data.disliked, liked: false});
@@ -39,6 +41,9 @@ class Post extends Component {
         // Send post id and user id to like
         dataToSend.post_id = this.props.post_id;
         dataToSend.user_id = this.props.auth.user.id;
+        dataToSend.current_user_name = this.props.auth.user.name;
+        dataToSend.post_author_id = this.props.post_author_id;
+        console.log(dataToSend);
 
         axios.post("/api/restricted-users/post-like", dataToSend).then(response => {
             this.setState({liked: response.data.liked, disliked: false});
