@@ -42,7 +42,8 @@
     margin-right: 5px;
     min-width: 220px;
     line-height: initial;
-    word-break: break-all;
+    /* word-break: break-all; */
+    word-wrap: break-word;
 }
 
 .single-notification-date-wrapper {

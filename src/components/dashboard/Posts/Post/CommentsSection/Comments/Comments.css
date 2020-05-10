@@ -1,0 +1,24 @@
+.all-comments-wrapper {
+    /* width: 300px; */
+    width: 300px;
+    min-height: 100px;
+    /* background-color: red; */
+    display: block;
+    margin-bottom: 10px;
+}
+
+.all-comments-more-comments-button {
+    display: inline-block;
+    height: 20px;
+    padding: 5px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    color: rgb(69, 109, 189);
+    font-weight: 600;
+    cursor: pointer;
+    display: none;
+}
+
+.all-comments-more-comments-button:hover {
+    border-bottom: 1px solid;
+}

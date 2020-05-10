@@ -4,6 +4,7 @@ import Player from '../../Menu/RecordVoice/Player/Player';
 import UserModal from './UserModal/UserModal';
 import axios from 'axios';
 import { connect } from "react-redux";
+import CommentsSection from './CommentsSection/CommentsSection';
 
 class Post extends Component {
     constructor() {
@@ -125,6 +126,11 @@ class Post extends Component {
                 <div className="user-post-description">
                     <span>{this.props.description}</span>
                 </div>
+
+                <hr></hr>
+
+                <CommentsSection post_author_id={this.props.post_author_id}
+                                 post_id={this.props.post_id}></CommentsSection>
             </div>)
     }
     

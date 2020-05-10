@@ -185,6 +185,7 @@ class UserModal extends Component {
                             {this.state.posts.map((data, index) => (
                                 <Post   
                                         post_id={data._id}
+                                        post_author_id={data.user_id}
                                         picture={data.picture}
                                         audio={data.sound}
                                         description={data.description}

@@ -141,7 +141,9 @@
 
 .user-post-description {
     margin: 0px 10px 30px;
-    word-wrap: break-word;
+    /* word-wrap: break-word; */
+    word-break: break-all;
+    font-size: 14px;
 }
 
 #user-post-player-container {

@@ -1,0 +1,44 @@
+.post-comments-wrapper {
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.post-comments-profile-image-wrapper, .post-comments-comment-input, .post-comments-post-button {
+    /* flex: 1; */
+    /* flex: 2 1 auto; */
+}
+
+.post-comments-profile-image-wrapper {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-left: 5px;
+}
+
+.post-comments-profile-image {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.post-comments-comment-input {
+    display: inline-block;
+    background-color: white;
+    min-height: 34px;
+    width: 260px;
+    padding: 5px;
+    position: relative;
+}
+
+.post-comments-comment-input .MuiTextField-root {
+    width: 210px;
+}
+
+.post-comments-post-button {
+    margin-left: 5px;
+    position: absolute;
+    bottom: 5px;
+}

@@ -87,7 +87,8 @@ class SingleNotification extends Component {
         this.fetchUserProfilePicture();
         if (!this.props.seen)
             this.notificationUnseenToSeen();
-        if (this.props.type === 'post-liking' || this.props.type === 'post-disliking')
+        if (this.props.type === 'post-liking' || this.props.type === 'post-disliking'
+            || this.props.type === 'post-commenting')
             this.fetchPostPicture();
     }
 
