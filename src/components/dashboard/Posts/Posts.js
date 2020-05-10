@@ -20,9 +20,19 @@ class Posts extends Component {
     fetchMoreData = () => {
         axios.get("/api/restricted-users/get-posts-with-page/?page=" + this.state.page
                  + "&user_id=" + this.props.auth.user.id).then(response => {
+
+            // Check if there were any new posts added after mounting this component which would 
+                // cause database array to shift and remove any duplicate elements from array
+                const newPostsArray = [...this.state.posts, ...response.data];
+                const newUniquePostsArray = Array.from(new Set(newPostsArray.map(a => a._id)))
+                .map(_id => {
+                    return newPostsArray.find(a => a._id === _id);
+                })
+
             if (response.data.length > 0) {
                 this.setState({
-                    posts: this.state.posts.concat(response.data),
+                    // posts: this.state.posts.concat(response.data),
+                    posts: newUniquePostsArray,
                     page: this.state.page + 10
                 });
             } else {

@@ -25,9 +25,18 @@ class NotificationsView extends Component {
         dataToSend.page = this.state.page;
 
         axios.post("/api/restricted-users/get-notification-data", dataToSend).then(response => {
+                // Check if there were any new notifications added after mounting this component which would 
+                // cause database array to shift and remove any duplicate elements from array
+                const newNotificationsArray = [...this.state.notifications, ...response.data.notifications];
+                const newUniqueNotificationsArray = Array.from(new Set(newNotificationsArray.map(a => a._id)))
+                .map(_id => {
+                    return newNotificationsArray.find(a => a._id === _id);
+                })
+
                 if (response.data.notifications.length > 0) {
                     this.setState({
-                        notifications: this.state.notifications.concat(response.data.notifications),
+                        // notifications: this.state.notifications.concat(response.data.notifications),
+                        notifications: newUniqueNotificationsArray,
                         page: this.state.page + 10
                     }, () => { this.notificationSeen(); });
                 } else {

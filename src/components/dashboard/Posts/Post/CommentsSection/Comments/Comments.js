@@ -44,7 +44,7 @@ class Comments extends Component {
                 const newCommentsArray = [...response.data.comments, ...this.state.comments];
                 const newUniqueCommentsArray = Array.from(new Set(newCommentsArray.map(a => a._id)))
                 .map(_id => {
-                return newCommentsArray.find(a => a._id === _id)
+                    return newCommentsArray.find(a => a._id === _id);
                 })
 
                 if (response.data.comments.length > 0) {
