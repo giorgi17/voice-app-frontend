@@ -7,6 +7,8 @@ import CommentsSection from './CommentsSection/CommentsSection';
 import { withRouter } from 'react-router-dom';
 
 class Post extends Component {
+    _isMounted = false;
+
     constructor() {
         super();
         this.playerRef = React.createRef();
@@ -28,7 +30,9 @@ class Post extends Component {
         dataToSend.post_author_id = this.props.post_author_id;
 
         axios.post("/api/restricted-users/post-dislike", dataToSend).then(response => {
-            this.setState({disliked: response.data.disliked, liked: false});
+            if (this._isMounted) {
+                this.setState({disliked: response.data.disliked, liked: false});
+            }
         }).catch( err => {
             console.log(err);
         });
@@ -46,19 +50,23 @@ class Post extends Component {
         console.log(dataToSend);
 
         axios.post("/api/restricted-users/post-like", dataToSend).then(response => {
-            this.setState({liked: response.data.liked, disliked: false});
-            console.log(response.data);
+            if (this._isMounted) {
+                this.setState({liked: response.data.liked, disliked: false});
+                // console.log(response.data);
+            }
         }).catch( err => {
             console.log(err);
         });
     }
 
     playAudio = () => {
-        this.playerRef.current.style.display = 'none';
-        this.setState({player: (
-            <div id="user-post-player-container">
-                <Player audioFile={this.props.audio} />
-            </div>)});
+        if (this._isMounted) {
+            this.playerRef.current.style.display = 'none';
+            this.setState({player: (
+                <div id="user-post-player-container">
+                    <Player audioFile={this.props.audio} />
+                </div>)});
+        }
     }
 
     redirectToUserProfile = () => {
@@ -67,7 +75,12 @@ class Post extends Component {
     }
 
     componentDidMount() {
+        this._isMounted = true;
         this.setState({liked: this.props.liked, disliked: this.props.disliked});
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     render() {

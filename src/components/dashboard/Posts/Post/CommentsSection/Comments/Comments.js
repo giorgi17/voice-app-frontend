@@ -4,6 +4,8 @@ import Comment from './Comment/Comment';
 import axios from 'axios';
 
 class Comments extends Component {
+    _isMounted = false;
+
     constructor() {
         super();
         this.viewMorePreviousCommentsButtonRef = React.createRef();
@@ -24,9 +26,11 @@ class Comments extends Component {
     fetchMoreNextComments = () => {
         axios.get("/api/restricted-users/get-next-comments-with-page/?page=" + this.state.page
         + "&post_id=" + this.props.post_id).then(response => {
-                console.log(response.data.comments);
+                // console.log(response.data.comments);
                 if (response.data.comments.length > 0) {
-                    this.setState({ comments: response.data.comments, page: this.state.page + 10 });   
+                    if (this._isMounted) {
+                        this.setState({ comments: response.data.comments, page: this.state.page + 10 });
+                    }   
                 }
             });
     };
@@ -35,7 +39,7 @@ class Comments extends Component {
     fetchMoreComments = () => {
         axios.get("/api/restricted-users/get-comments-with-page/?page=" + this.state.page
                     + "&post_id=" + this.props.post_id).then(response => {
-                    
+                
                 if (!this.state.initialCleanupDone)
                     this.setState({comments: []}, () => this.setState({initialCleanupDone: true}));
                 
@@ -48,17 +52,26 @@ class Comments extends Component {
                 })
 
                 if (response.data.comments.length > 0) {
-                    this.setState({
-                        comments: newUniqueCommentsArray,
-                        page: this.state.page + 10
-                    });
+                    if (this._isMounted) {
+                        this.setState({
+                            comments: newUniqueCommentsArray,
+                            page: this.state.page + 10
+                        });
+                    }
+            
                     // make "View previous comments" button dissapear if there are no more comments
-                    if (response.data.comments.length < 10)
-                        this.viewMorePreviousCommentsButtonRef.current.style.display = 'none';
+                    if (response.data.comments.length < 10) {
+                        if (this.viewMorePreviousCommentsButtonRef.current);
+                            this.viewMorePreviousCommentsButtonRef.current.style.display = 'none';
+
+                    }
                 } else {
                     this.setState({
                         hasMore: false
-                    }, () => { this.viewMorePreviousCommentsButtonRef.current.style.display = 'none'; });
+                    }, () => { 
+                        if (this.viewMorePreviousCommentsButtonRef.current);
+                            this.viewMorePreviousCommentsButtonRef.current.style.display = 'none';
+                    });
                 }
             });
     };
@@ -71,10 +84,15 @@ class Comments extends Component {
         dataToSend.post_id = this.props.post_id;
 
         axios.post("/api/restricted-users/fetch-initial-comments-for-post", dataToSend).then(response => {
-            this.setState({comments: response.data.comments,
-                            hasMore: response.data.hasMore});
-            if (response.data.hasMore)
-                this.viewMorePreviousCommentsButtonRef.current.style.display = 'inline-block';
+            if (this._isMounted) {
+                this.setState({comments: response.data.comments,
+                    hasMore: response.data.hasMore});
+            }
+        
+            if (response.data.hasMore) {
+                if (this.viewMorePreviousCommentsButtonRef.current)
+                    this.viewMorePreviousCommentsButtonRef.current.style.display = 'inline-block';
+            }
         }).catch( err => {
             console.log(err);
         });
@@ -96,7 +114,12 @@ class Comments extends Component {
     }
 
     componentDidMount() {
+        this._isMounted = true;
         this.FetchComments();
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     render() {

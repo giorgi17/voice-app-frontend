@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import axios from 'axios';
 
 class Notifications extends Component {
+    _isMounted = false;
+
     constructor() {
         super();
         this.state = {
@@ -12,16 +14,24 @@ class Notifications extends Component {
     }
 
     componentDidMount() {
+        this._isMounted = true;
+
         let dataToSend = {};
 
         // Send user id to fetch notifications
         dataToSend.user_id = this.props.auth.user.id;
 
         axios.post("/api/restricted-users/get-notification-number-data", dataToSend).then(response => {
-            this.setState({notification: response.data.notification});
+            if (this._isMounted) {
+                this.setState({notification: response.data.notification});
+            }
         }).catch( err => {
             console.log(err);
         });
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     render() {

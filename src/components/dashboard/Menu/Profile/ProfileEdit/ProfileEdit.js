@@ -9,6 +9,8 @@ import ProfileImageCrop from './ProfileImageCrop/ProfileImageCrop';
 import { Alert, AlertTitle } from '@material-ui/lab';
 
 class ProfileEdit extends Component {
+    _isMounted = false;
+
     constructor(props) {
         super(props);
         this.cropperDisplayRef = React.createRef();
@@ -39,25 +41,31 @@ class ProfileEdit extends Component {
             id: this.props.auth.user.id,
             name: this.state.userData.name,
             email: this.state.userData.email
-            };
+        };
 
         axios
         .post("/api/restricted-users/update-user-data", newUserInfo)
         .then(res => {
-            this.setState({userData: {
-                ...this.state.userData,
-                errors: {}
-            }});
+            if (this._isMounted) {
+                this.setState({userData: {
+                    ...this.state.userData,
+                    errors: {}
+                }});
+            }
+            
             // Check if error message is open and close if it is and show success message instead
             this.profileInfoUpdateSuccessRef.current.style.display = 'flex';
             this.profileInfoUpdateErrorRef.current.style.display = 'none';
         }) 
         .catch(err => {
             let newErrors = err.response.data;
-            this.setState({userData: {
-                ...this.state.userData,
-                errors: newErrors
-            }});
+            if (this._isMounted) {
+                this.setState({userData: {
+                    ...this.state.userData,
+                    errors: newErrors
+                }});
+            }
+            
             // Check if success message is open and close if it is and show error message instead
             this.profileInfoUpdateSuccessRef.current.style.display = 'none';
             this.profileInfoUpdateErrorRef.current.style.display = 'flex';
@@ -71,41 +79,40 @@ class ProfileEdit extends Component {
             password: this.state.userData.password,
             newPassword: this.state.userData.newPassword,
             newPassword2: this.state.userData.newPassword2
-            };
+        };
 
         axios
         .post("/api/restricted-users/update-user-password", newUserPassword)
         .then(res => {
-            this.setState({userData: {
-                ...this.state.userData,
-                errors: {},
-                password: '',
-                newPassword: '',
-                newPassword2: ''
-            }});
-            document.getElementById('profile-edit-activity-info-change-password-button').click();
+            if (this._isMounted) {
+                this.setState({userData: {
+                    ...this.state.userData,
+                    errors: {},
+                    password: '',
+                    newPassword: '',
+                    newPassword2: ''
+                }});
+                document.getElementById('profile-edit-activity-info-change-password-button').click();
+            }
         }) 
         .catch(err => {
             let newErrors = err.response.data;
-            this.setState({userData: {
-                ...this.state.userData,
-                errors: newErrors
-            }});
+            if (this._isMounted) {
+                this.setState({userData: {
+                    ...this.state.userData,
+                    errors: newErrors
+                }});
+            }
         });
     };
 
     onChange = e => {
         let userDataCopy = {...this.state.userData};
         userDataCopy[e.target.name] = e.target.value;
-        this.setState({ userData: {...userDataCopy} });
+        if (this._isMounted) {
+            this.setState({ userData: {...userDataCopy} });
+        }
     };
-
-    componentDidMount() {
-        // Fetch user data using id to be displayed in inputs
-        axios.post('/api/restricted-users/get-user-data', {id: this.props.auth.user.id}).then(res => {
-            this.setState({userData: { ...this.state.userData, ...res.data}});
-        });
-    }
    
     makePasswordVisible = (visibilityNumber) => {
         let passwordInput = null;
@@ -146,6 +153,20 @@ class ProfileEdit extends Component {
             this.cropperDisplayRef.current.style.display = 'flex';
     }
   
+    componentDidMount() {
+        this._isMounted = true;
+
+        // Fetch user data using id to be displayed in inputs
+        axios.post('/api/restricted-users/get-user-data', {id: this.props.auth.user.id}).then(res => {
+            if (this._isMounted) {
+                this.setState({userData: { ...this.state.userData, ...res.data}});
+            }
+        });
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
 
     render() {
 

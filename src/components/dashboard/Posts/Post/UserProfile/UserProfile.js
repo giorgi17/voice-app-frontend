@@ -8,6 +8,8 @@ import UserActivityInfo from '../../../Menu/Profile/ProfileView/UserActivityInfo
 import Button from '@material-ui/core/Button';
 
 class UserProfile extends Component {
+    _isMounted = false;
+
     constructor() {
         super();
         this.userPostModalCloseButtonRef = React.createRef();
@@ -26,11 +28,6 @@ class UserProfile extends Component {
         }
     }
 
-    // When the user clicks on <span> (x), close the modal
-    modalClose = () => {
-       
-    }
-
     // Perform following or unfollowing on certain user
     followOrUnfollow = () => {
         let dataToSend = {};
@@ -42,7 +39,9 @@ class UserProfile extends Component {
         dataToSend.current_user_name = this.props.auth.user.name;
 
         axios.post("/api/restricted-users/follow-or-unfollow", dataToSend).then(response => {
-            this.setState({following: response.data.following});
+            if (this._isMounted) { 
+                this.setState({following: response.data.following});
+            }
         }).catch( err => {
             console.log(err);
         });
@@ -64,8 +63,10 @@ class UserProfile extends Component {
         dataToSend.current_user_id = this.props.auth.user.id;
 
         axios.post("/api/restricted-users/get-user-following-data", dataToSend).then(response => {
-            this.setState({following: response.data.following});
-            this.followButtonRef.current.style.display = 'block';
+            if (this._isMounted) { 
+                this.setState({following: response.data.following});
+                this.followButtonRef.current.style.display = 'block';
+            }
         }).catch( err => {
             console.log(err);
         });
@@ -77,8 +78,10 @@ class UserProfile extends Component {
         dataToSend.user_id = this.props.user_id;
 
         axios.post("/api/restricted-users/get-post-author-user-data", dataToSend).then(response => {
-            this.setState({postAuthorData: response.data});
-            this.getFollowingInfo();   
+            if (this._isMounted) { 
+                this.setState({postAuthorData: response.data});
+                this.getFollowingInfo();  
+            } 
         }).catch( err => {
             console.log(err);
         });
@@ -101,15 +104,19 @@ class UserProfile extends Component {
                 })
 
                 if (response.data.length > 0) {
-                    this.setState({
-                        // posts: this.state.posts.concat(response.data),
-                        posts: newUniquePostsArray,
-                        page: this.state.page + 10
-                    });
+                    if (this._isMounted) {
+                        this.setState({
+                            // posts: this.state.posts.concat(response.data),
+                            posts: newUniquePostsArray,
+                            page: this.state.page + 10
+                        });
+                    }
                 } else {
-                    this.setState({
-                        hasMore: false
-                    });
+                    if (this._isMounted) {
+                        this.setState({
+                            hasMore: false
+                        });
+                    }
                 }
         }).catch(e => {
             console.log(e.message);
@@ -120,27 +127,34 @@ class UserProfile extends Component {
         // If query parameter user_id is changed then load another user info
         //  after cleaning up old one
         if (prevProps.user_id !== this.props.user_id) {
-            this.setState({ 
-                postAuthorData: {
-                    avatarImage: null,
-                    email: null,
-                    name: null,
-                    user_id: null
-                },
-                posts: [],
-                page: 0,
-                hasMore: true,
-                following: true
-            }, () => {
-                this.getUserInfo();
-                this.getUserPosts();  
-            })
+            if (this._isMounted) {
+                this.setState({ 
+                    postAuthorData: {
+                        avatarImage: null,
+                        email: null,
+                        name: null,
+                        user_id: null
+                    },
+                    posts: [],
+                    page: 0,
+                    hasMore: true,
+                    following: true
+                }, () => {
+                    this.getUserInfo();
+                    this.getUserPosts();  
+                })
+            }
         }
     }
 
     componentDidMount() {
+        this._isMounted = true;
         this.getUserInfo();
         this.getUserPosts();
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     render() {

@@ -3,6 +3,8 @@ import './SingleNotification.css';
 import axios from 'axios';
 
 class SingleNotification extends Component {
+    _isMounted = false;
+
     constructor() {
         super();
         this.singleNotificationRef = React.createRef();
@@ -44,7 +46,9 @@ class SingleNotification extends Component {
         let date = new Date(this.props.date);
         // let formatted_date = date.getFullYear() + "-" + this.appendLeadingZeroes((date.getMonth() + 1)) + "-" + this.appendLeadingZeroes(date.getDate()) + " " + this.appendLeadingZeroes(date.getHours()) + ":" + this.appendLeadingZeroes(date.getMinutes()) + ":" + this.appendLeadingZeroes(date.getSeconds());
         // this.setState({date: formatted_date});
-        this.setState({date: date.toLocaleString()});
+        if (this._isMounted) {
+            this.setState({date: date.toLocaleString()});
+        }
     }
 
     notificationUnseenToSeen = () => {
@@ -61,7 +65,9 @@ class SingleNotification extends Component {
         dataToSend.id = this.props.action_taker_user_id;
 
         axios.post("/api/restricted-users/get-user-profile-picture-for-notifications", dataToSend).then(response => {
-            this.setState({profilePicture: response.data.avatarImage});
+            if (this._isMounted) {
+                this.setState({profilePicture: response.data.avatarImage});
+            }
         }).catch( err => {
             console.log(err.message);
         });
@@ -74,15 +80,19 @@ class SingleNotification extends Component {
         dataToSend.post_id = this.props.target;
 
         axios.post("/api/restricted-users/get-post-picture-for-notifications", dataToSend).then(response => {
-            this.setState({postPicture: response.data.postPicture});
-            this.notificationImageRef.current.style.display = 'block';
-            console.log(response.data.postPicture);
+            if (this._isMounted) {
+                this.setState({postPicture: response.data.postPicture});
+                this.notificationImageRef.current.style.display = 'block';
+                // console.log(response.data.postPicture);
+            }
         }).catch( err => {
             console.log(err.message);
         });
     }
 
     componentDidMount() {
+        this._isMounted = true;
+
         this.transform_date();
         this.fetchUserProfilePicture();
         if (!this.props.seen)
@@ -92,33 +102,37 @@ class SingleNotification extends Component {
             this.fetchPostPicture();
     }
 
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
     render() {
-    return (
-        <React.Fragment>
-            <div 
-                className={`single-notification ${this.props.seen ? "" : "unseen-notification"}`}
-                ref={this.singleNotificationRef}>
+        return (
+                <React.Fragment>
+                    <div 
+                        className={`single-notification ${this.props.seen ? "" : "unseen-notification"}`}
+                        ref={this.singleNotificationRef}>
 
-                <div className="single-notification-image-wrapper">
-                    <img src={this.state.profilePicture}></img>
-                </div>
-                <div className="single-notification-text">
-                    <p dangerouslySetInnerHTML={this.createTextMarkup()}>
-                    </p>
+                        <div className="single-notification-image-wrapper">
+                            <img src={this.state.profilePicture}></img>
+                        </div>
+                        <div className="single-notification-text">
+                            <p dangerouslySetInnerHTML={this.createTextMarkup()}>
+                            </p>
 
-                    <div className="single-notification-date-wrapper">
-                        {this.state.date}
+                            <div className="single-notification-date-wrapper">
+                                {this.state.date}
+                            </div>
+                        </div>
+                        <div className="single-notification-right-image-wrapper" ref={this.notificationImageRef}>
+                            <img className="single-notification-image" 
+                            src={this.state.postPicture} />
+                        </div>
+                        
                     </div>
-                </div>
-                <div className="single-notification-right-image-wrapper" ref={this.notificationImageRef}>
-                    <img className="single-notification-image" 
-                    src={this.state.postPicture} />
-                </div>
-                
-            </div>
-            <hr className="single-notification-hr"></hr>
-        </React.Fragment>
-        );  
+                    <hr className="single-notification-hr"></hr>
+                </React.Fragment>
+            );  
     }
 };
 

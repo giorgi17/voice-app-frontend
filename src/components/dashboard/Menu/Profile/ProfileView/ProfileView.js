@@ -6,6 +6,7 @@ import axios from 'axios';
 import UserActivityInfo from './UserActivityInfo/UserActivityInfo';
 
 class ProfileView extends Component {
+    _isMounted = false;
 
     constructor(props) {
         super(props);
@@ -18,12 +19,21 @@ class ProfileView extends Component {
     }
 
     componentDidMount() {
+        this._isMounted = true;
+
         // Fetch user data using id to be displayed in inputs
         axios.post('/api/restricted-users/get-user-data',
             {id: this.props.auth.user.id}).then(res => {
-            this.setState({userData: { ...this.state.userData, ...res.data}});
+                if (this._isMounted) {
+                    this.setState({userData: { ...this.state.userData, ...res.data}});
+                }
         });
     }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
     render() {
         return (
             <div className="profile-view-container">

@@ -3,6 +3,8 @@ import './Comment.css';
 import axios from 'axios';
 
 class Comment extends Component {
+    _isMounted = false;
+
     constructor() {
         super();
         this.state = {
@@ -16,7 +18,9 @@ class Comment extends Component {
         let date = new Date(this.props.comment_date);
         // let formatted_date = date.getFullYear() + "-" + this.appendLeadingZeroes((date.getMonth() + 1)) + "-" + this.appendLeadingZeroes(date.getDate()) + " " + this.appendLeadingZeroes(date.getHours()) + ":" + this.appendLeadingZeroes(date.getMinutes()) + ":" + this.appendLeadingZeroes(date.getSeconds());
         // this.setState({date: formatted_date});
-        this.setState({date: date.toLocaleString()});
+        if (this._isMounted) {
+            this.setState({date: date.toLocaleString()});
+        }
     }
 
     fetchUserProfilePicture = () => {
@@ -26,15 +30,22 @@ class Comment extends Component {
         dataToSend.id = this.props.comment_author_user_id;
 
         axios.post("/api/restricted-users/get-user-profile-picture-for-notifications", dataToSend).then(response => {
-            this.setState({commentAuthorProfilePicture: response.data.avatarImage});
+            if (this._isMounted) {
+                this.setState({commentAuthorProfilePicture: response.data.avatarImage});
+            }
         }).catch( err => {
             console.log(err.message);
         });
     }
 
     componentDidMount() {
+        this._isMounted = true;
         this.transform_date();
         this.fetchUserProfilePicture();
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     render() {

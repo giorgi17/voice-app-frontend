@@ -10,6 +10,8 @@ import { connect } from "react-redux";
 const MAX_IMAGE_SIZE = 1024 * 1024 * 16;
 
 class ProfileImageCrop extends Component {
+    _isMounted = false;
+
     constructor(props) {
         super(props);
         this.moreThan16mbRef = React.createRef();
@@ -90,14 +92,18 @@ class ProfileImageCrop extends Component {
         .then(res => {
             // console.log("RESPONSE - " + res);
             // console.log(res.data);
-            this.imageUploadSuccessRef.current.style.display = 'flex';
-            this.imageUploadErrorRef.current.style.display = 'none';
+            if (this._isMounted) {
+              this.imageUploadSuccessRef.current.style.display = 'flex';
+              this.imageUploadErrorRef.current.style.display = 'none';
+            }
         }) 
         .catch(err => {
             // console.log("ERROR RESPONSE - " + err);
             // console.log(err);
-            this.imageUploadSuccessRef.current.style.display = 'none';
-            this.imageUploadErrorRef.current.style.display = 'flex';
+            if (this._isMounted) {
+              this.imageUploadSuccessRef.current.style.display = 'none';
+              this.imageUploadErrorRef.current.style.display = 'flex';
+            }
         });
     }
 
@@ -231,6 +237,14 @@ class ProfileImageCrop extends Component {
 
     onCropChange = crop => {
         this.setState({ crop });
+    }
+
+    componentDidMount() {
+      this._isMounted = true;
+    }
+
+    componentWillUnmount() {
+      this._isMounted = false;
     }
 
     render() {

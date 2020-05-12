@@ -6,6 +6,8 @@ import SingleNotification from './SingleNotification/SingleNotification';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 class NotificationsView extends Component {
+    _isMounted = false;
+
     constructor() {
         super();
         this.state = {
@@ -34,15 +36,19 @@ class NotificationsView extends Component {
                 })
 
                 if (response.data.notifications.length > 0) {
-                    this.setState({
-                        // notifications: this.state.notifications.concat(response.data.notifications),
-                        notifications: newUniqueNotificationsArray,
-                        page: this.state.page + 10
-                    }, () => { this.notificationSeen(); });
+                    if (this._isMounted) {
+                        this.setState({
+                            // notifications: this.state.notifications.concat(response.data.notifications),
+                            notifications: newUniqueNotificationsArray,
+                            page: this.state.page + 10
+                        }, () => { this.notificationSeen(); });
+                    }
                 } else {
-                    this.setState({
-                        hasMore: false
-                    });
+                    if (this._isMounted) {
+                        this.setState({
+                            hasMore: false
+                        });
+                    }
                 }
         }).catch(e => {
             console.log(e.message);
@@ -71,7 +77,12 @@ class NotificationsView extends Component {
     }
 
     componentDidMount() {
+        this._isMounted = true;
         this.getUserNotifications();
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     render() {

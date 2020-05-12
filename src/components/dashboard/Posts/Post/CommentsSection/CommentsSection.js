@@ -6,6 +6,8 @@ import axios from 'axios';
 import Comments from './Comments/Comments';
 
 class CommentsSection extends Component {
+    _isMounted = false;
+
     constructor() {
         super();
         this.commentPostButtonRef = React.createRef();
@@ -42,7 +44,9 @@ class CommentsSection extends Component {
         dataToSend.user_id = this.props.auth.user.id;
 
         axios.post("/api/restricted-users/get-logged-in-user-profile-picture-for-new-comment", dataToSend).then(response => {
-            this.setState({loggedInUserProfilePicture: response.data.profilePicture});
+            if (this._isMounted) {
+                this.setState({loggedInUserProfilePicture: response.data.profilePicture});
+            }
         }).catch( err => {
             console.log(err);
         });
@@ -64,14 +68,21 @@ class CommentsSection extends Component {
         dataToSend.post_author_id = this.props.post_author_id;
 
         axios.post("/api/restricted-users/add-new-comment", dataToSend).then(response => {
-            this.setState({commentSent: true, commentInput: ''});
+            if (this._isMounted) {
+                this.setState({commentSent: true, commentInput: ''});
+            }
         }).catch( err => {
             console.log(err);
         });
     }
 
     componentDidMount() {
+        this._isMounted = true;
         this.FetchLoggedInUserProfilePicture();
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     render() {
