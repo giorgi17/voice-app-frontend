@@ -80,27 +80,28 @@ class CommentsSection extends Component {
 
                 <Comments post_id={this.props.post_id} commentSent={this.state.commentSent}
                           commentAddedResetHandler={this.commentAddedResetHandler} ></Comments>
+                <div className="post-comments-add-new-comment-wrapper">
+                    <div className="post-comments-profile-image-wrapper">
+                        <img className="post-comments-profile-image"
+                            src={this.state.loggedInUserProfilePicture}></img>
+                    </div>
 
-                <div className="post-comments-profile-image-wrapper">
-                    <img className="post-comments-profile-image"
-                         src={this.state.loggedInUserProfilePicture}></img>
-                </div>
+                    <div className="post-comments-comment-input">
+                        <TextField
+                            id="outlined-textarea"
+                            label="Add a comment"
+                            placeholder="Write something..."
+                            multiline
+                            variant="outlined"
+                            onChange={this.controlCommentInput}
+                            value={this.state.commentInput}
+                            />
 
-                <div className="post-comments-comment-input">
-                    <TextField
-                        id="outlined-textarea"
-                        label="Add a comment"
-                        placeholder="Write something..."
-                        multiline
-                        variant="outlined"
-                        onChange={this.controlCommentInput}
-                        value={this.state.commentInput}
-                        />
-
-                        <span className="material-icons post-comments-post-button" 
-                            ref={this.commentPostButtonRef} onClick={this.addNewComment}>
-                            send
-                        </span>
+                            <span className="material-icons post-comments-post-button" 
+                                ref={this.commentPostButtonRef} onClick={this.addNewComment}>
+                                send
+                            </span>
+                    </div>
                 </div>
             </div>
         );

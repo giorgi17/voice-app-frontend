@@ -9,6 +9,12 @@
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
+@media only screen and (max-width: 1100px) {
+    .profile-edit-container {
+        max-width: 350px;
+    }
+}
+
 .profile-edit-image-wrapper {
     display: inline-block;
     border-radius: 50%;
@@ -85,7 +91,7 @@
 
 .profile-edit-activity-info-wrapper {
     /* background-color: red; */
-    margin-top: 150px;
+    margin-top: 100px;
     width: 100%;
     display: flex;
     flex-wrap: wrap;

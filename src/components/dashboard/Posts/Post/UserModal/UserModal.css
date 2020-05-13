@@ -1,42 +1,36 @@
-/* The Modal (background) */
-.user-post-modal {
-    display: block; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 6; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
-  
-  /* Modal Content/Box */
-  .user-post-modal-content {
-    background-color: #fefefe;
-    margin: 2vw;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 90vw; /* Could be more or less, depending on screen size */
-  }
-  
-  /* The Close Button */
-  .user-post-modal-close {
-    color: #aaa;
+.user-profile-page {
+    background: #fff;
+    border-radius: 2px;
+    display: inline-block;
+    min-height: 80%;
+    margin: 2%;
+    position: relative;
+    width: 60%;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     float: right;
-    font-size: 28px;
-    font-weight: bold;
   }
   
-  .user-post-modal-close:hover,
-  .user-post-modal-close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+  @media only screen and (max-width: 1050px) {
+    .user-profile-page {
+      width: 510px;
+    }
   }
 
-  .user-post-modal-profile-image-wrapper {
+  @media only screen and (max-width: 600px) {
+    .user-profile-page {
+      width: 100%;
+    }
+  }
+
+  .user-profile-page-content {
+    background-color: #fefefe;
+    padding: 20px;
+    /* border: 1px solid #888; */
+    min-width: 90%; /* Could be more or less, depending on screen size */
+  }
+  
+
+  .user-profile-page-profile-image-wrapper {
     display: inline-block;
     border-radius: 50%;
     border: 2px solid #fff9f9;
@@ -45,7 +39,7 @@
     margin: 20px;
 }
 
-.user-post-modal-profile-image-wrapper img {
+.user-profile-page-profile-image-wrapper img {
     border-radius: 50%;
     object-fit: cover;
     width: 100%;
@@ -53,24 +47,24 @@
     cursor: pointer;
 }
 
-.user-post-modal-profile-info-wrapper {
+.user-profile-page-info-wrapper {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
 }
 
-.user-post-modal-profile-info-wrapper div {
+.user-profile-page-info-wrapper div {
   margin-right: 20px;
 }
 
-.user-post-modal-profile-username {
+.user-profile-page-profile-username {
   /* padding-top: 60px; */
   /* display: inline-block; */
   /* height: 20px; */
 }
 
-.user-post-modal-follow-button {
+.user-profile-page-follow-button {
   display: none;
   margin-bottom: 20px;
 }

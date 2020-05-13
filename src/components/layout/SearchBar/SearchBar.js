@@ -10,27 +10,19 @@ class SearchBar extends Component {
         this.searchResultsDisplayRef = React.createRef();
         this.state = {
             searchInput: '',
-            searchResult: [],
-            hoveringOnSearchResults: false
+            searchResult: []
         }
-    }
-
-    // Checking to see if user is hovering over results container to not close everything after
-    // Search input loses focus
-    hoveringOnSearchResultsIsNotHovering = async () => {
-        this.setState({hoveringOnSearchResults: false});
-    }
-
-    // Checking to see if user is hovering over results container to not close everything after
-    // Search input loses focus
-    hoveringOnSearchResultsIsHovering = async () => {
-        this.setState({hoveringOnSearchResults: true});
     }
 
     // When black background is clicked, close everything
     blackOverlayClicked = () => {
         this.blackOverlayRef.current.style.display = 'none';
-        this.searchResultsDisplayRef.current.style.display = 'none';
+
+        // Delay search results dissapearance so it won't miss a click to transfer 
+        // to profile page
+        setTimeout(() => {
+            this.searchResultsDisplayRef.current.style.display = 'none';
+        }, 200);
     }
 
     // On every search input, send request to fetch results
@@ -55,12 +47,10 @@ class SearchBar extends Component {
     }
       
     off = () => {
-        if (this.state.hoveringOnSearchResults){
-            return;
-        } else {
+        setTimeout(() => {
             this.blackOverlayRef.current.style.display = "none";
             this.searchResultsDisplayRef.current.style.display = 'none';
-        }
+        }, 100);
     }
 
     render() {
@@ -74,12 +64,10 @@ class SearchBar extends Component {
                         onChange={this.onSearchInputChange} /><input id="search_submit" value="Rechercher" type="submit" />
                 </div>
 
-                <div id="user-search-results" ref={this.searchResultsDisplayRef}
-                    onMouseEnter={() => this.hoveringOnSearchResultsIsHovering()}
-                    onMouseLeave={() => this.hoveringOnSearchResultsIsNotHovering()}>
+                <div id="user-search-results" ref={this.searchResultsDisplayRef}>
                     {this.state.searchResult.map(data => (
                         <SearchedUser user_id={data._id} name={data.name} avatarImage={data.avatarImage}
-                            key={data._id} user_modal={this.state.modal}></SearchedUser>
+                            key={data._id} closeSearchPanel={this.blackOverlayClicked}></SearchedUser>
                     ))}
                 </div>
 

@@ -17,9 +17,27 @@
     justify-content: space-around;
 }
 
+.infinite-scroll-component p {
+    width: 100%;
+}
+
+@media only screen and (max-width: 1050px) {
+    .posts-container {
+       margin-right: 0px;
+       width: 510px;
+    }
+}
+
+@media only screen and (max-width: 1150px) {
+    .posts-container {
+       margin-right: 0px;
+    }
+}
+
 @media only screen and (max-width: 600px) {
     .posts-container {
-        width: auto;
+        width: 100%;
+        margin: 0;
     }
     /* .posts-container {
         background: #fff;

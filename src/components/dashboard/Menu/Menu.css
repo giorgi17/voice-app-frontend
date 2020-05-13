@@ -67,4 +67,10 @@
     .menu-container {
         width: auto;
     }
-  }
+}
+
+@media only screen and (max-width: 1150px) {
+    .menu-container {
+       margin-left: 0px;
+    }
+}

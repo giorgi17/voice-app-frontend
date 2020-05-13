@@ -10,7 +10,6 @@ import Button from '@material-ui/core/Button';
 class UserModal extends Component {
     constructor() {
         super();
-        this.userPostModalRef = React.createRef();
         this.userPostModalCloseButtonRef = React.createRef();
         this.followButtonRef = React.createRef();
         this.state = {
@@ -29,18 +28,14 @@ class UserModal extends Component {
 
     // When the user clicks on <span> (x), close the modal
     modalClose = () => {
-        this.props.closeModal();
+       
     }
 
     // Perform following or unfollowing on certain user
     followOrUnfollow = () => {
         let dataToSend = {};
 
-        // If user profile is opened through search send 'user_id' else send 'id' for post id
-        if (this.props.post_id)
-            dataToSend.id = this.props.post_id;
-        else if (this.props.user_id)
-            dataToSend.user_id = this.props.user_id;
+        dataToSend.user_id = this.props.user_id;
 
         // Send logged in user id and username to follow or unfollow
         dataToSend.current_user_id = this.props.auth.user.id;
@@ -63,11 +58,7 @@ class UserModal extends Component {
 
         let dataToSend = {};
 
-        // If user profile is opened through search send 'user_id' else send 'id' for post id
-        if (this.props.post_id)
-            dataToSend.id = this.props.post_id;
-        else if (this.props.user_id)
-            dataToSend.user_id = this.props.user_id;
+        dataToSend.user_id = this.props.user_id;
 
         // Send user id to determine wether he is following this user or not
         dataToSend.current_user_id = this.props.auth.user.id;
@@ -83,11 +74,7 @@ class UserModal extends Component {
     // Fetch information of certain user
     getUserInfo = () => {
         let dataToSend = {};
-        // If user profile is opened through search send 'user_id' else send 'id' for post id
-        if (this.props.post_id)
-            dataToSend.id = this.props.post_id;
-        else if (this.props.user_id)
-            dataToSend.user_id = this.props.user_id;
+        dataToSend.user_id = this.props.user_id;
 
         axios.post("/api/restricted-users/get-post-author-user-data", dataToSend).then(response => {
             this.setState({postAuthorData: response.data});
@@ -100,12 +87,8 @@ class UserModal extends Component {
     // Fetch posts of post author
     getUserPosts = () => {
         let dataToSend = {};
-        // If user profile is opened through search send 'user_id' else send 'id' for post id
-        if (this.props.post_id)
-            dataToSend.id = this.props.post_id;
-        else if (this.props.user_id)
-            dataToSend.user_id = this.props.user_id;
-
+        dataToSend.user_id = this.props.user_id;
+        dataToSend.logged_in_user_id = this.props.auth.user.id;
         dataToSend.page = this.state.page;
 
         axios.post("/api/restricted-users/get-post-author-user-posts", dataToSend).then(response => {
@@ -133,40 +116,53 @@ class UserModal extends Component {
         });
     }
 
+    componentDidUpdate(prevProps) {
+        // If query parameter user_id is changed then load another user info
+        //  after cleaning up old one
+        if (prevProps.user_id !== this.props.user_id) {
+            this.setState({ 
+                postAuthorData: {
+                    avatarImage: null,
+                    email: null,
+                    name: null,
+                    user_id: null
+                },
+                posts: [],
+                page: 0,
+                hasMore: true,
+                following: true
+            }, () => {
+                this.getUserInfo();
+                this.getUserPosts();  
+            })
+        }
+    }
+
     componentDidMount() {
         this.getUserInfo();
         this.getUserPosts();
     }
 
     render() {
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = (event) => {
-            if (event.target.className === 'user-post-modal') {
-                this.props.closeModal();
-            }
-        }
         return (
-            <div id="user-post-modal" className="user-post-modal" ref={this.userPostModalRef}>
-                <div className="user-post-modal-content">
-                    <span className="user-post-modal-close" ref={this.userPostModalCloseButtonRef}
-                            onClick={this.modalClose}>&times;</span>
-                    {/* <p>Some text in the Modal..</p> */}
-                    <div className="user-post-modal-profile-info-wrapper">
-                        <div className="user-post-modal-profile-image-wrapper">
+            <div className="user-profile-page">
+                <div className="user-profile-page-content">
+                    <div className="user-profile-page-info-wrapper">
+                        <div className="user-profile-page-profile-image-wrapper">
                             <img src={this.state.postAuthorData.avatarImage} />
                         </div>
 
-                        <div className="user-post-modal-profile-username">
+                        <div className="user-profile-page-profile-username">
                         <strong>Username:</strong> {this.state.postAuthorData.name}
                         </div>
 
-                        <div className="user-post-modal-profile-email">
+                        <div className="user-profile-page-profile-email">
                         <strong>Email:</strong> {this.state.postAuthorData.email}
                         </div>
                     </div>
 
                     <UserActivityInfo></UserActivityInfo>
-                    <div className="user-post-modal-follow-button" ref={this.followButtonRef}>
+                    <div className="user-profile-page-follow-button" ref={this.followButtonRef}>
                         <Button variant="contained" 
                         color={`${this.state.following ? "secondary" : "primary"}`}
                         onClick={this.followOrUnfollow} >
@@ -176,7 +172,7 @@ class UserModal extends Component {
 
                     <hr></hr>
 
-                    <div className="user-post-modal-posts-container">
+                    <div className="user-profile-page-posts-container">
                         <InfiniteScroll
                             height="100%"
                             dataLength={this.state.posts.length}
@@ -201,6 +197,8 @@ class UserModal extends Component {
                                         audio_duration={data.audio_duration}
                                         profile_picture={data.profile_picture}
                                         user_name={data.user_name}
+                                        liked={data.liked}
+                                        disliked={data.disliked}
                                         key={data._id}></Post>
                             ))}
 

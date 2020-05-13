@@ -1,30 +1,22 @@
 import React, {Component} from 'react';
 import './SearchedUser.css';
 import UserModal from '../../../dashboard/Posts/Post/UserModal/UserModal';
+import { withRouter } from 'react-router-dom';
 
 class SearchedUser extends Component {
     constructor() {
         super();
     }
-
-    state = {
-        modal: null
-    }
     
-    openModal = () => {
-        const modal = (<UserModal closeModal={this.closeModal}
-            user_id={this.props.user_id}></UserModal>);
-        this.setState({modal: modal});
-    }
-
-    closeModal = () => {
-        this.setState({modal: false});
+    openSearchedUserProfile = () => {
+        const queryParams = 'userId=' + this.props.user_id;
+        this.props.closeSearchPanel();
+        this.props.history.push(`/dashboard?${queryParams}`);
     }
 
     render() {
         return ( <React.Fragment>
-                    {this.state.modal}
-                    <div className="user-search-result-profile-info-wrapper" onClick={this.openModal}>
+                    <div className="user-search-result-profile-info-wrapper" onClick={this.openSearchedUserProfile}>
                         <div className="user-search-result-profile-image-wrapper">
                             <img src={this.props.avatarImage} />
                         </div>
@@ -39,4 +31,4 @@ class SearchedUser extends Component {
     }
 } 
 
-export default SearchedUser;
+export default withRouter(SearchedUser);

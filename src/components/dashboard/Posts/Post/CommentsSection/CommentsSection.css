@@ -1,13 +1,5 @@
 .post-comments-wrapper {
     min-height: 40px;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.post-comments-profile-image-wrapper, .post-comments-comment-input, .post-comments-post-button {
-    /* flex: 1; */
-    /* flex: 2 1 auto; */
 }
 
 .post-comments-profile-image-wrapper {
@@ -16,6 +8,7 @@
     height: 32px;
     border-radius: 50%;
     margin-left: 5px;
+    margin-top: 15px;
 }
 
 .post-comments-profile-image {
@@ -28,17 +21,24 @@
     display: inline-block;
     background-color: white;
     min-height: 34px;
-    width: 260px;
+    /* width: 260px; */
+    width: 80%;
     padding: 5px;
     position: relative;
 }
 
 .post-comments-comment-input .MuiTextField-root {
-    width: 210px;
+    /* width: 210px; */
+    width: 100%;
 }
 
 .post-comments-post-button {
     margin-left: 5px;
     position: absolute;
     bottom: 5px;
+}
+
+.post-comments-add-new-comment-wrapper {
+    display: flex;
+    justify-content: flex-start;
 }

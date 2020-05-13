@@ -47,7 +47,7 @@ class Comment extends Component {
                 </div>
                 <p className="single-comment-comment-text">
                     <b>{this.props.comment_author_user_name}</b> {this.props.comment_content}
-                    <br></br>
+                    <br></br><br></br>
                     {this.state.date}
                 </p>
             </div>

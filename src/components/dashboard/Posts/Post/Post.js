@@ -5,6 +5,7 @@ import UserModal from './UserModal/UserModal';
 import axios from 'axios';
 import { connect } from "react-redux";
 import CommentsSection from './CommentsSection/CommentsSection';
+import { withRouter } from 'react-router-dom';
 
 class Post extends Component {
     constructor() {
@@ -12,7 +13,6 @@ class Post extends Component {
         this.playerRef = React.createRef();
         this.state = {
             player: null,
-            modal: null,
             liked: false,
             disliked: false
         }
@@ -61,15 +61,10 @@ class Post extends Component {
                 <Player audioFile={this.props.audio} />
             </div>)});
     }
-    
-    openModal = () => {
-        const modal = (<UserModal closeModal={this.closeModal}
-            post_id={this.props.post_id}></UserModal>);
-        this.setState({modal: modal});
-    }
 
-    closeModal = () => {
-        this.setState({modal: null});
+    redirectToUserProfile = () => {
+        const queryParams = 'userId=' + this.props.post_author_id;
+        this.props.history.push(`/dashboard?${queryParams}`);
     }
 
     componentDidMount() {
@@ -79,7 +74,6 @@ class Post extends Component {
     render() {
         return (
             <div className="single-post">
-                {this.state.modal}
                 <div className="user-post-image-wrapper">
                     <div className="user-post-play-and-time" ref={this.playerRef}>
                         <span className="material-icons user-post-play-button" onClick={this.playAudio}>
@@ -90,11 +84,12 @@ class Post extends Component {
                     <img src={this.props.picture}></img>
                 </div>
     
-                <div className="user-post-profile-image-wrapper" onClick={this.openModal}>
+                <div className="user-post-profile-image-wrapper"
+                     onClick={this.redirectToUserProfile}>
                     <img src={this.props.profile_picture} />
                 </div>
     
-                <strong className="user-post-username" onClick={this.openModal}>{this.props.user_name}</strong>
+                <strong className="user-post-username" onClick={this.redirectToUserProfile}>{this.props.user_name}</strong>
     
                 <div className="user-post-viewer-options">
                     <span className={`material-icons like ${this.state.liked ? "liked" : ""}`}
@@ -142,4 +137,4 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps
-  )(Post);
+  )(withRouter(Post));
