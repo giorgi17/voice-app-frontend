@@ -9,7 +9,7 @@ import Header from '../Header/Header';
 import SearchBar from '../layout/SearchBar/SearchBar';
 import Posts from './Posts/Posts';
 import ContentContainer from './ContentContainer/ContentContainer';
-import UserProfile from './Posts/Post/UserModal/UserModal';
+import UserProfile from './Posts/Post/UserModal/UserProfile';
 
 class Dashboard extends Component {
   constructor() {

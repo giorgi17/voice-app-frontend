@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './Post.css';
 import Player from '../../Menu/RecordVoice/Player/Player';
-import UserModal from './UserModal/UserModal';
 import axios from 'axios';
 import { connect } from "react-redux";
 import CommentsSection from './CommentsSection/CommentsSection';

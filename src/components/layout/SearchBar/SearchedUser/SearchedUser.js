@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './SearchedUser.css';
-import UserModal from '../../../dashboard/Posts/Post/UserModal/UserModal';
 import { withRouter } from 'react-router-dom';
 
 class SearchedUser extends Component {

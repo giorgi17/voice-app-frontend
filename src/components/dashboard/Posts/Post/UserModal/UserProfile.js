@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './UserModal.css';
+import './UserProfile.css';
 import { connect } from "react-redux";
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -7,7 +7,7 @@ import Post from '../Post';
 import UserActivityInfo from '../../../Menu/Profile/ProfileView/UserActivityInfo/UserActivityInfo';
 import Button from '@material-ui/core/Button';
 
-class UserModal extends Component {
+class UserProfile extends Component {
     constructor() {
         super();
         this.userPostModalCloseButtonRef = React.createRef();
@@ -218,4 +218,4 @@ const mapStateToProps = state => ({
 export default connect(
     mapStateToProps
     // { logoutUser }
-  )(UserModal);
+  )(UserProfile);
