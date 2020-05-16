@@ -12,6 +12,8 @@ class Post extends Component {
     constructor() {
         super();
         this.playerRef = React.createRef();
+        this.profileImageRef = React.createRef();
+        this.profileUsernameRef = React.createRef();
         this.postEditButtonRef = React.createRef();
         this.postEditRef = React.createRef();
         this.postEditNotificationsSwitchRef = React.createRef();
@@ -47,15 +49,23 @@ class Post extends Component {
                     this.setState({notifyOptionText: 'Turn off notifications for this post',
                     notifyMessageText: 'Notifications turned on for this post'});
                     this.postEditNotificationsMessageRef.current.style.display = 'block';
+                    this.profileImageRef.current.style.top = '200px';
+                    this.profileUsernameRef.current.style.top = '260px';
                     setTimeout(() => {
                          this.postEditNotificationsMessageRef.current.style.display = 'none';
+                         this.profileImageRef.current.style.top = '140px';
+                         this.profileUsernameRef.current.style.top = '200px';
                          }, 3000);
                 } else {
                     this.setState({notifyOptionText: 'Turn on notifications for this post',
                     notifyMessageText: 'Notifications turned off for this post'});
                     this.postEditNotificationsMessageRef.current.style.display = 'block';
+                    this.profileImageRef.current.style.top = '200px';
+                    this.profileUsernameRef.current.style.top = '260px';
                     setTimeout(() => { 
-                        this.postEditNotificationsMessageRef.current.style.display = 'none'; 
+                        this.postEditNotificationsMessageRef.current.style.display = 'none';
+                        this.profileImageRef.current.style.top = '140px';
+                        this.profileUsernameRef.current.style.top = '200px'; 
                     }, 3000);
                 }
             }
@@ -206,11 +216,12 @@ class Post extends Component {
                 </div>
 
                 <div className="user-post-profile-image-wrapper"
-                     onClick={this.redirectToUserProfile}>
+                     onClick={this.redirectToUserProfile} ref={this.profileImageRef}>
                     <img src={this.props.profile_picture} />
                 </div>
     
-                <strong className="user-post-username" onClick={this.redirectToUserProfile}>{this.props.user_name}</strong>
+                <strong className="user-post-username" onClick={this.redirectToUserProfile}
+                    ref={this.profileUsernameRef}>{this.props.user_name}</strong>
     
                 <div className="user-post-viewer-options">
                     <span className={`material-icons like ${this.state.liked ? "liked" : ""}`}
