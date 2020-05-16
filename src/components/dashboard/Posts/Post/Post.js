@@ -89,7 +89,7 @@ class Post extends Component {
     // Perform disliking the post
     dislikePost = () => {
         let dataToSend = {};
-
+        
         // Send post id and user id to dislike
         dataToSend.post_id = this.props.post_id;
         dataToSend.user_id = this.props.auth.user.id;

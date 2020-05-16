@@ -10,6 +10,12 @@
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
+@media only screen and (max-width: 320px) {
+    .single-post {
+        width: 220px !important;
+    }
+}
+
 @media only screen and (max-width: 600px) {
     .single-post {
         width: 300px;
@@ -162,6 +168,12 @@
     width: 100%;
 }
 
+@media only screen and (max-width: 320px) {
+    #user-post-player-container .rhap_container {
+        min-width: auto;
+    }
+}
+
 .user-post-created-at {
     margin: 10px;
     margin-top: 30px;
@@ -216,4 +228,23 @@
     text-align: center;
     padding: 20px;
     display: none;
+}
+
+.liked {
+    color: rgb(79, 148, 243);
+}
+
+
+.disliked {
+    color: rgb(79, 148, 243);
+}
+
+@media only screen and (min-width: 1000px) {
+    .like:hover {
+        color: rgb(79, 148, 243);
+    }
+
+    .dislike:hover {
+        color: rgb(79, 148, 243);
+    }
 }

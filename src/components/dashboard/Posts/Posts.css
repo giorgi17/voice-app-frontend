@@ -52,18 +52,10 @@
     } */
 }
 
-.like:hover {
-    color: rgb(79, 148, 243);
+@media only screen and (max-width: 320px) {
+    .infinite-scroll-component__outerdiv {
+        width: auto;
+        margin: auto;
+    }
 }
 
-.liked {
-    color: rgb(79, 148, 243);
-}
-
-.dislike:hover {
-    color: rgb(79, 148, 243);
-}
-
-.disliked {
-    color: rgb(79, 148, 243);
-}
