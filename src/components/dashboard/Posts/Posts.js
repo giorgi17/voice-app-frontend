@@ -126,6 +126,8 @@ class Posts extends Component {
                                     user_name={data.user_name}
                                     liked={data.liked}
                                     disliked={data.disliked}
+                                    created_at={data.created_at}
+                                    notify={data.notify}
                                     key={data._id}></Post>
                         ))}
 

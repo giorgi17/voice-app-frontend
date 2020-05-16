@@ -18,7 +18,7 @@ const About = props => {
             <Header authenticated={props.auth.isAuthenticated} logoutMethod={onLogoutClick} aboutActive={true} />
             <div className="about-page-wrapper">
                 <img src={AboutImage} />
-                <h1>ABOUT VOX</h1>
+                <h1>ABOUT GUTH</h1>
 
                 <AboutInfo></AboutInfo>
             </div>

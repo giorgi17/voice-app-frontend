@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import logo from '../../logo.svg';
 import './Header.css';
 import {Link} from 'react-router-dom';
-import Logo from '../../img/logos/white_logo_transparent_background.png';
+// import Logo from '../../img/logos/white_logo_transparent_background.png';
+import Logo from '../../img/logos/Guth_4.png';
 
 class header extends Component {
 

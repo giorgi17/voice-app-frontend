@@ -12,11 +12,78 @@ class Post extends Component {
     constructor() {
         super();
         this.playerRef = React.createRef();
+        this.postEditButtonRef = React.createRef();
+        this.postEditRef = React.createRef();
+        this.postEditNotificationsSwitchRef = React.createRef();
+        this.postEditDeleteRef = React.createRef();
+        this.postEditOptionRef = React.createRef();
+        this.postEditNotificationsMessageRef = React.createRef();
         this.state = {
             player: null,
             liked: false,
-            disliked: false
+            disliked: false,
+            notify: false,
+            notifyOptionText: '',
+            notifyMessageText: ''
         }
+    }
+
+    notificationsSwitchHandler = () => {
+        let dataToSend = {};
+
+        // Send post id and user id to dislike
+        dataToSend.id = this.props.auth.user.id;
+        dataToSend.target = this.props.post_id;
+        dataToSend.option = !this.state.notify;
+
+        axios.post("/api/restricted-users/change-notification-state-for-post", dataToSend).then(response => {
+            if (this._isMounted) {
+                // Close post edit menu
+                this.postEditRef.current.style.display = 'none';
+                document.removeEventListener("click", this.documentClickEventHandler);
+
+                this.setState({notify: response.data.notify});
+                if (response.data.notify) {
+                    this.setState({notifyOptionText: 'Turn off notifications for this post',
+                    notifyMessageText: 'Notifications turned on for this post'});
+                    this.postEditNotificationsMessageRef.current.style.display = 'block';
+                    setTimeout(() => {
+                         this.postEditNotificationsMessageRef.current.style.display = 'none';
+                         }, 3000);
+                } else {
+                    this.setState({notifyOptionText: 'Turn on notifications for this post',
+                    notifyMessageText: 'Notifications turned off for this post'});
+                    this.postEditNotificationsMessageRef.current.style.display = 'block';
+                    setTimeout(() => { 
+                        this.postEditNotificationsMessageRef.current.style.display = 'none'; 
+                    }, 3000);
+                }
+            }
+        }).catch( err => {
+            console.log(err);
+        });
+    }
+
+    documentClickEventHandler = (event) => {
+        if (event.target !== this.postEditRef.current 
+            && !this.postEditRef.current.contains(event.target)) {
+            this.postEditRef.current.style.display = 'none';
+            document.removeEventListener("click", this.documentClickEventHandler);
+        }
+    }
+
+    openProfileEdit = () => {
+        this.postEditRef.current.style.display = 'block';
+        // Detect all clicks on the document
+        document.addEventListener("click", this.documentClickEventHandler);
+    }
+
+    transform_date = (dateToTransform) => {
+        // transform date 
+        let date = new Date(dateToTransform);
+        // let formatted_date = date.getFullYear() + "-" + this.appendLeadingZeroes((date.getMonth() + 1)) + "-" + this.appendLeadingZeroes(date.getDate()) + " " + this.appendLeadingZeroes(date.getHours()) + ":" + this.appendLeadingZeroes(date.getMinutes()) + ":" + this.appendLeadingZeroes(date.getSeconds());
+        // this.setState({date: formatted_date});
+        return date.toLocaleString();
     }
     
     // Perform disliking the post
@@ -76,16 +143,33 @@ class Post extends Component {
 
     componentDidMount() {
         this._isMounted = true;
-        this.setState({liked: this.props.liked, disliked: this.props.disliked});
+
+        if (this.props.post_author_id === this.props.auth.user.id) {
+            this.postEditDeleteRef.current.style.display = 'block';
+            this.postEditOptionRef.current.style.display = 'block';
+        }
+
+        this.setState({liked: this.props.liked, disliked: this.props.disliked,
+                notify: this.props.notify}, () => {
+                    if (this.state.notify)
+                        this.setState({notifyOptionText: 'Turn off notifications for this post'});
+                    else
+                        this.setState({notifyOptionText: 'Turn on notifications for this post'});
+                });
     }
 
     componentWillUnmount() {
         this._isMounted = false;
+        document.removeEventListener("click", this.documentClickEventHandler);
     }
 
     render() {
         return (
             <div className="single-post">
+                <div className="notifications-message" ref={this.postEditNotificationsMessageRef}>
+                    {this.state.notifyMessageText}
+                </div>
+
                 <div className="user-post-image-wrapper">
                     <div className="user-post-play-and-time" ref={this.playerRef}>
                         <span className="material-icons user-post-play-button" onClick={this.playAudio}>
@@ -95,7 +179,32 @@ class Post extends Component {
                     </div>
                     <img src={this.props.picture}></img>
                 </div>
-    
+
+                <div className="user-post-edit-button-container" ref={this.postEditButtonRef}
+                        onClick={this.openProfileEdit}>    
+                    <span className="material-icons">
+                        more_horiz
+                    </span>
+                </div>
+
+                <div className="user-post-edit-options-modal-container" ref={this.postEditRef}>
+                    <ul className="user-post-edit-options-modal-menu-items">
+                        <li className="user-post-edit-options-modal-menu-items-edit-post"
+                                ref={this.postEditOptionRef}>
+                            Edit post
+                        </li>
+                        <li className="user-post-edit-options-modal-menu-items-delete-post"
+                                ref={this.postEditDeleteRef}>
+                            Delete post
+                        </li>
+                        <li className="user-post-edit-options-modal-menu-items-notifications-switch-post"
+                                ref={this.postEditNotificationsSwitchRef}
+                                onClick={this.notificationsSwitchHandler}>
+                            {this.state.notifyOptionText}
+                        </li>
+                    </ul>
+                </div>
+
                 <div className="user-post-profile-image-wrapper"
                      onClick={this.redirectToUserProfile}>
                     <img src={this.props.profile_picture} />
@@ -138,6 +247,10 @@ class Post extends Component {
 
                 <CommentsSection post_author_id={this.props.post_author_id}
                                  post_id={this.props.post_id}></CommentsSection>
+
+                <div className="user-post-created-at">
+                    {this.transform_date(this.props.created_at)}
+                </div>
             </div>)
     }
     

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './Comments.css';
 import Comment from './Comment/Comment';
 import axios from 'axios';
+import CircularProgressBar from '../../../../../../img/progressbar2.gif';
 
 class Comments extends Component {
     _isMounted = false;
@@ -9,6 +10,8 @@ class Comments extends Component {
     constructor() {
         super();
         this.viewMorePreviousCommentsButtonRef = React.createRef();
+        this.expandLessCommentsButtonRef = React.createRef();
+        this.circularProgressBarRef = React.createRef();
         this.state = {
             comments: [],
             page: 0,
@@ -22,10 +25,24 @@ class Comments extends Component {
             this.fetchMoreComments();
     }
 
+    // Expand less comments
+    expandLessHandler = () => {
+        this.setState({comments: [], page: 0, hasMore: true, initialCleanupDone: false},
+            () => { 
+                this.FetchComments();
+                this.expandLessCommentsButtonRef.current.style.display = 'none';
+             });
+    }
+
     // Fetch more comments from database according to page number
     fetchMoreNextComments = () => {
+        this.circularProgressBarRef.current.style.display = 'inline-block';
+
         axios.get("/api/restricted-users/get-next-comments-with-page/?page=" + this.state.page
         + "&post_id=" + this.props.post_id).then(response => {
+
+                this.circularProgressBarRef.current.style.display = 'none';
+
                 // console.log(response.data.comments);
                 if (response.data.comments.length > 0) {
                     if (this._isMounted) {
@@ -37,9 +54,12 @@ class Comments extends Component {
 
     // Fetch more previous comments from database according to page number
     fetchMoreComments = () => {
+        this.circularProgressBarRef.current.style.display = 'inline-block';
         axios.get("/api/restricted-users/get-comments-with-page/?page=" + this.state.page
                     + "&post_id=" + this.props.post_id).then(response => {
-                
+
+                this.circularProgressBarRef.current.style.display = 'none';
+
                 if (!this.state.initialCleanupDone)
                     this.setState({comments: []}, () => this.setState({initialCleanupDone: true}));
                 
@@ -83,7 +103,9 @@ class Comments extends Component {
         // Send user id to fetch profile picture
         dataToSend.post_id = this.props.post_id;
 
+        this.circularProgressBarRef.current.style.display = 'inline-block';
         axios.post("/api/restricted-users/fetch-initial-comments-for-post", dataToSend).then(response => {
+            this.circularProgressBarRef.current.style.display = 'none';
             if (this._isMounted) {
                 this.setState({comments: response.data.comments,
                     hasMore: response.data.hasMore});
@@ -99,6 +121,10 @@ class Comments extends Component {
     }
 
     componentDidUpdate() {
+
+        if (this.state.comments.length > 3)
+            this.expandLessCommentsButtonRef.current.style.display = 'block';
+
         if (this.props.commentSent) {
             this.props.commentAddedResetHandler();
             if (this.state.page === 0) {
@@ -130,6 +156,18 @@ class Comments extends Component {
                     ref={this.viewMorePreviousCommentsButtonRef}>
                     View previous comments
                 </div>
+
+                <img src={CircularProgressBar} className="all-comments-circular-progressbar"
+                    ref={this.circularProgressBarRef}></img>
+
+                <div className="all-comments-wrapper-expand-less"
+                    onClick={this.expandLessHandler}
+                    ref={this.expandLessCommentsButtonRef}>
+                    <span className="material-icons">
+                        expand_less
+                    </span>
+                </div>
+
                 {this.state.comments.map(comment => (
                     <Comment    comment_author_user_id={comment.user_id}
                                 comment_author_user_name={comment.user_name}

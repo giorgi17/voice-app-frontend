@@ -161,3 +161,59 @@
     margin-top: 20px;
     width: 100%;
 }
+
+.user-post-created-at {
+    margin: 10px;
+    margin-top: 30px;
+}
+
+.user-post-edit-button-container {
+    float: right;
+    margin: 10px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.user-post-edit-options-modal-container {
+    width: 200px;
+    height: 100px;
+    background-color: white;
+    box-shadow: 0px 0px 2px 5px rgba(0,0,0,0.12);
+    border: 1px solid rgb(121, 118, 118);
+    z-index: 1;
+    position: absolute;
+    top: 90px;
+    right: 10px;
+    display: none;
+}
+
+.user-post-edit-options-modal-menu-items {
+    list-style: none;
+    padding: 0px;
+    font-size: 12px;
+}
+
+.user-post-edit-options-modal-menu-items li {
+    padding-left: 10px;
+    cursor: pointer;
+    transition: background-color 0.4s;
+}
+
+.user-post-edit-options-modal-menu-items li:hover {
+    background-color: #4E93F3;
+    color: white;
+}
+
+.user-post-edit-options-modal-menu-items-edit-post, .user-post-edit-options-modal-menu-items-delete-post {
+    display: none;
+}
+
+.notifications-message {
+    background-color: black;
+    color: white;
+    z-index: 3;
+    font-size: 14px;
+    text-align: center;
+    padding: 20px;
+    display: none;
+}
