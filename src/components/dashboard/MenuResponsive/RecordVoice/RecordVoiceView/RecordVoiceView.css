@@ -145,3 +145,14 @@
         min-width: auto;
     }
 }
+
+#responsive-recordvoice-view-recorded-time {
+    margin-top: 50px;
+    text-align: center;
+    font-weight: bold;
+    display: none;
+}
+
+.responsive-recordvoice-view-recorded-time-recording-icon {
+    color: red;
+}
