@@ -1,0 +1,50 @@
+.responsive-profile-view-container {
+    background: #fff;
+    border-radius: 2px;
+    display: inline-block;
+    min-height: 80%;
+    position: relative;
+    width: 100%;
+    min-height: 80%;
+    margin-bottom: 100px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+
+.responsive-profile-view-image-wrapper {
+    display: inline-block;
+    border-radius: 50%;
+    border: 2px solid #fff9f9;
+    width: 70px;
+    height: 70px;
+    margin: 20px;
+}
+
+.responsive-profile-view-image-wrapper img {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.responsive-profile-view-container hr {
+    width: 90%;
+    margin: 5px auto 20px;
+}
+
+#responsive-profile-view-edit-container {
+    margin: 20px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    border-radius: 50%;
+    background-color: rgb(199, 182, 182);
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.responsive-profile-view-edit {
+    padding-top: 6px;
+}

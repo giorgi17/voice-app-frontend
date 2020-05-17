@@ -10,7 +10,7 @@
     float: right;
 }
 
-.infinite-scroll-component  {
+.posts-container .infinite-scroll-component  {
     height: 900px !important;
     display: flex;
     flex-wrap: wrap;

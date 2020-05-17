@@ -1,0 +1,147 @@
+.responsive-recordvoice-view-container {
+    background: #fff;
+    position: relative;
+    width: 100%;
+    min-height: 80%;
+    margin-bottom: 100px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.responsive-recordvoice-view-container h3 {
+    text-align: center;
+    margin-top: 5px;
+}
+
+#responsive-recordvoice-view-post-image {
+    width: 300px;
+    height: 120px;
+    object-fit: cover;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    /* opacity: 0.4; */
+}
+
+#responsive-recordvoice-view-record-button {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    background-color: #124DA0;
+    line-height: 50px;
+    font-weight: 600;
+    padding: 5px;
+    border-radius: 50%;
+    position: absolute;
+    top: 90px;
+    left: 170px;
+    color: wheat;
+    cursor: pointer;
+}
+
+#responsive-recordvoice-view-post-picture-and-record-container {
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+#responsive-recordvoice-view-player-container {
+    margin-top: 40px;
+    margin-bottom: 20px;   
+}
+
+#responsive-recordvoice-view-post-image-icon {
+    border: 1px solid black;
+    border-radius: 50%;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    padding: 0.8rem;
+    cursor: pointer;
+    background-color: #1c5b69;
+    color: #9be7ff;
+    margin: 10px;
+    margin-right: 20px;
+    float: right;
+}
+
+#responsive-recordvoice-view-post-description-input-container {
+    margin: 10px;
+    margin-top: 60px;
+}
+
+.row-filename {
+    display: inline-block;
+    float: right;
+}
+
+.rhap_controls-section .rhap_additional-controls button {
+    display: none;
+}
+
+.rhap_main-controls .rhap_rewind-button {
+    display: none;
+}
+
+.rhap_main-controls .rhap_forward-button {
+    display: none;
+}
+
+#responsive-recordvoice-view-post-button {
+    height: 30px;
+    width: 60px;
+    display: inline-block;
+    background-color: #124DA0;
+    color: wheat;
+    border-radius: 20%;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+#responsive-recordvoice-view-post-button span {
+    display: inline-block;
+}
+
+#responsive-recordvoice-view-post-button .responsive-recordvoice-view-post-button-label-icon {
+    font-size: 20px;
+    position: absolute;
+    top: 4px;
+    left: 37px;
+}
+
+#responsive-recordvoice-view-post-button-label {
+    font-size: 14px;
+    font-weight: 700;
+    position: absolute;
+    left: 8px;
+    top: 5px;
+}
+
+#responsive-add-post-message-after {
+    display: none;
+    margin-top: 20%;
+}
+
+#responsive-add-post-message-after-success {
+    display: none;
+    margin-top: 20%;
+}
+
+/* .row-filename .fileName {
+
+} */
+
+
+@media only screen and (max-width: 320px) {
+    #responsive-recordvoice-view-post-image {
+        width: 220px;
+    }
+
+    #responsive-recordvoice-view-player-container .rhap_container {
+        min-width: auto;
+    }
+}

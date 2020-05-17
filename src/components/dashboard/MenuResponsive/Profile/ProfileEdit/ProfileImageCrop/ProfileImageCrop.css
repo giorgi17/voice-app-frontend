@@ -1,0 +1,43 @@
+.ReactCrop__crop-selection {
+    max-height: 91px;
+    max-width: 91px;
+}
+
+#responsive-cropped_image_preview {
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 10px;
+}
+
+#responsive-cropped_image_file_input {
+    margin: 10px;
+}
+
+.responsive-profile-edit-picture-cropper-alert {
+    width: 100%;
+    margin: 5px;
+}
+
+#responsive-profile-edit-picture-cropper-warning {
+    display: none;
+}
+
+#responsive-profile-edit-picture-cropper-error {
+    display: none;
+}
+
+#responsive-profile-edit-picture-cropper-error-uploading {
+    display: none;
+}
+
+#responsive-profile-edit-picture-cropper-error-wrong-extension {
+    display: none;
+}
+
+#responsive-profile-edit-picture-cropper-success {
+    display: none;
+}
+
+#responsive-profile-edit-picture-cropper-error-while-upload {
+    display: none;
+}

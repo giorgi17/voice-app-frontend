@@ -1,0 +1,27 @@
+.responsive-notifications-view-container {
+    background: #fff;
+    border-radius: 2px;
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: initial;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.responsive-notifications-view-container .infinite-scroll-component__outerdiv {
+    width: auto;
+    margin: auto;
+    height: calc(100vh - 90px) ;
+    margin-top: 20px;
+}
+
+.responsive-notifications-view-container .infinite-scroll-component {
+    display: inline-block;
+    display: block;
+    width: 100%;
+}
+
+.responsive-notifications-view-container .infinite-scroll-component h4 {
+    text-align: center;
+}
