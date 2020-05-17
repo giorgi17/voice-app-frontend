@@ -48,12 +48,14 @@ class Menu extends Component {
         document.body.style.position = '';
         document.body.style.top = '';
         window.scrollTo(0, parseInt(scrollY || '0') * -1);
+        document.exitFullscreen();
     }
 
     // Handle and stop windows scroll while menu items are open
     handleScroll = () => {
         document.body.style.position = 'fixed';
         document.body.style.top = `-${window.scrollY}px`;
+        document.body.requestFullscreen();
     }
 
     render () {
@@ -65,7 +67,7 @@ class Menu extends Component {
                 </div>
 
                 <div className="responsive-menu-items-container">
-                    <Home onClick={this.setMenuIconActive} isHomeActive={this.state.home} changeDisplayedContent={this.changeDisplayedContent} hideMenuItems={this.hideMenuItems} />
+                    <Home onClick={this.setMenuIconActive} isHomeActive={this.state.activeIcons.home} changeDisplayedContent={this.changeDisplayedContent} hideMenuItems={this.hideMenuItems} />
                     <RecordVoice onClick={this.setMenuIconActive} isRecordVoiceActive={this.state.activeIcons.recordVoice}
                          changeDisplayedContent={this.changeDisplayedContent} handleScroll={this.handleScroll} />
                     <Profile onClick={this.setMenuIconActive} isProfileActive={this.state.activeIcons.profile} changeDisplayedContent={this.changeDisplayedContent}
