@@ -3,9 +3,10 @@
     position: relative;
     width: 100%;
     /* min-height: 80%; */
-    height: 100%;
+    height: calc(100% - 70px);
     /* margin-bottom: 70px; */
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    overflow: scroll;
 }
 
 .responsive-recordvoice-view-container h3 {
@@ -165,3 +166,8 @@
 .responsive-recordvoice-view-recorded-time-recording-icon {
     color: red;
 }
+
+/* #add-post-container {
+    width: 300px;
+    overflow: scroll;
+} */
