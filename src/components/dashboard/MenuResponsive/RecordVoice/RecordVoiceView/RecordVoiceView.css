@@ -2,8 +2,9 @@
     background: #fff;
     position: relative;
     width: 100%;
-    min-height: 80%;
-    margin-bottom: 100px;
+    /* min-height: 80%; */
+    height: 100%;
+    /* margin-bottom: 70px; */
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
@@ -70,6 +71,14 @@
 #responsive-recordvoice-view-post-description-input-container {
     margin: 10px;
     margin-top: 60px;
+    margin-bottom: 70px;
+    width: 96%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+#responsive-recordvoice-view-post-description-input-container .MuiFormControl-root {
+    width: 100%;
 }
 
 .row-filename {
