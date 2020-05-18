@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import { connect } from "react-redux";
 import axios from 'axios';
 import { Alert, AlertTitle } from '@material-ui/lab';
+import EasyTimer from "easytimer";
 
 class RecordVoiceView extends Component {
 
@@ -16,6 +17,7 @@ class RecordVoiceView extends Component {
         this.afterAddPostMessageRef = React.createRef();
         this.addNewPostContainerRef = React.createRef();
         this.afterAddPostSuccessMessageRef = React.createRef();
+        this.recordedTimeDisplayRef = React.createRef();
         this.state = {
             recording: false,
             audioBlobUrl: '',
@@ -25,7 +27,9 @@ class RecordVoiceView extends Component {
             deviceFound: false,
             postImageSrc: 'https://voice-social-network.s3.us-east-2.amazonaws.com/post-pictures/stripes.png',
             recordButtonText: 'Record',
-            afterMessage: null
+            afterMessage: null,
+            timer: new EasyTimer(),
+            currentRecordedTime: '00:00:00'
         }
       }
 
@@ -110,6 +114,22 @@ class RecordVoiceView extends Component {
         });
     };
 
+    handleRecordedTimeDisplay = () => {
+        if (this.recordedTimeDisplayRef.current) {
+            if (this.recordedTimeDisplayRef.current.style.display === 'block') {
+                this.recordedTimeDisplayRef.current.style.display = 'none';
+                this.state.timer.stop();
+                this.setState({currentRecordedTime: '00:00:00'});
+            } else if (this.recordedTimeDisplayRef.current.style.display === 'none' || this.recordedTimeDisplayRef.current.style.display === '') {
+                this.recordedTimeDisplayRef.current.style.display = 'block';
+                this.state.timer.start();
+                this.state.timer.addEventListener('secondsUpdated', (e) => {
+                    this.setState({currentRecordedTime: this.state.timer.getTimeValues().toString()});
+                });
+            }
+        }
+    }
+
     render() {
         return (
             <div className="responsive-recordvoice-view-container">
@@ -136,8 +156,19 @@ class RecordVoiceView extends Component {
                     <h3>Record</h3>
                     <div id="responsive-recordvoice-view-post-picture-and-record-container">
                         <img src={this.state.postImageSrc} id="responsive-recordvoice-view-post-image"></img>
-                        <div ref={this.recordButtonRef} id="responsive-recordvoice-view-record-button" onClick={() => startRecording(this.state, this.changeFileName, this.deviceNotFound, this.deviceFound, this.changeRecording, this.changeRecordButtonText, this.changeAudioBlob)}>{this.state.recordButtonText}</div>
+                        <div ref={this.recordButtonRef} id="responsive-recordvoice-view-record-button" onClick={() => {startRecording(this.state, this.changeFileName, this.deviceNotFound, this.deviceFound, this.changeRecording, this.changeRecordButtonText, this.changeAudioBlob);
+                            this.handleRecordedTimeDisplay();}}>
+                            {this.state.recordButtonText}
+                        </div>
                     </div>
+
+                    <div id="responsive-recordvoice-view-recorded-time" ref={this.recordedTimeDisplayRef}>
+                        <span className="material-icons responsive-recordvoice-view-recorded-time-recording-icon">
+                            fiber_manual_record
+                        </span>
+                        {this.state.currentRecordedTime}
+                    </div>
+
                     <div id="responsive-recordvoice-view-player-container">
                         <Player audioFile={this.state.audioBlobUrl} />
                         {/* <Player audioFile="https://voice-social-network.s3.us-east-2.amazonaws.com/posts-audio/bensound-summer.mp3" /> */}
