@@ -11,8 +11,8 @@
 .responsive-notifications-view-container .infinite-scroll-component__outerdiv {
     width: auto;
     margin: auto;
-    height: calc(100vh - 90px) ;
-    margin-top: 20px;
+    height: calc(100vh - 150px) ;
+    margin-top: 5px;
 }
 
 .responsive-notifications-view-container .infinite-scroll-component {

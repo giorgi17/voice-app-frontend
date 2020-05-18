@@ -37,7 +37,7 @@ class Menu extends Component {
     }
 
     changeDisplayedContent = (newContent) => {
-        this.menuContentRef.current.style.height = '100vh';
+        this.menuContentRef.current.style.height = 'calc(100vh - 80px)';
         this.setState({contentToDisplay: newContent});
     }
 
