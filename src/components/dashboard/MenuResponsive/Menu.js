@@ -38,9 +38,7 @@ class Menu extends Component {
     }
 
     changeDisplayedContent = (newContent) => {
-        // this.menuContentRef.current.style.height = 'calc(100vh - 80px)';
         let currentWindowHeight = window.innerHeight;
-        // console.log(currentWindowHeight);
         this.menuContentRef.current.style.height = 'calc(' + currentWindowHeight + 'px - 80px)';
         this.setState({contentToDisplay: newContent});
     }
