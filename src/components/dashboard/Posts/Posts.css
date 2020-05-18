@@ -11,7 +11,7 @@
 }
 
 .posts-container .infinite-scroll-component  {
-    height: 900px !important;
+    /* height: 900px !important; */
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -38,11 +38,18 @@
     .posts-container {
         width: 100%;
         margin: 0;
+        margin-bottom: 70px;
     }
     .infinite-scroll-component__outerdiv {
-        width: 320px;
+        /* width: 320px; */
         margin: auto;
     }
+
+    .content-container {
+        height: 100%;
+    }
+
+    /* .infinite-scroll-component  */
     /* .posts-container {
         background: #fff;
         border-radius: 2px;

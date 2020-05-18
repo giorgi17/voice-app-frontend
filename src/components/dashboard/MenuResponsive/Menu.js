@@ -48,14 +48,14 @@ class Menu extends Component {
         document.body.style.position = '';
         document.body.style.top = '';
         window.scrollTo(0, parseInt(scrollY || '0') * -1);
-        document.exitFullscreen();
+        // document.exitFullscreen();
     }
 
     // Handle and stop windows scroll while menu items are open
     handleScroll = () => {
         document.body.style.position = 'fixed';
         document.body.style.top = `-${window.scrollY}px`;
-        document.body.requestFullscreen();
+        // document.body.requestFullscreen();
     }
 
     render () {

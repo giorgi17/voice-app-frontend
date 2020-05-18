@@ -91,6 +91,7 @@ class Posts extends Component {
     }
 
     render() {
+        console.log(document.body);
         return (
             <div className="posts-container">
 
@@ -101,7 +102,7 @@ class Posts extends Component {
                     changeFilter={this.changeFilter}></PostsFilter>
 
                  <InfiniteScroll
-                        height="100%"
+                        // height="100%"
                         dataLength={this.state.posts.length}
                         next={this.fetchMoreData}
                         hasMore={this.state.hasMore}
