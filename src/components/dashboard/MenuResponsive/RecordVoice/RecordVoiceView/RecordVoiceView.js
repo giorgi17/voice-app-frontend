@@ -131,10 +131,6 @@ class RecordVoiceView extends Component {
         }
     }
 
-    componentDidMount() {
-        this.mainContainerRef.current.scrollTo(0, 0);
-    }
-
     render() {
         return (
             <div className="responsive-recordvoice-view-container" ref={this.mainContainerRef}>

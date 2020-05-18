@@ -9,6 +9,7 @@ class Menu extends Component {
 
     constructor() {
         super();
+        this.menuContentContainerRef = React.createRef();
         this.menuContentRef = React.createRef();
         this.state = {
             activeIcons: {
@@ -37,7 +38,10 @@ class Menu extends Component {
     }
 
     changeDisplayedContent = (newContent) => {
-        this.menuContentRef.current.style.height = 'calc(100vh - 80px)';
+        // this.menuContentRef.current.style.height = 'calc(100vh - 80px)';
+        let currentWindowHeight = window.innerHeight;
+        // console.log(currentWindowHeight);
+        this.menuContentRef.current.style.height = 'calc(' + currentWindowHeight + 'px - 80px)';
         this.setState({contentToDisplay: newContent});
     }
 
@@ -49,10 +53,12 @@ class Menu extends Component {
         document.body.style.top = '';
         window.scrollTo(0, parseInt(scrollY || '0') * -1);
         // document.exitFullscreen();
+        this.menuContentContainerRef.current.style.zIndex = '2';
     }
 
     // Handle and stop windows scroll while menu items are open
     handleScroll = () => {
+        this.menuContentContainerRef.current.style.zIndex = '3';
         document.body.style.position = 'fixed';
         document.body.style.top = `-${window.scrollY}px`;
         // document.body.requestFullscreen();
@@ -60,7 +66,7 @@ class Menu extends Component {
 
     render () {
         return (
-            <div className="responsive-menu-container">
+            <div className="responsive-menu-container" ref={this.menuContentContainerRef}>
 
                 <div ref={this.menuContentRef} className="responsive-menu-content-display-container" >
                     {this.state.contentToDisplay}
