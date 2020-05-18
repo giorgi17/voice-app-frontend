@@ -13,6 +13,7 @@ class RecordVoiceView extends Component {
 
     constructor() {
         super();
+        this.mainContainerRef = React.createRef();
         this.recordButtonRef = React.createRef();
         this.afterAddPostMessageRef = React.createRef();
         this.addNewPostContainerRef = React.createRef();
@@ -130,9 +131,13 @@ class RecordVoiceView extends Component {
         }
     }
 
+    componentDidMount() {
+        this.mainContainerRef.current.scrollTo(0, 0);
+    }
+
     render() {
         return (
-            <div className="responsive-recordvoice-view-container">
+            <div className="responsive-recordvoice-view-container" ref={this.mainContainerRef}>
                 <div id="responsive-add-post-message-after" ref={this.afterAddPostMessageRef}>
                     <Alert severity="error">
                         <AlertTitle>Error</AlertTitle>
