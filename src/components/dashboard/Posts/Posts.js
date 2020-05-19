@@ -91,7 +91,6 @@ class Posts extends Component {
     }
 
     render() {
-        console.log(document.body);
         return (
             <div className="posts-container">
 

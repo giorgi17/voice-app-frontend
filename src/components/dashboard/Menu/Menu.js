@@ -3,19 +3,22 @@ import './Menu.css';
 import RecordVoice from './RecordVoice/RecordVoice';
 import Profile from './Profile/Profile';
 import Notifications from './Notifications/Notifications';
+import RecordVoiceView from './RecordVoice/RecordVoiceView/RecordVoiceView';
 
 class Menu extends Component { 
 
     constructor() {
         super();
         this.menuContentRef = React.createRef();
+        this.menuMainWrapperRef = React.createRef();
         this.state = {
             activeIcons: {
-                recordVoice: false,
+                recordVoice: true,
                 profile: false,
                 notification: false
             },
-            contentToDisplay: null
+            contentToDisplay: <RecordVoiceView />,
+            makeMenuFixed: false
         };
       }    
 
@@ -38,9 +41,25 @@ class Menu extends Component {
         this.setState({contentToDisplay: newContent});
     }
 
+    scrollListener = e => {
+        if (window.scrollY > 700) {
+            this.setState({makeMenuFixed: true});
+        } else {
+            this.setState({makeMenuFixed: false});
+        }
+    }
+
+    componentDidMount() {
+        window.addEventListener("scroll", this.scrollListener);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("scroll", this.scrollListener);
+    }
+
     render () {
         return (
-            <div className="menu-container">
+            <div className={`menu-container ${this.state.makeMenuFixed ? "menu-container-fixed" : ""}`} ref={this.menuMainWrapperRef}>
                 <div className="menu-items-container">
                     <RecordVoice onClick={this.setMenuIconActive} isRecordVoiceActive={this.state.activeIcons.recordVoice} changeDisplayedContent={this.changeDisplayedContent}/>
                     <Profile onClick={this.setMenuIconActive} isProfileActive={this.state.activeIcons.profile} changeDisplayedContent={this.changeDisplayedContent} />

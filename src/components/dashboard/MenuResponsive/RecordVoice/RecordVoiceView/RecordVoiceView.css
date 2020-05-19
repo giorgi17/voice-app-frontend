@@ -15,9 +15,7 @@
 }
 
 #responsive-recordvoice-view-post-image {
-    width: 300px;
-    height: 120px;
-    object-fit: cover;
+    width: 100%;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -35,14 +33,14 @@
     padding: 5px;
     border-radius: 50%;
     position: absolute;
-    top: 90px;
+    bottom: -30px;
     left: 170px;
     color: wheat;
-    cursor: pointer;
 }
 
 #responsive-recordvoice-view-post-picture-and-record-container {
-    max-width: 400px;
+    width: 100%;
+    height: auto;
     margin-left: auto;
     margin-right: auto;
     position: relative;
@@ -147,10 +145,6 @@
 
 
 @media only screen and (max-width: 320px) {
-    #responsive-recordvoice-view-post-image {
-        width: 220px;
-    }
-
     #responsive-recordvoice-view-player-container .rhap_container {
         min-width: auto;
     }

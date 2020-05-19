@@ -8,9 +8,17 @@
     top: 150px;
     width: 95vw;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    display: flex;
+    /* display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-around; */
+}
+
+@media only screen and (max-width: 950px) {
+    .content-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around; 
+    }
 }
 
 @media only screen and (max-width: 600px) {

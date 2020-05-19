@@ -24,13 +24,14 @@
 @media only screen and (max-width: 1050px) {
     .posts-container {
        margin-right: 0px;
-       width: 510px;
+       margin-left: 0px;
     }
 }
 
 @media only screen and (max-width: 1150px) {
     .posts-container {
-       margin-right: 0px;
+       margin-right: 30px;
+       width: 510px;
     }
 }
 

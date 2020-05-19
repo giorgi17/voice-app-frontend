@@ -29,7 +29,6 @@
 
   .user-profile-page-content {
     background-color: #fefefe;
-    padding: 20px;
     /* border: 1px solid #888; */
     min-width: 90%; /* Could be more or less, depending on screen size */
   }
@@ -79,6 +78,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
+  margin: 10px;
 }
 
 .user-profile-page-info-wrapper div {

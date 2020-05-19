@@ -115,18 +115,21 @@ class RecordVoiceView extends Component {
         });
     };
 
+    stopWatchEventListener = e => {
+        this.setState({currentRecordedTime: this.state.timer.getTimeValues().toString()});
+    }
+
     handleRecordedTimeDisplay = () => {
         if (this.recordedTimeDisplayRef.current) {
             if (this.recordedTimeDisplayRef.current.style.display === 'block') {
                 this.recordedTimeDisplayRef.current.style.display = 'none';
                 this.state.timer.stop();
+                this.state.timer.removeEventListener('secondsUpdated', this.stopWatchEventListener);
                 this.setState({currentRecordedTime: '00:00:00'});
             } else if (this.recordedTimeDisplayRef.current.style.display === 'none' || this.recordedTimeDisplayRef.current.style.display === '') {
                 this.recordedTimeDisplayRef.current.style.display = 'block';
                 this.state.timer.start();
-                this.state.timer.addEventListener('secondsUpdated', (e) => {
-                    this.setState({currentRecordedTime: this.state.timer.getTimeValues().toString()});
-                });
+                this.state.timer.addEventListener('secondsUpdated', this.stopWatchEventListener);
             }
         }
     }
