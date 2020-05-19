@@ -1,10 +1,5 @@
-.ReactCrop__crop-selection {
-    max-height: 91px;
-    max-width: 91px;
-}
-
 #responsive-cropped_image_preview {
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 50%;
     margin: 10px;
 }
