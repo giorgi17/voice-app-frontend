@@ -19,6 +19,11 @@
   @media only screen and (max-width: 600px) {
     .user-profile-page {
       width: 100%;
+      margin: 0;
+    }
+
+    .content-container {
+      height: auto;
     }
   }
 
@@ -29,14 +34,36 @@
     min-width: 90%; /* Could be more or less, depending on screen size */
   }
   
+  .user-profile-page-posts-container .infinite-scroll-component  {
+    /* height: 900px !important; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    /* width: 100%; */
+    /* mar */
+}
 
-  .user-profile-page-profile-image-wrapper {
-    display: inline-block;
-    border-radius: 50%;
-    border: 2px solid #fff9f9;
-    width: 70px;
-    height: 70px;
-    margin: 20px;
+.user-profile-page-posts-container .infinite-scroll-component__outerdiv {
+  width: 100%;
+}
+
+.user-profile-page-posts-container .single-post {
+  /* margin: auto; */
+}
+
+@media only screen and (max-width: 950px) {
+  .user-profile-page-posts-container .single-post {
+    width: 100%;
+  }
+}
+
+.user-profile-page-profile-image-wrapper {
+  display: inline-block;
+  border-radius: 50%;
+  border: 2px solid #fff9f9;
+  width: 70px;
+  height: 70px;
+  margin: 20px;
 }
 
 .user-profile-page-profile-image-wrapper img {

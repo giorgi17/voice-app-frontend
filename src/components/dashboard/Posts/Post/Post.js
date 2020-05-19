@@ -49,23 +49,15 @@ class Post extends Component {
                     this.setState({notifyOptionText: 'Turn off notifications for this post',
                     notifyMessageText: 'Notifications turned on for this post'});
                     this.postEditNotificationsMessageRef.current.style.display = 'block';
-                    this.profileImageRef.current.style.top = '200px';
-                    this.profileUsernameRef.current.style.top = '260px';
                     setTimeout(() => {
                          this.postEditNotificationsMessageRef.current.style.display = 'none';
-                         this.profileImageRef.current.style.top = '140px';
-                         this.profileUsernameRef.current.style.top = '200px';
                          }, 3000);
                 } else {
                     this.setState({notifyOptionText: 'Turn on notifications for this post',
                     notifyMessageText: 'Notifications turned off for this post'});
                     this.postEditNotificationsMessageRef.current.style.display = 'block';
-                    this.profileImageRef.current.style.top = '200px';
-                    this.profileUsernameRef.current.style.top = '260px';
                     setTimeout(() => { 
                         this.postEditNotificationsMessageRef.current.style.display = 'none';
-                        this.profileImageRef.current.style.top = '140px';
-                        this.profileUsernameRef.current.style.top = '200px'; 
                     }, 3000);
                 }
             }
@@ -188,16 +180,49 @@ class Post extends Component {
                         <span className="user-post-video-time">{this.props.audio_duration}</span>
                     </div>
                     <img src={this.props.picture}></img>
+
+                    <div className="user-post-profile-image-wrapper"
+                        onClick={this.redirectToUserProfile} ref={this.profileImageRef}>
+                        <img src={this.props.profile_picture} />
+                    </div>
+
+                    <strong className="user-post-username" onClick={this.redirectToUserProfile}
+                    ref={this.profileUsernameRef}>{this.props.user_name}</strong>
+
+                    <div className="user-post-edit-button-container" ref={this.postEditButtonRef}
+                            onClick={this.openProfileEdit}>    
+                        <span className="material-icons">
+                            more_horiz
+                        </span>
+                    </div>
+
+                    <div className="user-post-edit-options-modal-container" ref={this.postEditRef}>
+                        <ul className="user-post-edit-options-modal-menu-items">
+                            <li className="user-post-edit-options-modal-menu-items-edit-post"
+                                    ref={this.postEditOptionRef}>
+                                Edit post
+                            </li>
+                            <li className="user-post-edit-options-modal-menu-items-delete-post"
+                                    ref={this.postEditDeleteRef}>
+                                Delete post
+                            </li>
+                            <li className="user-post-edit-options-modal-menu-items-notifications-switch-post"
+                                    ref={this.postEditNotificationsSwitchRef}
+                                    onClick={this.notificationsSwitchHandler}>
+                                {this.state.notifyOptionText}
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
-                <div className="user-post-edit-button-container" ref={this.postEditButtonRef}
+                {/* <div className="user-post-edit-button-container" ref={this.postEditButtonRef}
                         onClick={this.openProfileEdit}>    
                     <span className="material-icons">
                         more_horiz
                     </span>
-                </div>
+                </div> */}
 
-                <div className="user-post-edit-options-modal-container" ref={this.postEditRef}>
+                {/* <div className="user-post-edit-options-modal-container" ref={this.postEditRef}>
                     <ul className="user-post-edit-options-modal-menu-items">
                         <li className="user-post-edit-options-modal-menu-items-edit-post"
                                 ref={this.postEditOptionRef}>
@@ -213,15 +238,15 @@ class Post extends Component {
                             {this.state.notifyOptionText}
                         </li>
                     </ul>
-                </div>
+                </div> */}
 
-                <div className="user-post-profile-image-wrapper"
+                {/* <div className="user-post-profile-image-wrapper"
                      onClick={this.redirectToUserProfile} ref={this.profileImageRef}>
                     <img src={this.props.profile_picture} />
-                </div>
+                </div> */}
     
-                <strong className="user-post-username" onClick={this.redirectToUserProfile}
-                    ref={this.profileUsernameRef}>{this.props.user_name}</strong>
+                {/* <strong className="user-post-username" onClick={this.redirectToUserProfile}
+                    ref={this.profileUsernameRef}>{this.props.user_name}</strong> */}
     
                 <div className="user-post-viewer-options">
                     <span className={`material-icons like ${this.state.liked ? "liked" : ""}`}
