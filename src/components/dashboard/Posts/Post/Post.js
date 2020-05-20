@@ -26,7 +26,13 @@ class Post extends Component {
             disliked: false,
             notify: false,
             notifyOptionText: '',
-            notifyMessageText: ''
+            notifyMessageText: '',
+            postInfo: {
+                likes: 0,
+                dislikes: 0,
+                comments: 0,
+                views: 0
+            }
         }
     }
 
@@ -100,7 +106,15 @@ class Post extends Component {
 
         axios.post("/api/restricted-users/post-dislike", dataToSend).then(response => {
             if (this._isMounted) {
-                this.setState({disliked: response.data.disliked, liked: false});
+                const postInfo = {...this.state.postInfo};
+                if (response.data.disliked) {
+                    postInfo.dislikes+=1;
+                    if (this.state.liked && this.state.postInfo.likes !== 0)
+                        postInfo.likes-=1;
+                } else {
+                    postInfo.dislikes-=1;
+                }
+                this.setState({disliked: response.data.disliked, liked: false, postInfo});
             }
         }).catch( err => {
             console.log(err);
@@ -116,16 +130,68 @@ class Post extends Component {
         dataToSend.user_id = this.props.auth.user.id;
         dataToSend.current_user_name = this.props.auth.user.name;
         dataToSend.post_author_id = this.props.post_author_id;
-        console.log(dataToSend);
 
         axios.post("/api/restricted-users/post-like", dataToSend).then(response => {
             if (this._isMounted) {
-                this.setState({liked: response.data.liked, disliked: false});
+                const postInfo = {...this.state.postInfo};
+                if (response.data.liked) {
+                    postInfo.likes+=1;
+                    if (this.state.disliked && this.state.postInfo.dislikes !== 0)
+                        postInfo.dislikes-=1;
+                } else {
+                    postInfo.likes-=1;
+                }
+                this.setState({liked: response.data.liked, disliked: false, postInfo});
                 // console.log(response.data);
             }
         }).catch( err => {
             console.log(err);
         });
+    }
+
+    // Perform viewing the post
+    viewPost = () => {
+        let dataToSend = {};
+
+        // Send post id and user id to view
+        dataToSend.post_id = this.props.post_id;
+        dataToSend.user_id = this.props.auth.user.id;
+        dataToSend.current_user_name = this.props.auth.user.name;
+        dataToSend.post_author_id = this.props.post_author_id;
+
+        axios.post("/api/restricted-users/post-view", dataToSend).then(response => {
+            if (this._isMounted) {
+                if (response.data.newView) {
+                    const postInfo = {...this.state.postInfo};
+                    postInfo.views+=1;
+                    this.setState({postInfo});
+                }
+            }
+        }).catch( err => {
+            console.log(err);
+        });
+    }
+
+    // Perform viewing the post
+    getPostLikesDislikesCommentsViews = () => {
+        let dataToSend = {};
+
+        // Send post id to fetch information about post
+        dataToSend.post_id = this.props.post_id;
+
+        axios.post("/api/restricted-users/get-post-likes-dislikes-comments-views", dataToSend).then(response => {
+            if (this._isMounted) {
+                const postInfo = {...response.data};
+                this.setState({postInfo});
+                // console.log(response.data);
+            }
+        }).catch( err => {
+            console.log(err);
+        });
+    }
+
+    changeCommentsNumber = postInfo => {
+        this.setState({postInfo});
     }
 
     playAudio = () => {
@@ -134,7 +200,9 @@ class Post extends Component {
             this.setState({player: (
                 <div id="user-post-player-container">
                     <Player audioFile={this.props.audio} />
-                </div>)});
+                </div>)});  
+            // If user has viewed the post - pass, if not save the new view
+            this.viewPost();
         }
     }
 
@@ -158,6 +226,8 @@ class Post extends Component {
                     else
                         this.setState({notifyOptionText: 'Turn on notifications for this post'});
                 });
+
+        this.getPostLikesDislikesCommentsViews();
     }
 
     componentWillUnmount() {
@@ -214,39 +284,6 @@ class Post extends Component {
                         </ul>
                     </div>
                 </div>
-
-                {/* <div className="user-post-edit-button-container" ref={this.postEditButtonRef}
-                        onClick={this.openProfileEdit}>    
-                    <span className="material-icons">
-                        more_horiz
-                    </span>
-                </div> */}
-
-                {/* <div className="user-post-edit-options-modal-container" ref={this.postEditRef}>
-                    <ul className="user-post-edit-options-modal-menu-items">
-                        <li className="user-post-edit-options-modal-menu-items-edit-post"
-                                ref={this.postEditOptionRef}>
-                            Edit post
-                        </li>
-                        <li className="user-post-edit-options-modal-menu-items-delete-post"
-                                ref={this.postEditDeleteRef}>
-                            Delete post
-                        </li>
-                        <li className="user-post-edit-options-modal-menu-items-notifications-switch-post"
-                                ref={this.postEditNotificationsSwitchRef}
-                                onClick={this.notificationsSwitchHandler}>
-                            {this.state.notifyOptionText}
-                        </li>
-                    </ul>
-                </div> */}
-
-                {/* <div className="user-post-profile-image-wrapper"
-                     onClick={this.redirectToUserProfile} ref={this.profileImageRef}>
-                    <img src={this.props.profile_picture} />
-                </div> */}
-    
-                {/* <strong className="user-post-username" onClick={this.redirectToUserProfile}
-                    ref={this.profileUsernameRef}>{this.props.user_name}</strong> */}
     
                 <div className="user-post-viewer-options">
                     <span className={`material-icons like ${this.state.liked ? "liked" : ""}`}
@@ -268,10 +305,10 @@ class Post extends Component {
                  {this.state.player}
     
                 <div className="user-post-info">
-                    <span className="user-post-info-likes">1 Likes</span>
-                    <span className="user-post-info-dislikes">17 Dislikes</span>
-                    <span className="user-post-info-comments">15 Comments</span>
-                    <span className="user-post-info-views">502 Views</span>
+                    <span className="user-post-info-likes">{this.state.postInfo.likes} Likes</span>
+                    <span className="user-post-info-dislikes">{this.state.postInfo.dislikes} Dislikes</span>
+                    <span className="user-post-info-comments">{this.state.postInfo.comments} Comments</span>
+                    <span className="user-post-info-views">{this.state.postInfo.views} Views</span>
                 </div>
                 <hr></hr>
     
@@ -282,7 +319,9 @@ class Post extends Component {
                 <hr></hr>
 
                 <CommentsSection post_author_id={this.props.post_author_id}
-                                 post_id={this.props.post_id}></CommentsSection>
+                                 post_id={this.props.post_id}
+                                 comments_number={this.state.postInfo}
+                                 changeCommentsNumber={this.changeCommentsNumber}></CommentsSection>
 
                 <div className="user-post-created-at">
                     {this.transform_date(this.props.created_at)}

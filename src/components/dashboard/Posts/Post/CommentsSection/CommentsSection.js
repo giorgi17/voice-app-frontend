@@ -69,6 +69,10 @@ class CommentsSection extends Component {
 
         axios.post("/api/restricted-users/add-new-comment", dataToSend).then(response => {
             if (this._isMounted) {
+                const postInfo = {...this.props.comments_number};
+                postInfo.comments+=1;
+                this.props.changeCommentsNumber(postInfo);
+                
                 this.setState({commentSent: true, commentInput: ''});
             }
         }).catch( err => {
