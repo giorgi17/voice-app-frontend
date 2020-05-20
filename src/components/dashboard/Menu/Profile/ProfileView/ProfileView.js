@@ -14,8 +14,40 @@ class ProfileView extends Component {
             userData: {
                 name: null,
                 avatarImage: null
+            },
+            postAuthorStatistics: {
+                posts: 0,
+                followers: 0,
+                following: 0,
+                likes: 0,
+                dislikes: 0,
+                comments: 0,
+                views: 0
             }
         }
+    }
+
+    // Fetch statistics for user
+    getUserStatistics = () => {
+        let dataToSend = {};
+        dataToSend.user_id = this.props.auth.user.id;
+
+        axios.post("/api/restricted-users/get-user-statistics", dataToSend).then(response => {
+            if (this._isMounted) { 
+                const postAuthorStatistics = {...this.state.postAuthorStatistics};
+                postAuthorStatistics.posts = response.data.posts;
+                postAuthorStatistics.followers = response.data.followers;
+                postAuthorStatistics.following = response.data.following;
+                postAuthorStatistics.likes = response.data.likes;
+                postAuthorStatistics.dislikes = response.data.dislikes;
+                postAuthorStatistics.comments = response.data.comments;
+                postAuthorStatistics.views = response.data.views;
+                this.setState({postAuthorStatistics});
+                // console.log(response.data);
+            } 
+        }).catch( err => {
+            console.log(err);
+        });
     }
 
     componentDidMount() {
@@ -28,6 +60,8 @@ class ProfileView extends Component {
                     this.setState({userData: { ...this.state.userData, ...res.data}});
                 }
         });
+
+        this.getUserStatistics();
     }
 
     componentWillUnmount() {
@@ -49,7 +83,7 @@ class ProfileView extends Component {
                     </span>
                 </div>
 
-                <UserActivityInfo></UserActivityInfo>
+                <UserActivityInfo postAuthorStatistics={this.state.postAuthorStatistics}></UserActivityInfo>
     
                 <hr></hr>
                 

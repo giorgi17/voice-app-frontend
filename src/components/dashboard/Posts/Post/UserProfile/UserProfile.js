@@ -21,6 +21,15 @@ class UserProfile extends Component {
                 name: null,
                 user_id: null
             },
+            postAuthorStatistics: {
+                posts: 0,
+                followers: 0,
+                following: 0,
+                likes: 0,
+                dislikes: 0,
+                comments: 0,
+                views: 0
+            },
             posts: [],
             page: 0,
             hasMore: true,
@@ -67,6 +76,29 @@ class UserProfile extends Component {
                 this.setState({following: response.data.following});
                 this.followButtonRef.current.style.display = 'block';
             }
+        }).catch( err => {
+            console.log(err);
+        });
+    }
+
+    // Fetch statistics for certain user
+    getUserStatistics = () => {
+        let dataToSend = {};
+        dataToSend.user_id = this.props.user_id;
+
+        axios.post("/api/restricted-users/get-user-statistics", dataToSend).then(response => {
+            if (this._isMounted) { 
+                const postAuthorStatistics = {...this.state.postAuthorStatistics};
+                postAuthorStatistics.posts = response.data.posts;
+                postAuthorStatistics.followers = response.data.followers;
+                postAuthorStatistics.following = response.data.following;
+                postAuthorStatistics.likes = response.data.likes;
+                postAuthorStatistics.dislikes = response.data.dislikes;
+                postAuthorStatistics.comments = response.data.comments;
+                postAuthorStatistics.views = response.data.views;
+                this.setState({postAuthorStatistics});
+                // console.log(response.data);
+            } 
         }).catch( err => {
             console.log(err);
         });
@@ -141,7 +173,8 @@ class UserProfile extends Component {
                     following: true
                 }, () => {
                     this.getUserInfo();
-                    this.getUserPosts();  
+                    this.getUserPosts();
+                    this.getUserStatistics();  
                 })
             }
         }
@@ -151,6 +184,7 @@ class UserProfile extends Component {
         this._isMounted = true;
         this.getUserInfo();
         this.getUserPosts();
+        this.getUserStatistics();
     }
 
     componentWillUnmount() {
@@ -175,7 +209,7 @@ class UserProfile extends Component {
                         </div>
                     </div>
 
-                    <UserActivityInfo></UserActivityInfo>
+                    <UserActivityInfo postAuthorStatistics={this.state.postAuthorStatistics}></UserActivityInfo>
                     <div className="user-profile-page-follow-button" ref={this.followButtonRef}>
                         <Button variant="contained" 
                         color={`${this.state.following ? "secondary" : "primary"}`}

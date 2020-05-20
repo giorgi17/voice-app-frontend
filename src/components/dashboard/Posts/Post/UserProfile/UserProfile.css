@@ -93,5 +93,6 @@
 
 .user-profile-page-follow-button {
   display: none;
+  margin-left: 20px;
   margin-bottom: 20px;
 }
