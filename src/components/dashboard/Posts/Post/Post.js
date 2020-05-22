@@ -251,7 +251,7 @@ class Post extends Component {
                         <span className="user-post-video-time">{this.props.audio_duration}</span>
                     </div>
                     <img src={this.props.picture}></img>
-                    <Link to="/about"><h1>CLICK ME!</h1></Link>
+ 
                     <div className="user-post-profile-image-wrapper"
                         onClick={this.redirectToUserProfile} ref={this.profileImageRef}>
                         <img src={this.props.profile_picture} />
