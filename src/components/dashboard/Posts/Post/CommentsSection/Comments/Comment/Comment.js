@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './Comment.css';
 import axios from 'axios';
+import PageCacher from '../../../../../../../utils/PageCacher';
 
 class Comment extends Component {
     _isMounted = false;
@@ -19,7 +20,10 @@ class Comment extends Component {
         // let formatted_date = date.getFullYear() + "-" + this.appendLeadingZeroes((date.getMonth() + 1)) + "-" + this.appendLeadingZeroes(date.getDate()) + " " + this.appendLeadingZeroes(date.getHours()) + ":" + this.appendLeadingZeroes(date.getMinutes()) + ":" + this.appendLeadingZeroes(date.getSeconds());
         // this.setState({date: formatted_date});
         if (this._isMounted) {
-            this.setState({date: date.toLocaleString()});
+            this.setState({date: date.toLocaleString()},
+            () => PageCacher.cachePageUpdate([
+                {name: 'date', data: this.state.date}
+            ], 'Comment' + this.props.comment_id));
         }
     }
 
@@ -31,7 +35,10 @@ class Comment extends Component {
 
         axios.post("/api/restricted-users/get-user-profile-picture-for-notifications", dataToSend).then(response => {
             if (this._isMounted) {
-                this.setState({commentAuthorProfilePicture: response.data.avatarImage});
+                this.setState({commentAuthorProfilePicture: response.data.avatarImage},
+                    () => PageCacher.cachePageUpdate([
+                        {name: 'commentAuthorProfilePicture', data: response.data.avatarImage}
+                    ], 'Comment' + this.props.comment_id));
             }
         }).catch( err => {
             console.log(err.message);
@@ -40,12 +47,24 @@ class Comment extends Component {
 
     componentDidMount() {
         this._isMounted = true;
-        this.transform_date();
-        this.fetchUserProfilePicture();
+        // Set route name in state for "PageCacher.cachePageSaveScroll" to see while unmounting
+        this.setState({thisRoute: window.location.href.split("/").pop()});
+
+        const cachedData = PageCacher.cachePageOnMount('Comment' + this.props.comment_id);
+        const propertyNamesToBeCached = ['commentAuthorProfilePicture', 'date'];
+
+        if (PageCacher.areAllPropertiesCached(propertyNamesToBeCached, cachedData.data)) {
+            this.setState({... cachedData.data}, () => window.scrollTo(cachedData.scroll.scrollX, cachedData.scroll.scrollY));
+        } else {
+            this.transform_date();
+            this.fetchUserProfilePicture();
+        }
     }
 
     componentWillUnmount() {
         this._isMounted = false;
+        // Save the latest scroll position right before unmounting
+        PageCacher.cachePageSaveScroll(this.state.thisRoute);
     }
 
     render() {

@@ -5,6 +5,7 @@ import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { connect } from "react-redux";
 import PostsFilter from './PostsFilter/PostsFilter';
+import PageCacher from '../../../utils/PageCacher';
 
 class Posts extends Component {
     _isMounted = false;
@@ -30,28 +31,34 @@ class Posts extends Component {
         const currentFilter = this.state.filter;
         axios.get("/api/restricted-users/get-posts-with-page/?page=" + this.state.page
                  + "&user_id=" + this.props.auth.user.id + "&filter=" + this.state.filter).then(response => {
+            if (this._isMounted) {
+                    // Check if there were any new posts added after mounting this component which would 
+                    // cause database array to shift and remove any duplicate elements from array
+                    const newPostsArray = [...this.state.posts, ...response.data];
+                    const newUniquePostsArray = Array.from(new Set(newPostsArray.map(a => a._id)))
+                    .map(_id => {
+                        return newPostsArray.find(a => a._id === _id);
+                    })
 
-            // Check if there were any new posts added after mounting this component which would 
-                // cause database array to shift and remove any duplicate elements from array
-                const newPostsArray = [...this.state.posts, ...response.data];
-                const newUniquePostsArray = Array.from(new Set(newPostsArray.map(a => a._id)))
-                .map(_id => {
-                    return newPostsArray.find(a => a._id === _id);
-                })
-
-            if (response.data.length > 0) {
-                if (this.state.filter === currentFilter) {
-                    this.setState({
-                        // posts: this.state.posts.concat(response.data),
-                        posts: newUniquePostsArray,
-                        page: this.state.page + 10
-                    });
-                }
-            } else {
-                if (this.state.filter === currentFilter) {
-                    this.setState({
-                        hasMore: false
-                    });
+                if (response.data.length > 0) {
+                    if (this.state.filter === currentFilter) {
+                        this.setState({
+                            // posts: this.state.posts.concat(response.data),
+                            posts: newUniquePostsArray,
+                            page: this.state.page + 10
+                        },
+                         () => PageCacher.cachePageUpdate([
+                                {name: 'posts', data: this.state.posts},
+                                {name: 'page', data: this.state.page}
+                            ], 'Posts'));
+                    }
+                } else {
+                    if (this.state.filter === currentFilter) {
+                        this.setState({
+                            hasMore: false
+                        }, () => PageCacher.cachePageUpdate([{name: 'hasMore', data: this.state.hasMore}],
+                             'Posts'));
+                    }
                 }
             }
           });
@@ -82,12 +89,23 @@ class Posts extends Component {
 
     componentDidMount() {
         this._isMounted = true;
-        // Fetch initial number of posts after component render
-        this.fetchMoreData();
+        // Set route name in state for "PageCacher.cachePageSaveScroll" to see while unmounting
+        this.setState({thisRoute: window.location.href.split("/").pop()});
+
+        const cachedData = PageCacher.cachePageOnMount('Posts');
+        const propertyNamesToBeCached = ['posts', 'page'];
+        // console.log(cachedData);
+  
+        if (PageCacher.areAllPropertiesCached(propertyNamesToBeCached, cachedData.data))
+            this.setState({... cachedData.data}, () => window.scrollTo(cachedData.scroll.scrollX, cachedData.scroll.scrollY));
+        else
+            this.fetchMoreData();
     }
 
     componentWillUnmount() {
         this._isMounted = false;
+        // Save the latest scroll position right before unmounting
+        PageCacher.cachePageSaveScroll(this.state.thisRoute);
     }
 
     render() {

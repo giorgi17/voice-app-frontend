@@ -3,6 +3,7 @@ import './Comments.css';
 import Comment from './Comment/Comment';
 import axios from 'axios';
 import CircularProgressBar from '../../../../../../img/progressbar2.gif';
+import PageCacher from '../../../../../../utils/PageCacher';
 
 class Comments extends Component {
     _isMounted = false;
@@ -16,7 +17,8 @@ class Comments extends Component {
             comments: [],
             page: 0,
             hasMore: true,
-            initialCleanupDone: false
+            initialCleanupDone: false,
+            viewPreviousCommentsButton: false
         }
     }
     // Handle more comments after clicking "View previous comments"
@@ -31,6 +33,12 @@ class Comments extends Component {
             () => { 
                 this.FetchComments();
                 this.expandLessCommentsButtonRef.current.style.display = 'none';
+                PageCacher.cachePageUpdate([
+                    {name: 'comments', data: this.state.comments},
+                    {name: 'page', data: this.state.page},
+                    {name: 'hasMore', data: this.state.hasMore},
+                    {name: 'initialCleanupDone', data: this.state.initialCleanupDone}
+                ], 'Comments' + this.props.post_id);
              });
     }
 
@@ -46,7 +54,11 @@ class Comments extends Component {
                 // console.log(response.data.comments);
                 if (response.data.comments.length > 0) {
                     if (this._isMounted) {
-                        this.setState({ comments: response.data.comments, page: this.state.page + 10 });
+                        this.setState({ comments: response.data.comments, page: this.state.page + 10 },
+                            () => PageCacher.cachePageUpdate([
+                                {name: 'comments', data: this.state.comments},
+                                {name: 'page', data: this.state.page}
+                            ], 'Comments' + this.props.post_id));
                     }   
                 }
             });
@@ -61,7 +73,11 @@ class Comments extends Component {
                 this.circularProgressBarRef.current.style.display = 'none';
 
                 if (!this.state.initialCleanupDone)
-                    this.setState({comments: []}, () => this.setState({initialCleanupDone: true}));
+                    this.setState({comments: []}, () => this.setState({initialCleanupDone: true}, 
+                        () => PageCacher.cachePageUpdate([
+                            {name: 'comments', data: this.state.comments},
+                            {name: 'initialCleanupDone', data: this.state.initialCleanupDone}
+                        ], 'Comments' + this.props.post_id)));
                 
                 // Check if there were any new comments added after mounting this component which would 
                 // cause database array to shift and remove any duplicate elements from array
@@ -76,21 +92,35 @@ class Comments extends Component {
                         this.setState({
                             comments: newUniqueCommentsArray,
                             page: this.state.page + 10
-                        });
+                        }, () => PageCacher.cachePageUpdate([
+                            {name: 'comments', data: this.state.comments},
+                            {name: 'page', data: this.state.page},
+                            // {name: 'viewPreviousCommentsButton', data: this.state.viewPreviousCommentsButton}
+                        ], 'Comments' + this.props.post_id));
                     }
             
                     // make "View previous comments" button dissapear if there are no more comments
                     if (response.data.comments.length < 10) {
-                        if (this.viewMorePreviousCommentsButtonRef.current);
-                            this.viewMorePreviousCommentsButtonRef.current.style.display = 'none';
+                        this.setState({viewPreviousCommentsButton: false}, 
+                            () => PageCacher.cachePageUpdate([
+                                {name: 'viewPreviousCommentsButton', data: this.state.viewPreviousCommentsButton}
+                            ], 'Comments' + this.props.post_id));
+
+                        // if (this.viewMorePreviousCommentsButtonRef.current);
+                        //     this.viewMorePreviousCommentsButtonRef.current.style.display = 'none';
 
                     }
                 } else {
                     this.setState({
                         hasMore: false
                     }, () => { 
-                        if (this.viewMorePreviousCommentsButtonRef.current);
-                            this.viewMorePreviousCommentsButtonRef.current.style.display = 'none';
+                        this.setState({viewPreviousCommentsButton: false}, 
+                            () => PageCacher.cachePageUpdate([
+                                {name: 'viewPreviousCommentsButton', data: this.state.viewPreviousCommentsButton}
+                            ], 'Comments' + this.props.post_id));
+
+                        // if (this.viewMorePreviousCommentsButtonRef.current);
+                        //     this.viewMorePreviousCommentsButtonRef.current.style.display = 'none';
                     });
                 }
             });
@@ -108,12 +138,19 @@ class Comments extends Component {
             this.circularProgressBarRef.current.style.display = 'none';
             if (this._isMounted) {
                 this.setState({comments: response.data.comments,
-                    hasMore: response.data.hasMore});
-            }
+                    hasMore: response.data.hasMore},
+                     () => PageCacher.cachePageUpdate([
+                        {name: 'comments', data: this.state.comments},
+                        {name: 'hasMore', data: this.state.hasMore},
+                        // {name: 'viewPreviousCommentsButton', data: this.state.viewPreviousCommentsButton}
+                    ], 'Comments' + this.props.post_id));
         
-            if (response.data.hasMore) {
-                if (this.viewMorePreviousCommentsButtonRef.current)
-                    this.viewMorePreviousCommentsButtonRef.current.style.display = 'inline-block';
+                if (response.data.hasMore) {
+                    this.setState({viewPreviousCommentsButton: true}, 
+                        () => PageCacher.cachePageUpdate([
+                            {name: 'viewPreviousCommentsButton', data: this.state.viewPreviousCommentsButton}
+                        ], 'Comments' + this.props.post_id));
+                }
             }
         }).catch( err => {
             console.log(err);
@@ -121,6 +158,12 @@ class Comments extends Component {
     }
 
     componentDidUpdate() {
+
+        if (this.state.viewPreviousCommentsButton && this.viewMorePreviousCommentsButtonRef.current)
+            this.viewMorePreviousCommentsButtonRef.current.style.display = 'inline-block';
+        else
+            this.viewMorePreviousCommentsButtonRef.current.style.display = 'none';
+
 
         if (this.state.comments.length > 3)
             this.expandLessCommentsButtonRef.current.style.display = 'block';
@@ -141,11 +184,22 @@ class Comments extends Component {
 
     componentDidMount() {
         this._isMounted = true;
-        this.FetchComments();
-    }
+        // Set route name in state for "PageCacher.cachePageSaveScroll" to see while unmounting
+        this.setState({thisRoute: window.location.href.split("/").pop()});
+
+        const cachedData = PageCacher.cachePageOnMount('Comments' + this.props.post_id);
+        const propertyNamesToBeCached = ['hasMore', 'comments'];
+  
+        if (PageCacher.areAllPropertiesCached(propertyNamesToBeCached, cachedData.data))
+            this.setState({... cachedData.data}, () => window.scrollTo(cachedData.scroll.scrollX, cachedData.scroll.scrollY));
+        else
+            this.FetchComments();
+    } 
 
     componentWillUnmount() {
         this._isMounted = false;
+        // Save the latest scroll position right before unmounting
+        PageCacher.cachePageSaveScroll(this.state.thisRoute);
     }
 
     render() {
@@ -169,7 +223,8 @@ class Comments extends Component {
                 </div>
 
                 {this.state.comments.map(comment => (
-                    <Comment    comment_author_user_id={comment.user_id}
+                    <Comment    comment_id={comment._id}
+                                comment_author_user_id={comment.user_id}
                                 comment_author_user_name={comment.user_name}
                                 comment_content={comment.content}
                                 comment_date={comment.created_at}
