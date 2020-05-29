@@ -4,6 +4,7 @@ import RecordVoice from './RecordVoice/RecordVoice';
 import Profile from './Profile/Profile';
 import Notifications from './Notifications/Notifications';
 import Home from './Home/Home';
+import Search from './Search/Search';
 
 class Menu extends Component { 
 
@@ -16,7 +17,8 @@ class Menu extends Component {
                 recordVoice: false,
                 profile: false,
                 notification: false,
-                home: true
+                home: true,
+                search: false
             },
             contentToDisplay: null
         };
@@ -62,6 +64,18 @@ class Menu extends Component {
         // document.body.requestFullscreen();
     }
 
+    goToSearchMenu = () => {
+        this.props.history.push("/search");
+    }
+
+    goToHomeMenu = () => {
+        this.props.history.push("/dashboard");
+    }
+
+    componentDidMount() {
+        this.setMenuIconActive(this.props.menuName);
+    }
+
     render () {
         return (
             <div className="responsive-menu-container" ref={this.menuContentContainerRef}>
@@ -71,7 +85,8 @@ class Menu extends Component {
                 </div>
 
                 <div className="responsive-menu-items-container">
-                    <Home onClick={this.setMenuIconActive} isHomeActive={this.state.activeIcons.home} changeDisplayedContent={this.changeDisplayedContent} hideMenuItems={this.hideMenuItems} />
+                    <Home onClick={this.goToHomeMenu} isHomeActive={this.state.activeIcons.home} changeDisplayedContent={this.changeDisplayedContent} hideMenuItems={this.hideMenuItems} />
+                    <Search onClick={this.goToSearchMenu} isSearchActive={this.state.activeIcons.search} changeDisplayedContent={this.changeDisplayedContent} />
                     <RecordVoice onClick={this.setMenuIconActive} isRecordVoiceActive={this.state.activeIcons.recordVoice}
                          changeDisplayedContent={this.changeDisplayedContent} handleScroll={this.handleScroll} />
                     <Profile onClick={this.setMenuIconActive} isProfileActive={this.state.activeIcons.profile} changeDisplayedContent={this.changeDisplayedContent}

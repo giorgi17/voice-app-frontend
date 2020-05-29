@@ -87,22 +87,23 @@
 /* If the screen size is 600px wide or less*/
 @media screen and (max-width: 600px) {
   #wrap {
-    margin: 5px 5px 20px;
+    // margin: 5px 5px 20px;
+    display: none;
   }
 
-  #wrap input[type="text"] {
-    height: 40px;
-    font-size: 15px;
-  }
+  // #wrap input[type="text"] {
+  //   height: 40px;
+  //   font-size: 15px;
+  // }
 
   // #wrap input[type="text"]:focus {
   //   width: 80vw;
   // }
 
-  #user-search-results {
-    top: 145px !important;
-    right: 45px !important;
-  }
+  // #user-search-results {
+  //   top: 145px !important;
+  //   right: 45px !important;
+  // }
 }
 
 #overlay {

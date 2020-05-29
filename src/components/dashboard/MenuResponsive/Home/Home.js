@@ -7,7 +7,7 @@ const Home = props => {
             <React.Fragment>
             <div id="responsive-home-container" 
                 className={`responsive-menu-item ${props.isHomeActive ? "active" : ""}`}
-                onClick={() => {props.onClick("home"); props.changeDisplayedContent(null); props.hideMenuItems()}} >
+                onClick={() => {props.onClick(); props.changeDisplayedContent(null); props.hideMenuItems()}} >
                 <span className={`material-icons home-icon ${props.isHomeActive ? "active" : ""}`} >
                     home
                 </span>
