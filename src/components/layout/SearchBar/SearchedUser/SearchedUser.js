@@ -7,15 +7,19 @@ class SearchedUser extends Component {
         super();
     }
     
-    openSearchedUserProfile = () => {
-        const queryParams = 'userId=' + this.props.user_id;
-        this.props.closeSearchPanel();
-        this.props.history.push(`/dashboard?${queryParams}`);
+    // openSearchedUserProfile = () => {
+    //     const queryParams = 'userId=' + this.props.user_id;
+    //     this.props.closeSearchPanel();
+    //     this.props.history.push(`/dashboard?${queryParams}`);
+    // }
+
+    goToUserProfile = () => {
+        this.props.history.push(`/profile/${this.props.user_id}`);
     }
 
     render() {
         return ( <React.Fragment>
-                    <div className="user-search-result-profile-info-wrapper" onClick={this.openSearchedUserProfile}>
+                    <div className="user-search-result-profile-info-wrapper" onClick={this.goToUserProfile}>
                         <div className="user-search-result-profile-image-wrapper">
                             <img src={this.props.avatarImage} />
                         </div>

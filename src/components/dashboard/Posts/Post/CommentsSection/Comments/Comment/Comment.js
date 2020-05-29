@@ -21,7 +21,7 @@ class Comment extends Component {
         // this.setState({date: formatted_date});
         if (this._isMounted) {
             this.setState({date: date.toLocaleString()},
-            () => PageCacher.cachePageUpdate([
+            () => PageCacher.cachePageUpdate(null, [
                 {name: 'date', data: this.state.date}
             ], 'Comment' + this.props.comment_id));
         }
@@ -36,7 +36,7 @@ class Comment extends Component {
         axios.post("/api/restricted-users/get-user-profile-picture-for-notifications", dataToSend).then(response => {
             if (this._isMounted) {
                 this.setState({commentAuthorProfilePicture: response.data.avatarImage},
-                    () => PageCacher.cachePageUpdate([
+                    () => PageCacher.cachePageUpdate(null, [
                         {name: 'commentAuthorProfilePicture', data: response.data.avatarImage}
                     ], 'Comment' + this.props.comment_id));
             }
@@ -48,7 +48,10 @@ class Comment extends Component {
     componentDidMount() {
         this._isMounted = true;
         // Set route name in state for "PageCacher.cachePageSaveScroll" to see while unmounting
-        this.setState({thisRoute: window.location.href.split("/").pop()});
+        const fullThisRoute = window.location.href.split("/");
+        fullThisRoute.splice(0,3);
+        const thisRoute = fullThisRoute.join('/');
+        this.setState({thisRoute});
 
         const cachedData = PageCacher.cachePageOnMount('Comment' + this.props.comment_id);
         const propertyNamesToBeCached = ['commentAuthorProfilePicture', 'date'];

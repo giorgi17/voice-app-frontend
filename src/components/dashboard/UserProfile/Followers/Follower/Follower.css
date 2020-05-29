@@ -1,0 +1,30 @@
+.single-follower {
+    height: 40px;
+    padding: 8px 16px;
+    box-sizing: unset;
+    display: flex;
+}
+
+.single-follower img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 4px 13px 4px 4px;
+    cursor: pointer;
+}
+
+.single-follower-username {
+    flex: 1 1 70px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.single-follower-username strong {
+    cursor: pointer;
+}
+
+.single-follower-follow-button {
+    margin-left: 15px;
+    display: none;
+}

@@ -34,3 +34,11 @@
        width: 100vw;
     }
 }
+
+.user-profile-content-wrapper {
+    /* display: none; */
+}
+
+.user-profile-page-user-description {
+    padding: 20px;
+}

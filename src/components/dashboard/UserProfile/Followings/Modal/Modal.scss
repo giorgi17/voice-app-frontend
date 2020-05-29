@@ -1,0 +1,123 @@
+@mixin transform($rules...) {
+    -webkit-transform: $rules;
+    -moz-transform: $rules;
+    -ms-transform: $rules;
+    -o-transform: $rules;
+    transform: $rules;
+}
+
+@mixin transition($rules...) {
+    -webkit-transition: $rules;
+    -moz-transition: $rules;
+    transition: $rules;
+}
+
+@mixin box-shadow($params...) {
+    -webkit-box-shadow: $params;
+    -moz-box-shadow: $params;
+    box-shadow: $params;
+}
+
+$duration: 0.3s;
+
+button {
+  position: relative;
+  z-index: 3;
+  cursor: pointer;
+  
+  &:focus {
+    outline: 0;
+  }
+}
+
+.modal-component {
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  perspective: 100px;
+  z-index: 6;
+  @include transition(opacity $duration ease-out);
+  
+  &.open {
+    display: block;
+    opacity: 1;
+    .modal-component-window {
+      @include transform(rotateX(0deg) translate(0,0));
+      opacity: 1;
+    }
+  }
+}
+
+.modal-component-window {
+  width: 260px;
+  height: 400px;
+  position: relative;
+  margin: 150px auto;
+  background: #fff;
+  @include box-shadow(0 5px 5px rgba(0,0,0,0.2));
+  @include transform(rotateX(20deg) translate(0, -120px) scale(1.0,0.2));
+  @include transition(transform $duration ease-out, opacity $duration ease-out);
+  opacity: 0;
+}
+
+@media only screen and (min-width: 736px) {
+  .modal-component-window {
+    width: 400px;
+  }
+}
+
+.modal-component-header {
+  position: relative;
+  background: rgb(29, 93, 175);
+  color: white;
+  font-weight: 700;
+  padding: 10px 20px;
+}
+
+.modal-component-close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 39px;
+  width: 39px;
+  border: 0;
+  font-size: 18px;
+  background: rgba(0,0,0,0.1);
+  color: #fff;
+  
+  &:focus {
+    outline: 0;
+  }
+}
+
+.modal-component-body {
+  // padding: 5px;
+}
+
+// .show-btn {
+//   display: block;
+//   margin: 20px auto;
+//   border: 1px solid rgba(255,255,255,0.7);
+//   background: none;
+//   color: rgba(255,255,255,0.7);
+//   font-size: 32px;
+//   padding: 10px 20px;
+//   border-radius: 5px;
+//   @include transition(background-color 0.25s ease-out);
+  
+//   &:hover {
+//     background: rgba(0,0,0,0.1);
+//   }
+// }
+
+.modal-component-body .infinite-scroll-component  h4 {
+  text-align: center;
+}
+
+.modal-component-body .infinite-scroll-component__outerdiv {
+  height: 350px;
+}

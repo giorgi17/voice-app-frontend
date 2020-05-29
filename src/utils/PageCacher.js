@@ -7,13 +7,17 @@ class PageCasher {
     static cachePageOnMount = componentName => {
         // Checking if main data object even exists in localstorage
         let mainPageCacheObject = localStorage.getItem('mainPageCacheObject');
-        if (mainPageCacheObject)
+        if (mainPageCacheObject) {
             mainPageCacheObject = JSON.parse(mainPageCacheObject);
-        else
-            return;
+        } else {
+            localStorage.setItem('mainPageCacheObject', JSON.stringify({}));
+            return false;
+        }
 
         // Checking if this page's specific data object even exists in localstorage
-        const thisRoute = window.location.href.split("/").pop();
+        const fullThisRoute = window.location.href.split("/");
+        fullThisRoute.splice(0,3);
+        const thisRoute = fullThisRoute.join('/');
         if (!mainPageCacheObject.hasOwnProperty(thisRoute)) {
             mainPageCacheObject[thisRoute] = {};
             mainPageCacheObject[thisRoute]['data'] = {};
@@ -33,7 +37,7 @@ class PageCasher {
     }
     
     // Updates page specific object stored in localstorage on every asynchronous call
-    static cachePageUpdate = (dataArray, componentName) => {
+    static cachePageUpdate = (parentObjectName=null, dataArray, componentName) => {
         // Checking if main data object even exists in localstorage
         let mainPageCacheObject = localStorage.getItem('mainPageCacheObject');
         if (mainPageCacheObject)
@@ -42,7 +46,9 @@ class PageCasher {
             return;
 
         // Checking if this page's specific data object even exists in localstorage
-        const thisRoute = window.location.href.split("/").pop();
+        const fullThisRoute = window.location.href.split("/");
+        fullThisRoute.splice(0,3);
+        const thisRoute = fullThisRoute.join('/');
         if (!mainPageCacheObject.hasOwnProperty(thisRoute)) {
             mainPageCacheObject[thisRoute] = {};
             mainPageCacheObject[thisRoute]['data'] = {};
@@ -52,13 +58,23 @@ class PageCasher {
         }
 
         if (mainPageCacheObject[thisRoute].data.hasOwnProperty(componentName)) {
+            if (parentObjectName)
+                mainPageCacheObject[thisRoute]['data'][componentName][parentObjectName] = {};
+
             dataArray.forEach(element => {
-                mainPageCacheObject[thisRoute]['data'][componentName][element.name] = element.data;
+                if (parentObjectName)
+                    mainPageCacheObject[thisRoute]['data'][componentName][parentObjectName][element.name] = element.data;
+                else
+                    mainPageCacheObject[thisRoute]['data'][componentName][element.name] = element.data;
             });
         } else {
             mainPageCacheObject[thisRoute].data[componentName] = {};
+            mainPageCacheObject[thisRoute]['data'][componentName][parentObjectName] = {};
             dataArray.forEach(element => {
-                mainPageCacheObject[thisRoute]['data'][componentName][element.name] = element.data;
+                if (parentObjectName)
+                    mainPageCacheObject[thisRoute]['data'][componentName][parentObjectName][element.name] = element.data;
+                else
+                    mainPageCacheObject[thisRoute]['data'][componentName][element.name] = element.data;
             });
         }
 
@@ -99,7 +115,11 @@ class PageCasher {
      
         let contains = true;
         for (let i = 0; i < componentPropertyArray.length; i++) {   
-            if (componentPropertyArray[i] !== cachedPropertyArray[i]) {
+            // if (componentPropertyArray[i] !== cachedPropertyArray[i]) {
+            //     contains = false;
+            //     break;
+            // }
+            if (cachedPropertyArray.indexOf(componentPropertyArray[i]) === -1) {
                 contains = false;
                 break;
             }

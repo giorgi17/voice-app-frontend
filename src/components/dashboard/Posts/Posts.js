@@ -12,6 +12,7 @@ class Posts extends Component {
 
     constructor() {
         super();
+        this.postsLoadingRef = React.createRef();
     }
     
     state = {
@@ -28,6 +29,9 @@ class Posts extends Component {
 
     // Fetch more posts from database according to page number
     fetchMoreData = () => {
+        if (this.postsLoadingRef.current)
+            this.postsLoadingRef.current.style.display = 'block';
+
         const currentFilter = this.state.filter;
         axios.get("/api/restricted-users/get-posts-with-page/?page=" + this.state.page
                  + "&user_id=" + this.props.auth.user.id + "&filter=" + this.state.filter).then(response => {
@@ -41,23 +45,36 @@ class Posts extends Component {
                     })
 
                 if (response.data.length > 0) {
+                    this.postsLoadingRef.current.style.display = 'none';
                     if (this.state.filter === currentFilter) {
                         this.setState({
                             // posts: this.state.posts.concat(response.data),
                             posts: newUniquePostsArray,
                             page: this.state.page + 10
                         },
-                         () => PageCacher.cachePageUpdate([
-                                {name: 'posts', data: this.state.posts},
-                                {name: 'page', data: this.state.page}
-                            ], 'Posts'));
+                         () => {
+                                PageCacher.cachePageUpdate(null, [
+                                    {name: 'hasMore', data: this.state.hasMore},
+                                    {name: 'posts', data: this.state.posts},
+                                    {name: 'page', data: this.state.page}
+                                ], 'Posts');
+                                window.addEventListener('scroll', this.scrollListener); 
+                            });
                     }
                 } else {
+                    this.postsLoadingRef.current.innerHTML = 'You\'ve seen all posts.';
                     if (this.state.filter === currentFilter) {
                         this.setState({
                             hasMore: false
-                        }, () => PageCacher.cachePageUpdate([{name: 'hasMore', data: this.state.hasMore}],
-                             'Posts'));
+                        }, () => {
+                                PageCacher.cachePageUpdate(null, [
+                                    {name: 'hasMore', data: this.state.hasMore},
+                                    {name: 'posts', data: this.state.posts},
+                                    {name: 'page', data: this.state.page}
+                                ],
+                                'Posts');
+                                window.addEventListener('scroll', this.scrollListener); 
+                            });
                     }
                 }
             }
@@ -87,19 +104,51 @@ class Posts extends Component {
         });
     }
 
+    scrollListener = () => {
+        const lastScrollY = window.scrollY;
+        var body = document.body,
+        html = document.documentElement;
+
+        var height = Math.max( body.scrollHeight, body.offsetHeight, 
+                            html.clientHeight, html.scrollHeight, html.offsetHeight );
+    
+        // console.log(height);
+        // console.log(lastScrollY);
+
+        if ((lastScrollY + 1000) >= height) {
+            console.log("RUN");
+            // alert("you're at the bottom of the page");
+            if (this.state.hasMore){
+                if (this._isMounted) {
+                    window.removeEventListener('scroll', this.scrollListener); 
+                    this.fetchMoreData();
+                }
+            }
+        }
+    }
+
     componentDidMount() {
         this._isMounted = true;
+        // window.addEventListener('scroll', this.scrollListener); 
+
         // Set route name in state for "PageCacher.cachePageSaveScroll" to see while unmounting
-        this.setState({thisRoute: window.location.href.split("/").pop()});
+        const fullThisRoute = window.location.href.split("/");
+        fullThisRoute.splice(0,3);
+        const thisRoute = fullThisRoute.join('/');
+        this.setState({thisRoute});
 
         const cachedData = PageCacher.cachePageOnMount('Posts');
         const propertyNamesToBeCached = ['posts', 'page'];
         // console.log(cachedData);
   
-        if (PageCacher.areAllPropertiesCached(propertyNamesToBeCached, cachedData.data))
-            this.setState({... cachedData.data}, () => window.scrollTo(cachedData.scroll.scrollX, cachedData.scroll.scrollY));
-        else
+        if (PageCacher.areAllPropertiesCached(propertyNamesToBeCached, cachedData.data)){  
+            this.setState({... cachedData.data}, () => {
+                window.scrollTo(cachedData.scroll.scrollX, cachedData.scroll.scrollY);
+                window.addEventListener('scroll', this.scrollListener);
+            });
+        } else {
             this.fetchMoreData();
+        }
     }
 
     componentWillUnmount() {
@@ -118,7 +167,7 @@ class Posts extends Component {
                     isMyPostsActive={this.state.activeIcons.myPosts}
                     changeFilter={this.changeFilter}></PostsFilter>
 
-                 <InfiniteScroll
+                 {/* <InfiniteScroll
                         // height="100%"
                         dataLength={this.state.posts.length}
                         next={this.fetchMoreData}
@@ -129,7 +178,7 @@ class Posts extends Component {
                             <b><br />You have seen it all !</b>
                             </p>
                         }
-                        >
+                        > */}
                         
                         {/* Display fetched posts */}
                          {this.state.posts.map((data, index) => (
@@ -149,7 +198,10 @@ class Posts extends Component {
                                     key={data._id}></Post>
                         ))}
 
-                </InfiniteScroll>
+                        <h4 className="user-profile-page-posts-loading" ref={this.postsLoadingRef}>
+                            Loading...
+                        </h4>
+                {/* </InfiniteScroll> */}
             </div>
         );
     }

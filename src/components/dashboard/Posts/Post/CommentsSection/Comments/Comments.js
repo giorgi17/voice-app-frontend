@@ -33,7 +33,7 @@ class Comments extends Component {
             () => { 
                 this.FetchComments();
                 this.expandLessCommentsButtonRef.current.style.display = 'none';
-                PageCacher.cachePageUpdate([
+                PageCacher.cachePageUpdate(null, [
                     {name: 'comments', data: this.state.comments},
                     {name: 'page', data: this.state.page},
                     {name: 'hasMore', data: this.state.hasMore},
@@ -55,7 +55,7 @@ class Comments extends Component {
                 if (response.data.comments.length > 0) {
                     if (this._isMounted) {
                         this.setState({ comments: response.data.comments, page: this.state.page + 10 },
-                            () => PageCacher.cachePageUpdate([
+                            () => PageCacher.cachePageUpdate([null, 
                                 {name: 'comments', data: this.state.comments},
                                 {name: 'page', data: this.state.page}
                             ], 'Comments' + this.props.post_id));
@@ -74,7 +74,7 @@ class Comments extends Component {
 
                 if (!this.state.initialCleanupDone)
                     this.setState({comments: []}, () => this.setState({initialCleanupDone: true}, 
-                        () => PageCacher.cachePageUpdate([
+                        () => PageCacher.cachePageUpdate(null, [
                             {name: 'comments', data: this.state.comments},
                             {name: 'initialCleanupDone', data: this.state.initialCleanupDone}
                         ], 'Comments' + this.props.post_id)));
@@ -92,7 +92,7 @@ class Comments extends Component {
                         this.setState({
                             comments: newUniqueCommentsArray,
                             page: this.state.page + 10
-                        }, () => PageCacher.cachePageUpdate([
+                        }, () => PageCacher.cachePageUpdate(null, [
                             {name: 'comments', data: this.state.comments},
                             {name: 'page', data: this.state.page},
                             // {name: 'viewPreviousCommentsButton', data: this.state.viewPreviousCommentsButton}
@@ -102,7 +102,7 @@ class Comments extends Component {
                     // make "View previous comments" button dissapear if there are no more comments
                     if (response.data.comments.length < 10) {
                         this.setState({viewPreviousCommentsButton: false}, 
-                            () => PageCacher.cachePageUpdate([
+                            () => PageCacher.cachePageUpdate(null, [
                                 {name: 'viewPreviousCommentsButton', data: this.state.viewPreviousCommentsButton}
                             ], 'Comments' + this.props.post_id));
 
@@ -115,7 +115,7 @@ class Comments extends Component {
                         hasMore: false
                     }, () => { 
                         this.setState({viewPreviousCommentsButton: false}, 
-                            () => PageCacher.cachePageUpdate([
+                            () => PageCacher.cachePageUpdate(null, [
                                 {name: 'viewPreviousCommentsButton', data: this.state.viewPreviousCommentsButton}
                             ], 'Comments' + this.props.post_id));
 
@@ -133,13 +133,15 @@ class Comments extends Component {
         // Send user id to fetch profile picture
         dataToSend.post_id = this.props.post_id;
 
-        this.circularProgressBarRef.current.style.display = 'inline-block';
+        if (this.circularProgressBarRef.current)
+            // this.circularProgressBarRef.current.style.display = 'inline-block';
         axios.post("/api/restricted-users/fetch-initial-comments-for-post", dataToSend).then(response => {
-            this.circularProgressBarRef.current.style.display = 'none';
+            if (this.circularProgressBarRef.current)
+                // this.circularProgressBarRef.current.style.display = 'none';
             if (this._isMounted) {
                 this.setState({comments: response.data.comments,
                     hasMore: response.data.hasMore},
-                     () => PageCacher.cachePageUpdate([
+                     () => PageCacher.cachePageUpdate(null, [
                         {name: 'comments', data: this.state.comments},
                         {name: 'hasMore', data: this.state.hasMore},
                         // {name: 'viewPreviousCommentsButton', data: this.state.viewPreviousCommentsButton}
@@ -147,7 +149,7 @@ class Comments extends Component {
         
                 if (response.data.hasMore) {
                     this.setState({viewPreviousCommentsButton: true}, 
-                        () => PageCacher.cachePageUpdate([
+                        () => PageCacher.cachePageUpdate(null, [
                             {name: 'viewPreviousCommentsButton', data: this.state.viewPreviousCommentsButton}
                         ], 'Comments' + this.props.post_id));
                 }
@@ -185,15 +187,22 @@ class Comments extends Component {
     componentDidMount() {
         this._isMounted = true;
         // Set route name in state for "PageCacher.cachePageSaveScroll" to see while unmounting
-        this.setState({thisRoute: window.location.href.split("/").pop()});
+        const fullThisRoute = window.location.href.split("/");
+        fullThisRoute.splice(0,3);
+        const thisRoute = fullThisRoute.join('/');
+        this.setState({thisRoute});
 
         const cachedData = PageCacher.cachePageOnMount('Comments' + this.props.post_id);
         const propertyNamesToBeCached = ['hasMore', 'comments'];
-  
-        if (PageCacher.areAllPropertiesCached(propertyNamesToBeCached, cachedData.data))
-            this.setState({... cachedData.data}, () => window.scrollTo(cachedData.scroll.scrollX, cachedData.scroll.scrollY));
-        else
+        
+        if (cachedData) {
+            if (PageCacher.areAllPropertiesCached(propertyNamesToBeCached, cachedData.data))
+                this.setState({... cachedData.data}, () => window.scrollTo(cachedData.scroll.scrollX, cachedData.scroll.scrollY));
+            else
+                this.FetchComments();
+        } else {
             this.FetchComments();
+        }
     } 
 
     componentWillUnmount() {

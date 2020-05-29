@@ -5,7 +5,8 @@ import axios from 'axios';
 import { connect } from "react-redux";
 import CommentsSection from './CommentsSection/CommentsSection';
 import { withRouter } from 'react-router-dom';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 
 class Post extends Component {
     _isMounted = false;
@@ -207,11 +208,6 @@ class Post extends Component {
         }
     }
 
-    redirectToUserProfile = () => {
-        const queryParams = 'userId=' + this.props.post_author_id;
-        this.props.history.push(`/dashboard?${queryParams}`);
-    }
-
     componentDidMount() {
         this._isMounted = true;
 
@@ -238,94 +234,101 @@ class Post extends Component {
 
     render() {
         return (
-            <div className="single-post">
-                <div className="notifications-message" ref={this.postEditNotificationsMessageRef}>
-                    {this.state.notifyMessageText}
-                </div>
+            <div className="single-post-outer-layer"> 
+                <div className="single-post">
+                    <div className="notifications-message" ref={this.postEditNotificationsMessageRef}>
+                        {this.state.notifyMessageText}
+                    </div>
 
-                <div className="user-post-image-wrapper">
-                    <div className="user-post-play-and-time" ref={this.playerRef}>
-                        <span className="material-icons user-post-play-button" onClick={this.playAudio}>
-                            play_circle_outline
+                    <div className="user-post-image-wrapper">
+                        <div className="user-post-play-and-time" ref={this.playerRef}>
+                            <span className="material-icons user-post-play-button" onClick={this.playAudio}>
+                                play_circle_outline
+                            </span>
+                            <span className="user-post-video-time">{this.props.audio_duration}</span>
+                        </div>
+                        <img src={this.props.picture}></img>
+
+                        <Link to={`/profile/${this.props.post_author_id}`}>
+                            <div className="user-post-profile-image-wrapper"
+                                ref={this.profileImageRef}>
+                                <img src={this.props.profile_picture} />
+                            </div>
+                        
+                        
+
+                        <strong className="user-post-username" 
+                        ref={this.profileUsernameRef}>{this.props.user_name}</strong>
+                        </Link> 
+
+                        <div className="user-post-edit-button-container" ref={this.postEditButtonRef}
+                                onClick={this.openProfileEdit}>    
+                            <span className="material-icons">
+                                more_horiz
+                            </span>
+                        </div>
+
+                        <div className="user-post-edit-options-modal-container" ref={this.postEditRef}>
+                            <ul className="user-post-edit-options-modal-menu-items">
+                                <li className="user-post-edit-options-modal-menu-items-edit-post"
+                                        ref={this.postEditOptionRef}>
+                                    Edit post
+                                </li>
+                                <li className="user-post-edit-options-modal-menu-items-delete-post"
+                                        ref={this.postEditDeleteRef}>
+                                    Delete post
+                                </li>
+                                <li className="user-post-edit-options-modal-menu-items-notifications-switch-post"
+                                        ref={this.postEditNotificationsSwitchRef}
+                                        onClick={this.notificationsSwitchHandler}>
+                                    {this.state.notifyOptionText}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+        
+                    <div className="user-post-viewer-options">
+                        <span className={`material-icons like ${this.state.liked ? "liked" : ""}`}
+                            onClick={this.likePost}>
+                            thumb_up
                         </span>
-                        <span className="user-post-video-time">{this.props.audio_duration}</span>
-                    </div>
-                    <img src={this.props.picture}></img>
- 
-                    <div className="user-post-profile-image-wrapper"
-                        onClick={this.redirectToUserProfile} ref={this.profileImageRef}>
-                        <img src={this.props.profile_picture} />
-                    </div>
-
-                    <strong className="user-post-username" onClick={this.redirectToUserProfile}
-                    ref={this.profileUsernameRef}>{this.props.user_name}</strong>
-
-                    <div className="user-post-edit-button-container" ref={this.postEditButtonRef}
-                            onClick={this.openProfileEdit}>    
-                        <span className="material-icons">
-                            more_horiz
+                        <span className={`material-icons dislike ${this.state.disliked ? "disliked" : ""}`}
+                            onClick={this.dislikePost}>
+                            thumb_down
+                        </span>
+                        <span className="material-icons comment">
+                            mode_comment
+                        </span>
+                        <span className="material-icons share">
+                            share
                         </span>
                     </div>
-
-                    <div className="user-post-edit-options-modal-container" ref={this.postEditRef}>
-                        <ul className="user-post-edit-options-modal-menu-items">
-                            <li className="user-post-edit-options-modal-menu-items-edit-post"
-                                    ref={this.postEditOptionRef}>
-                                Edit post
-                            </li>
-                            <li className="user-post-edit-options-modal-menu-items-delete-post"
-                                    ref={this.postEditDeleteRef}>
-                                Delete post
-                            </li>
-                            <li className="user-post-edit-options-modal-menu-items-notifications-switch-post"
-                                    ref={this.postEditNotificationsSwitchRef}
-                                    onClick={this.notificationsSwitchHandler}>
-                                {this.state.notifyOptionText}
-                            </li>
-                        </ul>
+        
+                    {this.state.player}
+        
+                    <div className="user-post-info">
+                        <span className="user-post-info-likes">{this.state.postInfo.likes} Likes</span>
+                        <span className="user-post-info-dislikes">{this.state.postInfo.dislikes} Dislikes</span>
+                        <span className="user-post-info-comments">{this.state.postInfo.comments} Comments</span>
+                        <span className="user-post-info-views">{this.state.postInfo.views} Views</span>
                     </div>
-                </div>
-    
-                <div className="user-post-viewer-options">
-                    <span className={`material-icons like ${this.state.liked ? "liked" : ""}`}
-                        onClick={this.likePost}>
-                        thumb_up
-                    </span>
-                    <span className={`material-icons dislike ${this.state.disliked ? "disliked" : ""}`}
-                        onClick={this.dislikePost}>
-                        thumb_down
-                    </span>
-                    <span className="material-icons comment">
-                        mode_comment
-                    </span>
-                    <span className="material-icons share">
-                        share
-                    </span>
-                </div>
-    
-                 {this.state.player}
-    
-                <div className="user-post-info">
-                    <span className="user-post-info-likes">{this.state.postInfo.likes} Likes</span>
-                    <span className="user-post-info-dislikes">{this.state.postInfo.dislikes} Dislikes</span>
-                    <span className="user-post-info-comments">{this.state.postInfo.comments} Comments</span>
-                    <span className="user-post-info-views">{this.state.postInfo.views} Views</span>
-                </div>
-                <hr></hr>
-    
-                <div className="user-post-description">
-                    <span>{this.props.description}</span>
-                </div>
+                    <hr></hr>
+        
+                    <div className="user-post-description">
+                        <span>{this.props.description}</span>
+                    </div>
 
-                <hr></hr>
+                    <hr></hr>
 
-                <CommentsSection post_author_id={this.props.post_author_id}
-                                 post_id={this.props.post_id}
-                                 comments_number={this.state.postInfo}
-                                 changeCommentsNumber={this.changeCommentsNumber}></CommentsSection>
+                    <CommentsSection post_author_id={this.props.post_author_id}
+                                    post_id={this.props.post_id}
+                                    comments_number={this.state.postInfo}
+                                    changeCommentsNumber={this.changeCommentsNumber}></CommentsSection>
 
-                <div className="user-post-created-at">
-                    {this.transform_date(this.props.created_at)}
+                    <div className="user-post-created-at">
+                        {this.transform_date(this.props.created_at)}
+                    </div>
+                    
                 </div>
             </div>)
     }

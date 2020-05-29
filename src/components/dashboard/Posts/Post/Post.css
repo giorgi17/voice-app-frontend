@@ -69,6 +69,7 @@
     left: 90px;
     cursor: pointer;
     transition: opacity 0.4s;
+    color: initial;
 }
 
 .user-post-username:hover {
@@ -242,3 +243,14 @@
         color: rgb(79, 148, 243);
     }
 }
+
+.single-post-outer-layer {
+    margin-bottom: 20px;
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* align-content: space-around;
+    align-content:center */
+  }

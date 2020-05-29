@@ -9,7 +9,7 @@ import Header from '../Header/Header';
 import SearchBar from '../layout/SearchBar/SearchBar';
 import Posts from './Posts/Posts';
 import ContentContainer from './ContentContainer/ContentContainer';
-import UserProfile from './Posts/Post/UserProfile/UserProfile';
+// import UserProfile from './Posts/Post/UserProfile/UserProfile';
 
 class Dashboard extends Component {
   constructor() {
@@ -27,47 +27,48 @@ class Dashboard extends Component {
   };
 
   componentDidUpdate() {
-    const parsed = queryString.parse(window.location.search);
+    // const parsed = queryString.parse(window.location.search);
 
-    if (parsed.userId) {
-      if (this.state.userIdForProfile === parsed.userId) {
-        return;
-      } else {
-        const userProfile = (<UserProfile user_id={parsed.userId}></UserProfile>);
-        this.setState({mainContent: userProfile,
-           userIdForProfile: parsed.userId});
-      }
-    } else {
-      if (!this.state.userIdForProfile)
-        return;
-      const posts = (<Posts />);
-      this.setState({mainContent: posts, userIdForProfile: null});
-    }
+    // if (parsed.userId) {
+    //   if (this.state.userIdForProfile === parsed.userId) {
+    //     return;
+    //   } else {
+    //     const userProfile = (<UserProfile user_id={parsed.userId}></UserProfile>);
+    //     this.setState({mainContent: userProfile,
+    //        userIdForProfile: parsed.userId});
+    //   }
+    // } else {
+    //   if (!this.state.userIdForProfile)
+    //     return;
+    //   const posts = (<Posts />);
+    //   this.setState({mainContent: posts, userIdForProfile: null});
+    // }
   }
 
   componentDidMount() {
-    const parsed = queryString.parse(window.location.search);
+    // const parsed = queryString.parse(window.location.search);
 
-    if (parsed.userId) {
-      if (this.state.userIdForProfile === parsed.userId) {
-        return;
-      } else {
-        const userProfile = (<UserProfile user_id={parsed.userId}></UserProfile>);
-        this.setState({mainContent: userProfile, userIdForProfile: parsed.userId});
-      }
-    } else {
-      const posts = (<Posts />);
-      this.setState({mainContent: posts});
-    }
+    // if (parsed.userId) {
+    //   if (this.state.userIdForProfile === parsed.userId) {
+    //     return;
+    //   } else {
+    //     const userProfile = (<UserProfile user_id={parsed.userId}></UserProfile>);
+    //     this.setState({mainContent: userProfile, userIdForProfile: parsed.userId});
+    //   }
+    // } else {
+    //   const posts = (<Posts />);
+    //   this.setState({mainContent: posts});
+    // }
   }
 
 render() {
     return (
           <React.Fragment>
             <Header authenticated={true} logoutMethod={this.onLogoutClick} homeActive={true} />
-            <SearchBar />
+            {/* <SearchBar /> */}
             <ContentContainer>
-              {this.state.mainContent}
+              {/* {this.state.mainContent} */}
+              <Posts />
             </ContentContainer>
           </React.Fragment>
         );

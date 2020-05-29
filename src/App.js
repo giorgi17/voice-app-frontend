@@ -9,6 +9,7 @@ import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
 import Welcome from './components/Welcome/Welcome';
 import About from './components/About/About';
+import Profile from './components/dashboard/UserProfile/UserProfile';
 // import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { Provider } from "react-redux";
@@ -18,6 +19,9 @@ import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
+import userProfile from './components/dashboard/UserProfile/UserProfile';
+import Followers from './components/dashboard/UserProfile/Followers/Followers';
+import Followings from './components/dashboard/UserProfile/Followings/Followings';
 
 import { Button } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -64,6 +68,10 @@ function App() {
             <Route exact path="/about" component={About} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/profile" component={Profile} />
+            <Route exact path='/profile/:userId' component={userProfile} />
+            <Route path='/profile/:userId/followers' component={Followers} />
+            <Route path='/profile/:userId/following' component={Followings} />
 
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />

@@ -4,10 +4,12 @@
     background-color: #333;
     overflow: hidden;
     z-index: 5;
-    position: relative;
+    /* position: relative; */
+    position: fixed;
+    width: 100%;
     min-height: 80px;
   }
-  
+
   /* Style the links inside the navigation bar */
   .topnav a {
     float: left;

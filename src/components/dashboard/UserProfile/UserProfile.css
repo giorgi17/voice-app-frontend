@@ -1,0 +1,200 @@
+.user-profile-page {
+    background: #fff;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    width: 100%;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    /* position: absolute;
+    top: 83px; */
+    min-height: 100%;
+    /* margin-top: 14px; */
+    padding-top: 80px;
+    /* margin-bottom: 50px; */
+  }
+
+  @media only screen and (max-width: 1050px) {
+    /* .user-profile-page {
+      width: 510px;
+    } */
+  }
+
+  @media only screen and (max-width: 600px) {
+    /* .user-profile-page {
+      width: 100%;
+      margin: 0;
+    } */
+  }
+
+  .user-profile-content-wrapper {
+    min-height: 4%;
+    /* margin: 2%; */
+    /* position: absolute; */
+    width: 100%;
+  }
+  
+  .user-profile-page-posts-container {
+    /* position: absolute; */
+    display: block;
+    /* max-width: 40%; */
+    /* width: 400px; */
+    width: 100%;
+    /* height: 200px; */
+    /* margin: 0 2%; */
+    /* vertical-align: top; */
+    margin-bottom: 50px;
+  }
+
+  .user-profile-page-basic-info {
+    display: inline-block;
+    /* min-width: 40%; */
+    width: 400px;
+    height: 500px;
+    background-color: green;
+    /* margin: 0 2%; */
+    
+  }
+
+.single-post {
+
+}
+
+.user-profile-page-posts-loading {
+  text-align: center;
+  display: none;
+}
+
+.user-profile-page-posts-container .single-post {
+  margin: auto;
+}
+
+@media only screen and (max-width: 950px) {
+  .user-profile-page-posts-container .single-post {
+    margin: auto;
+  }
+}
+
+@media only screen and (max-width: 510px) {
+  .user-profile-page-posts-container .single-post {
+    width: 100%;
+  }
+}
+
+.user-profile-page-profile-image-wrapper {
+  display: block;
+  border-radius: 50%;
+  border: 2px solid black;
+  width: 150px;
+  height: 150px;
+  padding: 5px;
+  margin: 40px;
+  margin-left: 60px;
+  flex-shrink: 0;
+}
+
+@media only screen and (max-width: 850px) {
+  .user-profile-page-profile-image-wrapper {
+    width: 91px;
+    height: 91px;
+    margin: 20px;
+    margin-left: 30px;
+  }
+
+  .user-profile-page-follow-button {
+    margin: 0px !important;
+  }
+
+  .user-profile-page-follow-button .MuiButtonBase-root {
+    width: 80px;
+    height: 30px;
+  }
+
+  .user-profile-page-profile-username {
+    /* flex: 0 1 100%; */
+    margin-bottom: 5px;
+  }
+}
+
+.user-profile-page-profile-image-wrapper img {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    /* cursor: pointer; */
+}
+
+.user-profile-page-info-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  /* margin: 10px;
+  margin-top: 30px; */
+  /* width: 50%; */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-shrink: 1;
+  min-width: 0;
+}
+
+.user-profile-page-profile-username {
+  font-size: 28px;
+  min-width: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin-right: 20px;
+}
+
+.user-profile-page-follow-button {
+  /* display: none; */
+}
+
+.user-profile-page-user-description {
+  font-size: 16px;
+  flex-shrink: 1;
+  flex-grow: 1;
+  flex-basis: 100%;
+  min-width: 0;
+  align-items: stretch;
+}
+
+.user-profile-page-user-pic-and-basic {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.user-profile-page-line {
+  width: 100%;
+}
+
+.user-profile-page-basic-activity-info-wrapper-2 {
+  width: 100%;
+}
+
+@media only screen and (min-width: 850px) {
+  .user-profile-page-basic-activity-info-wrapper-2 {
+    display: none;
+  }
+
+  .user-profile-page-basic-activity-info-wrapper-2 .user-profile-page-basic-activity-info-wrapper {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .user-profile-page-basic-activity-info-wrapper-2 {
+    display: block;
+  }
+
+  .user-profile-page-basic-activity-info-wrapper-2 .user-profile-page-basic-activity-info-wrapper {
+    display: flex;
+    justify-content: space-around;
+  }
+}

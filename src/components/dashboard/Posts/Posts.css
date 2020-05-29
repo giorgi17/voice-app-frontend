@@ -2,23 +2,12 @@
     background: #fff;
     border-radius: 2px;
     display: inline-block;
-    min-height: 80%;
+    /* min-height: 80%; */
     margin: 2%;
     position: relative;
     width: 60%;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     float: right;
-}
-
-.posts-container .infinite-scroll-component  {
-    /* height: 900px !important; */
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-
-.infinite-scroll-component p {
-    width: 100%;
 }
 
 @media only screen and (max-width: 1050px) {

@@ -17,11 +17,12 @@ class SearchBar extends Component {
     // When black background is clicked, close everything
     blackOverlayClicked = () => {
         this.blackOverlayRef.current.style.display = 'none';
-
+        document.body.style.overflowY = "auto";
         // Delay search results dissapearance so it won't miss a click to transfer 
         // to profile page
         setTimeout(() => {
-            this.searchResultsDisplayRef.current.style.display = 'none';
+            if (this.searchResultsDisplayRef.current) 
+                this.searchResultsDisplayRef.current.style.display = 'none';
         }, 200);
     }
 
@@ -44,12 +45,16 @@ class SearchBar extends Component {
 
     on = () => {
         this.blackOverlayRef.current.style.display = "block";
+        document.body.style.overflowY = "hidden";
     }
       
     off = () => {
         setTimeout(() => {
-            this.blackOverlayRef.current.style.display = "none";
-            this.searchResultsDisplayRef.current.style.display = 'none';
+            document.body.style.overflowY = "auto";
+            if (this.blackOverlayRef.current && this.searchResultsDisplayRef.current) {
+                this.blackOverlayRef.current.style.display = "none";
+                this.searchResultsDisplayRef.current.style.display = 'none';
+            }
         }, 100);
     }
 
@@ -61,18 +66,27 @@ class SearchBar extends Component {
                         autoComplete="off" type="text"
                         placeholder="What're we looking for ?"
                         onFocus={this.on} onBlur={this.off}
-                        onChange={this.onSearchInputChange} /><input id="search_submit" value="Rechercher" type="submit" />
+                        onChange={this.onSearchInputChange} />
+                        {/* <input id="search_submit" value="Rechercher" type="submit" /> */}
+                        <span className="material-icons" id="search_submit" value="Rechercher" type="submit">
+                        search
+                        </span>
                 </div>
 
-                <div id="user-search-results" ref={this.searchResultsDisplayRef}>
+                {/* <div id="user-search-results" ref={this.searchResultsDisplayRef}>
                     {this.state.searchResult.map(data => (
                         <SearchedUser user_id={data._id} name={data.name} avatarImage={data.avatarImage}
                             key={data._id} closeSearchPanel={this.blackOverlayClicked}></SearchedUser>
                     ))}
-                </div>
+                </div> */}
 
                 <div id="overlay" ref={this.blackOverlayRef} onClick={this.blackOverlayClicked}>
-
+                    <div id="user-search-results" ref={this.searchResultsDisplayRef}>
+                        {this.state.searchResult.map(data => (
+                            <SearchedUser user_id={data._id} name={data.name} avatarImage={data.avatarImage}
+                                key={data._id} closeSearchPanel={this.blackOverlayClicked}></SearchedUser>
+                        ))}
+                    </div>
                 </div>
             </React.Fragment>
         );

@@ -1,0 +1,23 @@
+.user-profile-page-basic-activity-info-wrapper {
+    list-style-type: none;
+    flex: 0 1 100%;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  @media only screen and (max-width: 850px) {
+    .user-profile-page-basic-activity-info-wrapper {
+      display: none;
+    }
+  }
+  
+  .user-profile-page-basic-activity-info-wrapper li {
+    display: inline;
+    margin-right: 20px;
+  }
+
+  .user-profile-page-basic-activity-info-wrapper li:nth-child(n+2) {
+    cursor: pointer;
+  }
+
