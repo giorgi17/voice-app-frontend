@@ -3,6 +3,7 @@
     min-height: calc(100vh - 52px);
     background-color: white;
     margin-bottom: 52px;
+    position: absolute;
 }
 
 .responsive-search-view-top {
@@ -11,7 +12,10 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 10px;
+    position: fixed;
+    background-color: white;
+    z-index: 1;
 }
 
 .responsive-search-view-search-icon {
@@ -22,6 +26,10 @@
     width: 100%;
 } 
 
+.responsive-search-view-top #outlined-basic {
+    height: 5px;
+}
+
 .responsive-search-view-top-search-input {
     flex: 1;
     flex-grow: 3;
@@ -30,5 +38,7 @@
 .responsive-search-view-search-results {
     /* height: 100%; */
     width: 100%;
+    margin-top: 65px;
+    /* margin-top: 93px; */
     /* overflow: scroll; */
 }

@@ -1,11 +1,17 @@
 .user-search-result-profile-info-wrapper {
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     align-items: center;
     justify-content: flex-start;
     height: 70px;
     position: relative;
     cursor: pointer;
+}
+
+.user-search-result-profile-username {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .user-search-result-profile-info-wrapper:hover {
@@ -24,6 +30,7 @@
     width: 50px;
     height: 50px;
     margin-left: 15px;
+    flex-shrink: 0;
 }
 
 .user-search-result-profile-image-wrapper img {

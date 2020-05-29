@@ -45,7 +45,7 @@ class SearchView extends Component {
                         </span>
                     </div>
 
-                    <div id="responsive-search-view-search-results" ref={this.searchResultsDisplayRef}>
+                    <div className="responsive-search-view-search-results" ref={this.searchResultsDisplayRef}>
                         {this.state.searchResult.map(data => (
                                 <SearchedUser user_id={data._id} name={data.name} avatarImage={data.avatarImage}
                                     key={data._id} closeSearchPanel={this.blackOverlayClicked}></SearchedUser>
