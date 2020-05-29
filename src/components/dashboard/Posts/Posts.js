@@ -6,6 +6,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { connect } from "react-redux";
 import PostsFilter from './PostsFilter/PostsFilter';
 import PageCacher from '../../../utils/PageCacher';
+import AddNewPost from './AddNewPost/AddNewPost';
 
 class Posts extends Component {
     _isMounted = false;
@@ -161,11 +162,13 @@ class Posts extends Component {
         return (
             <div className="posts-container">
 
-                <PostsFilter onClick={this.setMenuIconActive}
+                {/* <PostsFilter onClick={this.setMenuIconActive}
                     isShowAllActive={this.state.activeIcons.showAll}
                     isFollowingActive={this.state.activeIcons.following}
                     isMyPostsActive={this.state.activeIcons.myPosts}
-                    changeFilter={this.changeFilter}></PostsFilter>
+                    changeFilter={this.changeFilter}></PostsFilter> */}
+
+                <AddNewPost/>
 
                  {/* <InfiniteScroll
                         // height="100%"

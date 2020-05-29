@@ -4,6 +4,7 @@
     padding: 0;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-around;
   }
   
   @media only screen and (max-width: 850px) {
@@ -14,7 +15,7 @@
   
   .user-profile-page-basic-activity-info-wrapper li {
     display: inline;
-    margin-right: 20px;
+    /* margin-right: 20px; */
   }
 
   .user-profile-page-basic-activity-info-wrapper li:nth-child(n+2) {

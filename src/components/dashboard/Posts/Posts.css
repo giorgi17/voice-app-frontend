@@ -2,12 +2,10 @@
     background: #fff;
     border-radius: 2px;
     display: inline-block;
-    /* min-height: 80%; */
-    margin: 2%;
     position: relative;
-    width: 60%;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    float: right;
+    width: 100%;
+    /* box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); */
+    margin-top: 50px;
 }
 
 @media only screen and (max-width: 1050px) {

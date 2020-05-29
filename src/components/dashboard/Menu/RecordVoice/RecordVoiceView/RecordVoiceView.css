@@ -2,13 +2,17 @@
     background: #fff;
     border-radius: 2px;
     display: inline-block;
-    min-height: 230px;
-    max-height: 80vh;
+    min-height: 500px;
     /* margin: 2%; */
     position: relative;
     width: 100%;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    overflow: scroll;
+    /* overflow: scroll;
+    overflow-x: hidden; */
+}
+
+#add-post-container {
+    margin: auto 20px;
 }
 
 .recordvoice-view-container h3 {
@@ -21,24 +25,42 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
+    position: relative;
     /* opacity: 0.4; */
+}
+
+#recordvoice-view-post-image span {
+  z-index: 1;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #898E95;
+  border-radius: 50%;
+  background-color: #D8DADF;
+  padding: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#recordvoice-view-post-image span:hover {
+    background-color: rgb(193, 196, 201);
 }
 
 #recordvoice-view-record-button {
     display: inline-block;
-    width: 60px;
-    height: 60px;
+    /* width: 60px;
+    height: 60px; */
+    width: 50px;
+    height: 50px;
     text-align: center;
     background-color: #124DA0;
     line-height: 50px;
     font-weight: 600;
-    padding: 5px;
+    margin-left: 10px;
     border-radius: 50%;
-    position: absolute;
+    /* position: absolute;
     bottom: -30px;
-    left: 170px;
-
-
+    left: 170px; */
     color: wheat;
     cursor: pointer;
 }
@@ -50,42 +72,67 @@
 
 #recordvoice-view-post-picture-and-record-container {
     width: 100%;
-    height: auto;
-    margin-left: auto;
-    margin-right: auto;
+    height: 300px;
+    overflow: scroll;
+    overflow-x: hidden;
+    /* margin: auto 20px; */
     position: relative;
 }
 
 #recordvoice-view-player-container {
-    margin-top: 40px;
+    margin-top: 10px;
     margin-bottom: 20px;   
 }
 
 #recordvoice-view-post-image-icon {
-    border: 1px solid black;
+    /* border: 1px solid black;
+    border-radius: 50%; */
     border-radius: 50%;
     display: inline-block;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     text-align: center;
-    padding: 0.8rem;
+    padding: 0.5rem;
     cursor: pointer;
-    background-color: #1c5b69;
-    color: #9be7ff;
-    margin: 10px;
-    margin-right: 20px;
-    float: right;
+    color: #1ee487;
+    transition: background-color 0.3s;
 }
 
 #recordvoice-view-post-image-icon:hover {
-    color: #0d47a1;
-    background-color: #748d97;
-    transition: color 0.3s;
+    background-color: #e0e7eb;
+}
+
+#recordvoice-view-post-image-icon span {
+    font-size: 24px;
+    font-weight: normal;
+    margin: auto;
+}
+
+#recordvoice-view-post-description-icon {
+    border-radius: 50%;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: #f87a04;
+    transition: background-color 0.3s;
+}
+
+#recordvoice-view-post-description-icon:hover {
+    background-color: #e0e7eb;
+}
+
+#recordvoice-view-post-description-icon span {
+    font-size: 24px;
+    font-weight: normal;
+    margin: auto;
 }
 
 #recordvoice-view-post-description-input-container {
     margin: 10px;
-    margin-top: 100px;
+    /* margin-top: 100px; */
 }
 
 
@@ -111,40 +158,31 @@
 }
 
 #recordvoice-view-post-button {
-    height: 30px;
-    width: 60px;
-    display: inline-block;
-    background-color: #124DA0;
-    color: wheat;
-    border-radius: 20%;
-    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #468CA2;
+    color: white;
+    border-radius: 10px;
+    /* position: absolute;
     top: 10px;
-    right: 10px;
+    right: 10px; */
     cursor: pointer;
+    margin-bottom: 20px;
 }
 
 #recordvoice-view-post-button:hover {
-    background-color: rgb(85, 121, 172);
+    opacity: 0.8;
     transition: background-color 0.4s;
 }
 
-#recordvoice-view-post-button span {
-    display: inline-block;
-}
-
-#recordvoice-view-post-button .recordvoice-view-post-button-label-icon {
-    font-size: 20px;
-    position: absolute;
-    top: 4px;
-    left: 37px;
-}
-
 #recordvoice-view-post-button-label {
-    font-size: 14px;
+    font-size: 20px;
     font-weight: 700;
-    position: absolute;
+    margin: 10px;
+    /* position: absolute;
     left: 8px;
-    top: 5px;
+    top: 5px; */
 }
 
 #add-post-message-after {
@@ -162,12 +200,76 @@
 } */
 
 #recordvoice-view-recorded-time {
-    margin-top: 50px;
     text-align: center;
     font-weight: bold;
     display: none;
+    margin-left: 20px;
 }
 
 .recordvoice-view-recorded-time-recording-icon {
     color: red;
+}
+
+.recordvoice-view-post-user-info {
+    width: 100%;
+}
+
+.recordvoice-view-post-user-info-username {
+    font-size: 20px;
+}
+
+.recordvoice-view-post-user-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 10px;
+}
+
+.recordvoice-view-post-picture-and-record-top-text {
+    font-size: 15px;
+    opacity: 0.7;
+    word-wrap: break-word
+}
+
+.recordvoice-view-post-picture-and-record-top {
+    width: 100%;
+    margin-bottom: 20px;
+    word-wrap: break-word
+}
+
+.recordvoice-view-add-to-your-post-container {
+    width: 100%;
+    /* height: 50px; */
+    border-radius: 10px;
+    border: 1px solid rgb(204, 196, 196);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.recordvoice-view-add-to-your-post-container span {
+    font-size: 15px;
+    font-weight: 700;
+    margin-left: 10px;
+}
+
+.recordvoice-view-add-to-your-post-container .container {
+    width: 40px;
+    height: 40px;
+}
+
+.recordvoice-view-add-to-your-post-container .container .row-filename {
+    display: none;
+}
+
+.recordvoice-view-add-to-your-post-icons {
+    display: flex;
+    /* align-items: center; */
+    justify-content: space-between; 
+}
+
+.recordvoice-view-add-to-your-post-icons > div {
+    margin: auto 5px; 
 }

@@ -18,6 +18,7 @@ class RecordVoiceView extends Component {
         this.addNewPostContainerRef = React.createRef();
         this.afterAddPostSuccessMessageRef = React.createRef();
         this.recordedTimeDisplayRef = React.createRef();
+        this.descriptionRef = React.createRef();
         this.state = {
             recording: false,
             audioBlobUrl: '',
@@ -120,18 +121,22 @@ class RecordVoiceView extends Component {
 
     handleRecordedTimeDisplay = () => {
         if (this.recordedTimeDisplayRef.current) {
-            if (this.recordedTimeDisplayRef.current.style.display === 'block') {
+            if (this.recordedTimeDisplayRef.current.style.display === 'inline-block') {
                 this.recordedTimeDisplayRef.current.style.display = 'none';
                 this.state.timer.stop();
                 this.state.timer.removeEventListener('secondsUpdated', this.stopWatchEventListener);
                 this.setState({currentRecordedTime: '00:00:00'});
             } else if (this.recordedTimeDisplayRef.current.style.display === 'none' || this.recordedTimeDisplayRef.current.style.display === '') {
-                    this.recordedTimeDisplayRef.current.style.display = 'block';
+                    this.recordedTimeDisplayRef.current.style.display = 'inline-block';
                     this.state.timer.start();
                     this.state.timer.addEventListener('secondsUpdated', this.stopWatchEventListener);
             }
         }
     }
+
+    focusDescriptionTextInput = () => {
+        this.descriptionRef.current.focus();
+      }    
 
     render() {
         return (
@@ -150,63 +155,107 @@ class RecordVoiceView extends Component {
                 </div>
                 
                 <div id="add-post-container" ref={this.addNewPostContainerRef}>
-                    <div id="recordvoice-view-post-button" onClick={this.addNewPostHandler}>
+                    <div className="recordvoice-view-post-user-info">
+                        <img src={this.props.profile_picture}></img>
+
+                        <span className="recordvoice-view-post-user-info-username">
+                            {this.props.auth.user.name}
+                        </span>
+                    </div>
+                    {/* <div id="recordvoice-view-post-button" onClick={this.addNewPostHandler}>
                         <span id="recordvoice-view-post-button-label">Post</span>
                         <span className="material-icons recordvoice-view-post-button-label-icon">
                             forward
                         </span>
-                    </div>
-                    <h3>Record</h3>
+                    </div> */}
+                    {/* <h3>Record</h3> */}
+
+
                     <div id="recordvoice-view-post-picture-and-record-container">
-                        <img src={this.state.postImageSrc} id="recordvoice-view-post-image"></img>
-                        <div ref={this.recordButtonRef} id="recordvoice-view-record-button" onClick={() => {startRecording(this.state, this.changeFileName, this.deviceNotFound, this.deviceFound, this.changeRecording, this.changeRecordButtonText, this.changeAudioBlob);
-                            this.handleRecordedTimeDisplay();}}>
-                            {this.state.recordButtonText}
+                        <div className="recordvoice-view-post-picture-and-record-top">
+                            <span className="recordvoice-view-post-picture-and-record-top-text">Got something to say, {this.props.auth.user.name}?</span>
+                
+                            <div ref={this.recordButtonRef} id="recordvoice-view-record-button" onClick={() => startRecording(this.state, this.changeFileName, this.deviceNotFound, this.deviceFound, this.changeRecording, this.changeRecordButtonText, this.changeAudioBlob, this.handleRecordedTimeDisplay)}>
+           
+                                    {this.state.recordButtonText}
+                            </div>
+
+                            <div id="recordvoice-view-recorded-time" ref={this.recordedTimeDisplayRef}>
+                                <span className="material-icons recordvoice-view-recorded-time-recording-icon">
+                                    fiber_manual_record
+                                </span>
+                                {this.state.currentRecordedTime}
+                            </div>
+                        </div>
+                        
+                        <div id="recordvoice-view-post-image">
+                            <span className="material-icons" onClick={() => this.setState({ postImageSrc: 'https://voice-social-network.s3.us-east-2.amazonaws.com/post-pictures/stripes.png',
+                                        imageBlob: null})}>
+                                close
+                            </span> 
+                            <img src={this.state.postImageSrc} id="recordvoice-view-post-image"></img>
+                        </div>
+
+                        <div id="recordvoice-view-post-description-input-container">
+                            <TextField
+                                id="recordvoice-view-post-description-input"
+                                label="Description"
+                                multiline
+                                rows={10}
+                                placeholder="Write description"
+                                variant="outlined"
+                                value={this.state.description}
+                                onChange={this.descriptionInputHandler}
+                                inputRef={this.descriptionRef} 
+                                />
                         </div>
                     </div>
 
-                    <div id="recordvoice-view-recorded-time" ref={this.recordedTimeDisplayRef}>
+                    {/* <div id="recordvoice-view-recorded-time" ref={this.recordedTimeDisplayRef}>
                         <span className="material-icons recordvoice-view-recorded-time-recording-icon">
                             fiber_manual_record
                         </span>
                         {this.state.currentRecordedTime}
-                    </div>
+                    </div> */}
 
                     <div id="recordvoice-view-player-container">
                         <Player audioFile={this.state.audioBlobUrl} />
                         {/* <Player audioFile="https://voice-social-network.s3.us-east-2.amazonaws.com/posts-audio/bensound-summer.mp3" /> */}
                     </div>
                     
-                    <FilePicker
-                        extensions={['image/jpg', 'image/jpeg', 'image/png', 'image/gif']}
-                        maxSize={50}
-                        dims={{minWidth: 50, maxWidth: 3000, minHeight: 50, maxHeight: 3000}}
-                        onChange={blob => {this.changePostImage(blob)}}
-                        onError={errMsg => (console.log(errMsg))}
-                        onClear={() => this.setState({ postImageSrc: 'https://voice-social-network.s3.us-east-2.amazonaws.com/post-pictures/stripes.png',
-                                    imageBlob: null})}
-                        // triggerReset={console.log("RESET!")}
-                    >
-                        <div id="recordvoice-view-post-image-icon">
-                            <span className="material-icons">
-                            insert_photo
-                            </span>
+                    <div className="recordvoice-view-add-to-your-post-container">
+                        <span>Add to your post</span>
+
+                        <div className="recordvoice-view-add-to-your-post-icons">
+                            <FilePicker
+                            extensions={['image/jpg', 'image/jpeg', 'image/png', 'image/gif']}
+                            maxSize={50}
+                            dims={{minWidth: 50, maxWidth: 3000, minHeight: 50, maxHeight: 3000}}
+                            onChange={blob => {this.changePostImage(blob)}}
+                            onError={errMsg => (console.log(errMsg))}
+                            onClear={() => this.setState({ postImageSrc: 'https://voice-social-network.s3.us-east-2.amazonaws.com/post-pictures/stripes.png',
+                                        imageBlob: null})}
+                            // triggerReset={console.log("RESET!")}
+                        >
+                                <div id="recordvoice-view-post-image-icon">
+                                    <span className="material-icons">
+                                        insert_photo
+                                    </span>
+                                </div>
+                            </FilePicker>
+
+                            <div id="recordvoice-view-post-description-icon" onClick={this.focusDescriptionTextInput}>
+                                <span className="material-icons">
+                                    description
+                                </span>
+                            </div>
                         </div>
-                    </FilePicker>
-                    <div id="recordvoice-view-post-description-input-container">
-                        <TextField
-                            id="recordvoice-view-post-description-input"
-                            label="Description"
-                            multiline
-                            rows={10}
-                            placeholder="Write description"
-                            variant="outlined"
-                            value={this.state.description}
-                            onChange={this.descriptionInputHandler}
-                            />
+                    </div>
+
+                    <div id="recordvoice-view-post-button" onClick={this.addNewPostHandler}>
+                        <span id="recordvoice-view-post-button-label">Post</span>
                     </div>
                 </div>
-                
                
             </div>
         );
