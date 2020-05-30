@@ -11,6 +11,12 @@
     overflow-x: hidden; */
 }
 
+@media screen and (max-width: 600px) {
+    #responsive-recordvoice-view-player-container .rhap_container  {
+        min-width: unset !important;
+    }
+}
+
 @media screen and (min-width: 600px) {
     .responsive-recordvoice-view-container {
         display: none;

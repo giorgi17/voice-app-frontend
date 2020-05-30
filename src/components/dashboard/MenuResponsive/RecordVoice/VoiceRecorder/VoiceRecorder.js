@@ -10,7 +10,7 @@ const VoiceRecorder = (props) => {
     return null;
 }
 
-export const startRecording = (props, changeFileName, deviceNotFound, deviceFound, changeRecording, changeRecordButtonText, changeAudioBlob) => {
+export const startRecording = (props, changeFileName, deviceNotFound, deviceFound, changeRecording, changeRecordButtonText, changeAudioBlob, handleRecordedTimeDisplay) => {
     if (!props.recording) {
         // Start recording. Browser will request permission to use your microphone.
         recorder.start().then(() => {
@@ -18,6 +18,7 @@ export const startRecording = (props, changeFileName, deviceNotFound, deviceFoun
             deviceFound();
             changeRecording();
             changeRecordButtonText("Stop");
+            handleRecordedTimeDisplay();
         }).catch((e) => {
             console.error(e);
             deviceNotFound();
@@ -43,6 +44,7 @@ export const startRecording = (props, changeFileName, deviceNotFound, deviceFoun
 
         // changeFileName(URL.createObjectURL(file));
         // Set recorded audio blob as blob state and blob url for player to play
+        handleRecordedTimeDisplay();
         changeAudioBlob(blob);
         changeFileName(URL.createObjectURL(blob));
         // player.play();

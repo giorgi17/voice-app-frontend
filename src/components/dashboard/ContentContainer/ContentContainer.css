@@ -9,11 +9,11 @@
 }
 
 @media only screen and (max-width: 950px) {
-    .content-container {
+    /* .content-container {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around; 
-    }
+    } */
 }
 
 @media only screen and (max-width: 600px) {
@@ -24,12 +24,6 @@
     }
 }
 
-@media only screen and (max-width: 1150px) {
-    .content-container {
-       margin: auto;
-       width: 100vw;
-    }
-}
 
 .user-profile-content-wrapper {
     /* display: none; */
