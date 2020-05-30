@@ -20,7 +20,7 @@
     margin-top: 5px;
 }
 
-#recordvoice-view-post-image {
+#recordvoice-view-post-image-wrapper {
     width: 100%;
     display: block;
     margin-left: auto;
@@ -29,7 +29,7 @@
     /* opacity: 0.4; */
 }
 
-#recordvoice-view-post-image span {
+#recordvoice-view-post-image-wrapper span {
   z-index: 1;
   position: absolute;
   top: 10px;
@@ -157,7 +157,7 @@
     display: none;
 }
 
-#recordvoice-view-post-button {
+.recordvoice-view-post-button {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -171,7 +171,16 @@
     margin-bottom: 20px;
 }
 
-#recordvoice-view-post-button:hover {
+.recordvoice-view-post-button-not-set {
+    opacity: 0.3;
+    cursor: unset;
+}
+
+.recordvoice-view-post-button-not-set:hover {
+    opacity: 0.3 !important;
+}
+
+.recordvoice-view-post-button:hover {
     opacity: 0.8;
     transition: background-color 0.4s;
 }

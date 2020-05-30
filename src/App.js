@@ -23,6 +23,7 @@ import userProfile from './components/dashboard/UserProfile/UserProfile';
 import Followers from './components/dashboard/UserProfile/Followers/Followers';
 import Followings from './components/dashboard/UserProfile/Followings/Followings';
 import SearchView from './components/dashboard/MenuResponsive/Search/SearchView/SearchView';
+import RecordVoiceView from './components/dashboard/MenuResponsive/RecordVoice/RecordVoiceView/RecordVoiceView';
 
 import { Button } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -74,6 +75,7 @@ function App() {
             <Route exact path='/profile/:userId/followers' component={Followers} />
             <Route exact path='/profile/:userId/following' component={Followings} />
             <Route exact path='/search' component={SearchView} />
+            <Route exact path='/new-post' component={RecordVoiceView} />
 
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />

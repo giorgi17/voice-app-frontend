@@ -168,7 +168,7 @@ class Posts extends Component {
                     isMyPostsActive={this.state.activeIcons.myPosts}
                     changeFilter={this.changeFilter}></PostsFilter> */}
 
-                <AddNewPost/>
+                <AddNewPost history={this.props.history} />
 
                  {/* <InfiniteScroll
                         // height="100%"

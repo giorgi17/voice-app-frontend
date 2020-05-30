@@ -35,8 +35,13 @@ class AddNewPost extends Component {
 
     // When the user clicks on the button, open the modal
     newPostButtonClick = () => {
-        this.modalRef.current.style.display = "block";
-        document.body.style.overflowY = "hidden";
+        console.log(window.innerWidth);
+        if (window.innerWidth <= 600) {
+            this.props.history.push('/new-post');
+        } else {
+            this.modalRef.current.style.display = "block";
+            document.body.style.overflowY = "hidden";
+        }
     }
 
     // When the user clicks on <span> (x), close the modal
@@ -67,7 +72,7 @@ class AddNewPost extends Component {
                         <img src={this.state.profilePicture} className="add-new-post-top-profile-picture"/>
                         <div className="add-new-post-top-post-open-button" ref={this.openModalButtonRef}
                             onClick={this.newPostButtonClick}>
-                            <span>Got something to say, {this.props.auth.user.name}?</span>
+                            <span className="add-new-post-top-post-open-button-label">Got something to say, {this.props.auth.user.name}?</span>
                             <span className="material-icons add-new-post-top-post-open-button-icon">
                                 mic
                             </span>

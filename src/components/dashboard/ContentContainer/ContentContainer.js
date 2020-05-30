@@ -16,7 +16,7 @@ const ContentContainer = (props) => (
         {/* {responsiveMenuComponent} */}
         <div className="content-container">
             {/* {menuComponent} */}
-            <Menu />
+            {/* <Menu /> */}
             {props.children}
             {/* <Menu /> */}
         </div>

@@ -188,7 +188,7 @@ class RecordVoiceView extends Component {
                             </div>
                         </div>
                         
-                        <div id="recordvoice-view-post-image">
+                        <div id="recordvoice-view-post-image-wrapper">
                             <span className="material-icons" onClick={() => this.setState({ postImageSrc: 'https://voice-social-network.s3.us-east-2.amazonaws.com/post-pictures/stripes.png',
                                         imageBlob: null})}>
                                 close
@@ -252,7 +252,7 @@ class RecordVoiceView extends Component {
                         </div>
                     </div>
 
-                    <div id="recordvoice-view-post-button" onClick={this.addNewPostHandler}>
+                    <div className={`recordvoice-view-post-button ${this.state.audioBlob ? "" : "recordvoice-view-post-button-not-set"}`} onClick={this.addNewPostHandler}>
                         <span id="recordvoice-view-post-button-label">Post</span>
                     </div>
                 </div>

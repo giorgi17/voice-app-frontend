@@ -70,7 +70,7 @@ render() {
             {/* <SearchBar /> */}
             <ContentContainer>
               {/* {this.state.mainContent} */}
-              <Posts />
+              <Posts history={this.props.history} />
             </ContentContainer>
           </React.Fragment>
         );

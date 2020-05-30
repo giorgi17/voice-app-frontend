@@ -9,8 +9,7 @@ const RecordVoice = props => {
             <React.Fragment>
                 <div id="record-voice-container" 
                     className={`responsive-menu-item ${props.isRecordVoiceActive ? "active" : ""}`}
-                    onClick={() => {props.onClick("recordVoice"); props.changeDisplayedContent(<RecordVoiceView></RecordVoiceView>);
-                                props.handleScroll();}} >
+                    onClick={() => {props.onClick(); props.changeDisplayedContent(<RecordVoiceView></RecordVoiceView>);}} >
                     <span className={`material-icons record-voice-icon ${props.isRecordVoiceActive ? "active" : ""}`} >
                         mic
                     </span>
