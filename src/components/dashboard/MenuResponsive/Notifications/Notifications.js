@@ -52,7 +52,7 @@ class Notifications extends Component {
         return (
             <div id="notifications-container" 
                 className={`responsive-menu-item ${this.props.isNotificationActive ? "active" : ""}`}
-                onClick={() => {this.props.onClick(); this.setState({notification: 0}); this.props.changeDisplayedContent(<NotificationsView></NotificationsView>);}}
+                onClick={() => {this.props.onClick(); this.setState({notification: 0});}}
             >
                 {notificationsIcon}
             </div>

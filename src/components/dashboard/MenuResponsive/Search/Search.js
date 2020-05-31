@@ -8,7 +8,7 @@ const Search = props => {
             <React.Fragment>
             <div id="responsive-search-container" 
                 className={`responsive-menu-item ${props.isSearchActive ? "active" : ""}`}
-                onClick={() => {props.onClick(); props.changeDisplayedContent(<SearchView/>);}} >
+                onClick={() => {props.onClick();}} >
                 <span className={`material-icons search-icon ${props.isSearchActive ? "active" : ""}`} >
                     search
                 </span>

@@ -334,7 +334,7 @@ class UserProfile extends Component {
                             arrow_back_ios
                         </span>
                         <div className="responsive-menu-section-name-user-name">
-                            {this.props.auth.user.name} 
+                            {this.state.postAuthorData.name} 
                         </div>
                     </div>
                 </div>
