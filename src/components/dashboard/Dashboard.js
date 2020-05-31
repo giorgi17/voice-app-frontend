@@ -11,6 +11,7 @@ import Posts from './Posts/Posts';
 import ContentContainer from './ContentContainer/ContentContainer';
 // import UserProfile from './Posts/Post/UserProfile/UserProfile';
 import MenuResponsive from './MenuResponsive/Menu';
+import HeaderResponsive from './MenuResponsive/HeaderResponsive/HeaderResponsive';
 
 class Dashboard extends Component {
   constructor() {
@@ -66,6 +67,7 @@ render() {
     return (
           <React.Fragment>
             <Header authenticated={true} logoutMethod={this.onLogoutClick} homeActive={true} />
+            <HeaderResponsive />
             <MenuResponsive history={{...this.props.history}} menuName="home" />
             {/* <SearchBar /> */}
             <ContentContainer>

@@ -34,3 +34,9 @@
     z-index: 1;
     width: 100%;
 }
+
+@media only screen and (min-width: 600px) {
+    .responsive-menu-section-name {
+      display: none;
+    }
+  }

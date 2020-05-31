@@ -1,0 +1,20 @@
+.responsive-header {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    z-index: 2;
+    width: 100%;
+    border-bottom: 1px solid rgb(148, 147, 147);
+}
+
+
+.responsive-header img {
+    height: 55px;
+}
+
+@media only screen and (min-width: 600px) {
+    .responsive-header {
+        display: none;
+    }
+}

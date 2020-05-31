@@ -34,7 +34,7 @@
 
 .responsive-menu-item {
     /* margin: 6px; */
-    margin: 8px;
+    margin: 3px;
     box-sizing: border-box;
     cursor: pointer;
     /* color: #9be7ff; */
@@ -44,10 +44,13 @@
     /* background-color: #045f73; */
     /* border-radius: 50%; */
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .responsive-menu-item span {
-    font-size: 35px;
+    font-size: 28px;
 }
 
 .responsive-menu-items-container .active {

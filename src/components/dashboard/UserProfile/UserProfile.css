@@ -12,6 +12,7 @@
     /* position: absolute;
     top: 83px; */
     min-height: 100%;
+    margin-top: 0;
     /* margin-top: 14px; */
     padding-top: 80px;
     /* margin-bottom: 50px; */
@@ -26,6 +27,7 @@
   @media only screen and (max-width: 600px) {
     .user-profile-page {
       padding: 0;
+      margin-top: 40px;
     }
   }
 
@@ -196,4 +198,20 @@
     display: flex;
     justify-content: space-around;
   }
+}
+
+.user-profile-page-section-items {
+  flex: 1 1 100%;
+  display: flex;
+  flex-direction: row;
+  min-width: 0;
+}
+
+.responsive-menu-section-name-user-name {
+  flex: 3 1 auto;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  min-width: 0px;
 }

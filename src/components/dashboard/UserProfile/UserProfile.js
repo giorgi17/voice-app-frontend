@@ -268,6 +268,10 @@ class UserProfile extends Component {
         }
     }
 
+    goBack = () => {
+        this.props.history.push('/dashboard');
+    }
+
     componentDidMount() {
         this._isMounted = true;
         // window.addEventListener('scroll', this.scrollListener);        
@@ -323,6 +327,17 @@ class UserProfile extends Component {
                 <Header authenticated={this.props.auth.isAuthenticated} logoutMethod={this.onLogoutClick} aboutActive={true} />
                 <MenuResponsive history={{...this.props.history}} menuName="home" />
 
+                <div className="responsive-menu-section-name">
+                    <div className="user-profile-page-section-items">
+                        <span className="material-icons responsive-menu-section-go-back"
+                            onClick={this.goBack}>
+                            arrow_back_ios
+                        </span>
+                        <div className="responsive-menu-section-name-user-name">
+                            {this.props.auth.user.name} 
+                        </div>
+                    </div>
+                </div>
                 <div className="user-profile-page">
                         <div className="user-profile-page-user-pic-and-basic">
                             <div className="user-profile-page-profile-image-wrapper">
