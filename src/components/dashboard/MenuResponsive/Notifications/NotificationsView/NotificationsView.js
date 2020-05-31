@@ -4,12 +4,14 @@ import { connect } from "react-redux";
 import axios from 'axios';
 import SingleNotification from './SingleNotification/SingleNotification';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import MenuResponsive from '../../Menu';
 
 class NotificationsView extends Component {
     _isMounted = false;
 
     constructor() {
         super();
+        this.notificationsLoadingRef = React.createRef();
         this.state = {
             notifications: [],
             page: 0,
@@ -26,7 +28,10 @@ class NotificationsView extends Component {
         // Send current page
         dataToSend.page = this.state.page;
 
-        axios.post("/api/restricted-users/get-notification-data-mobile", dataToSend).then(response => {
+        if (this.notificationsLoadingRef.current)
+            this.notificationsLoadingRef.current.style.display = 'block';
+
+        axios.post("/api/restricted-users/get-notification-data", dataToSend).then(response => {
                 // Check if there were any new notifications added after mounting this component which would 
                 // cause database array to shift and remove any duplicate elements from array
                 const newNotificationsArray = [...this.state.notifications, ...response.data.notifications];
@@ -37,14 +42,18 @@ class NotificationsView extends Component {
 
                 if (response.data.notifications.length > 0) {
                     if (this._isMounted) {
+                        this.notificationsLoadingRef.current.style.display = 'none';
                         this.setState({
                             // notifications: this.state.notifications.concat(response.data.notifications),
                             notifications: newUniqueNotificationsArray,
-                            page: this.state.page + 30
-                        }, () => { this.notificationSeen(); });
+                            page: this.state.page + 10
+                        }, () => { this.notificationSeen();
+                                    window.addEventListener('scroll', this.scrollListener); 
+                                });
                     }
                 } else {
                     if (this._isMounted) {
+                        this.notificationsLoadingRef.current.innerHTML = 'You\'ve seen all notifications.';
                         this.setState({
                             hasMore: false
                         });
@@ -76,6 +85,28 @@ class NotificationsView extends Component {
         });
     }
 
+    scrollListener = () => {
+        const lastScrollY = window.scrollY;
+        var body = document.body,
+        html = document.documentElement;
+
+        var height = Math.max( body.scrollHeight, body.offsetHeight, 
+                            html.clientHeight, html.scrollHeight, html.offsetHeight );
+    
+        // console.log(height);
+        // console.log(lastScrollY);
+
+        if ((lastScrollY + 1000) >= height) {
+            // alert("you're at the bottom of the page");
+            if (this.state.hasMore){
+                if (this._isMounted) {
+                    window.removeEventListener('scroll', this.scrollListener); 
+                    this.getUserNotifications();
+                }
+            }
+        }
+    }
+
     componentDidMount() {
         this._isMounted = true;
         this.getUserNotifications();
@@ -87,35 +118,46 @@ class NotificationsView extends Component {
 
     render() {
         return (
-            <div className="responsive-notifications-view-container">
+            <React.Fragment>
+                <MenuResponsive history={{...this.props.history}} menuName="notification" />
+                <div className="responsive-menu-section-name">
+                    <span>Notifications</span>
+                </div>
+                <div className="responsive-notifications-view-container">
 
-                        <InfiniteScroll
-                            height="100%"
-                            dataLength={this.state.notifications.length}
-                            next={this.getUserNotifications}
-                            hasMore={this.state.hasMore}
-                            loader={<h4>Loading...</h4>}
-                            endMessage={
-                                <p style={{ textAlign: "center" }}>
-                                <b><br />You have seen it all !</b>
-                                </p>
-                            }
-                            >
+                            {/* <InfiniteScroll
+                                height="100%"
+                                dataLength={this.state.notifications.length}
+                                next={this.getUserNotifications}
+                                hasMore={this.state.hasMore}
+                                loader={<h4>Loading...</h4>}
+                                endMessage={
+                                    <p style={{ textAlign: "center" }}>
+                                    <b><br />You have seen it all !</b>
+                                    </p>
+                                }
+                                > */}
 
-                            {this.state.notifications.map((data, index) => (
-                                        <SingleNotification _id={data._id}
-                                            action_taker_user_id={data.action_taker_user_id}
-                                            date={data.created_at}
-                                            seen={data.seen}
-                                            target={data.target}
-                                            text={data.text}
-                                            type={data.type}
-                                            key={data._id}
-                                            ></SingleNotification>
-                                    ))}
-                        </InfiniteScroll>
+                                {this.state.notifications.map((data, index) => (
+                                            <SingleNotification _id={data._id}
+                                                action_taker_user_id={data.action_taker_user_id}
+                                                date={data.created_at}
+                                                seen={data.seen}
+                                                target={data.target}
+                                                text={data.text}
+                                                type={data.type}
+                                                key={data._id}
+                                                ></SingleNotification>
+                                        ))}
+                                
+                                
+                                <h4 className="responsive-notifications-view-notifications-loading" ref={this.notificationsLoadingRef}>
+                                    Loading...
+                                </h4>
+                            {/* </InfiniteScroll> */}
 
-            </div>
+                </div>
+            </React.Fragment>
         );
     }
 };

@@ -8,7 +8,7 @@ const Home = props => {
             <div id="responsive-home-container" 
                 className={`responsive-menu-item ${props.isHomeActive ? "active" : ""}`}
                 onClick={() => {props.onClick(); props.changeDisplayedContent(null); props.hideMenuItems()}} >
-                <span className={`material-icons home-icon ${props.isHomeActive ? "active" : ""}`} >
+                <span className={`home-icon ${props.isHomeActive ? "material-icons" : "material-icons-outlined"}`} >
                     home
                 </span>
             </div>

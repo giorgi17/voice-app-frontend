@@ -14,7 +14,7 @@ class Menu extends Component {
         this.menuContentRef = React.createRef();
         this.state = {
             activeIcons: {
-                recordVoice: false,
+                // recordVoice: false,
                 profile: false,
                 notification: false,
                 home: true,
@@ -76,6 +76,10 @@ class Menu extends Component {
         this.props.history.push("/new-post");
     }
 
+    gotToNotificationsMenu = () => {
+        this.props.history.push("/notifications");
+    }
+
     componentDidMount() {
         this.setMenuIconActive(this.props.menuName);
     }
@@ -91,12 +95,11 @@ class Menu extends Component {
                 <div className="responsive-menu-items-container">
                     <Home onClick={this.goToHomeMenu} isHomeActive={this.state.activeIcons.home} changeDisplayedContent={this.changeDisplayedContent} hideMenuItems={this.hideMenuItems} />
                     <Search onClick={this.goToSearchMenu} isSearchActive={this.state.activeIcons.search} changeDisplayedContent={this.changeDisplayedContent} />
-                    <RecordVoice onClick={this.gotToRecordVoiceMenu} isRecordVoiceActive={this.state.activeIcons.recordVoice}
-                         changeDisplayedContent={this.changeDisplayedContent} />
+                    {/* <RecordVoice onClick={this.gotToRecordVoiceMenu} isRecordVoiceActive={this.state.activeIcons.recordVoice}
+                         changeDisplayedContent={this.changeDisplayedContent} /> */}
                     <Profile onClick={this.setMenuIconActive} isProfileActive={this.state.activeIcons.profile} changeDisplayedContent={this.changeDisplayedContent}
                          handleScroll={this.handleScroll} />
-                    <Notifications onClick={this.setMenuIconActive} isNotificationActive={this.state.activeIcons.notification} changeDisplayedContent={this.changeDisplayedContent}
-                         handleScroll={this.handleScroll} />
+                    <Notifications onClick={this.gotToNotificationsMenu} isNotificationActive={this.state.activeIcons.notification} changeDisplayedContent={this.changeDisplayedContent} />
                 </div>
 
             </div>

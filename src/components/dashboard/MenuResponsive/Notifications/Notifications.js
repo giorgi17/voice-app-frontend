@@ -37,13 +37,13 @@ class Notifications extends Component {
     render() {
             // TODO: Check if there are any notifications with redux 
 
-        let notificationsIcon = (<span className={`material-icons notifications-icon ${this.props.isNotificationActive ? "active" : ""}`}>
+        let notificationsIcon = (<span className={`notifications-icon ${this.props.isNotificationActive ? "material-icons" : "material-icons-outlined"}`}>
                                     notifications
                                 </span>);
         if (this.state.notification && this.state.notification > 0) {
   
             notificationsIcon = (<div className="material-label mdl-badge" data-badge={this.state.notification}>
-                                    <span className={`material-icons notifications-icon ${this.props.isNotificationActive ? "active" : ""}`}>
+                                    <span className={`notifications-icon ${this.props.isNotificationActive ? "material-icons" : "material-icons-outlined"}`}>
                                         notifications
                                     </span>
                                 </div>);
@@ -52,8 +52,7 @@ class Notifications extends Component {
         return (
             <div id="notifications-container" 
                 className={`responsive-menu-item ${this.props.isNotificationActive ? "active" : ""}`}
-                onClick={() => {this.props.onClick("notification"); this.setState({notification: 0}); this.props.changeDisplayedContent(<NotificationsView></NotificationsView>);
-                        this.props.handleScroll();}}
+                onClick={() => {this.props.onClick(); this.setState({notification: 0}); this.props.changeDisplayedContent(<NotificationsView></NotificationsView>);}}
             >
                 {notificationsIcon}
             </div>

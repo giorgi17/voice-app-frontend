@@ -8,19 +8,28 @@
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
-.responsive-notifications-view-container .infinite-scroll-component__outerdiv {
-    width: auto;
-    margin: auto;
-    height: calc(100% - 52px) ;
-    margin-top: 5px;
-}
-
-.responsive-notifications-view-container .infinite-scroll-component {
-    display: inline-block;
-    display: block;
+.responsive-notifications-view-container {
     width: 100%;
+    margin: auto;
+    height: calc(100% - 92px) ;
+    margin-top: 40px;
+    margin-bottom: 38px;
 }
 
-.responsive-notifications-view-container .infinite-scroll-component h4 {
+.responsive-notifications-view-container h4 {
     text-align: center;
+}
+
+.responsive-menu-section-name {
+    border-bottom: 1px solid rgb(165, 161, 161);
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: 5px;position: fixed;
+    top: 0;
+    z-index: 1;
+    width: 100%;
 }

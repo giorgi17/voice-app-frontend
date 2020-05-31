@@ -19,7 +19,7 @@
 @media only screen and (max-width: 600px) {
     .content-container {
        /* margin: auto; */
-       margin-top: 83px !important;
+       margin-top: 0px !important;
        width: 100% !important;
     }
 }

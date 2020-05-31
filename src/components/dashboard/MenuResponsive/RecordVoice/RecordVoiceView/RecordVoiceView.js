@@ -271,7 +271,7 @@ class RecordVoiceView extends Component {
                                 id="responsive-recordvoice-view-post-description-input"
                                 label="Description"
                                 multiline
-                                rows={10}
+                                rows={5}
                                 placeholder="Write description"
                                 variant="outlined"
                                 value={this.state.description}

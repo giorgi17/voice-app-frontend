@@ -27,13 +27,18 @@
     .posts-container {
         width: 100%;
         margin: auto;
-        margin-top: 50px;
+        margin-top: 20px;
         margin-bottom: 70px;
     }
-    .infinite-scroll-component__outerdiv {
-        /* width: 320px; */
-        margin: auto;
+
+    .user-profile-page-posts-loading {
+        margin-bottom: 80px;
     }
+
+    /* .infinite-scroll-component__outerdiv { */
+        /* width: 320px; */
+        /* margin: auto;
+    } */
 
     .content-container {
         height: 100%;
@@ -49,10 +54,10 @@
     } */
 }
 
-@media only screen and (max-width: 320px) {
+/* @media only screen and (max-width: 320px) {
     .infinite-scroll-component__outerdiv {
         width: auto;
         margin: auto;
     }
-}
+} */
 
