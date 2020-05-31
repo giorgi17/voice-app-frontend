@@ -24,10 +24,9 @@
   }
 
   @media only screen and (max-width: 600px) {
-    /* .user-profile-page {
-      width: 100%;
-      margin: 0;
-    } */
+    .user-profile-page {
+      padding: 0;
+    }
   }
 
   .user-profile-content-wrapper {

@@ -34,7 +34,7 @@
 
 .responsive-menu-item {
     /* margin: 6px; */
-    padding: 0.4rem;
+    margin: 8px;
     box-sizing: border-box;
     cursor: pointer;
     /* color: #9be7ff; */
@@ -44,6 +44,10 @@
     /* background-color: #045f73; */
     /* border-radius: 50%; */
     text-align: center;
+}
+
+.responsive-menu-item span {
+    font-size: 35px;
 }
 
 .responsive-menu-items-container .active {

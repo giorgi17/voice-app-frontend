@@ -11,7 +11,8 @@ import Header from '../../Header/Header';
 import { logoutUser } from '../../../actions/authActions';
 import ActivityCounter from './ActivityCounter/ActivityCounter';
 import PageCacher from '../../../utils/PageCacher';
-  
+import MenuResponsive from '../MenuResponsive/Menu';  
+
 class UserProfile extends Component {
     _isMounted = false;
 
@@ -320,7 +321,8 @@ class UserProfile extends Component {
         return (
             <React.Fragment>
                 <Header authenticated={this.props.auth.isAuthenticated} logoutMethod={this.onLogoutClick} aboutActive={true} />
-                
+                <MenuResponsive history={{...this.props.history}} menuName="home" />
+
                 <div className="user-profile-page">
                         <div className="user-profile-page-user-pic-and-basic">
                             <div className="user-profile-page-profile-image-wrapper">
@@ -329,7 +331,7 @@ class UserProfile extends Component {
 
                             <div className="user-profile-page-info-wrapper">
                                     <h2 className="user-profile-page-profile-username"> 
-                                        {this.state.postAuthorData.name} sdgfsgdsdfsdfs                                        
+                                        {this.state.postAuthorData.name}                                      
                                     </h2>
 
                                     {/* <div className="user-profile-page-profile-email">

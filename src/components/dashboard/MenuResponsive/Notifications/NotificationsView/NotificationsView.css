@@ -22,13 +22,14 @@
 
 .responsive-menu-section-name {
     border-bottom: 1px solid rgb(165, 161, 161);
-    font-size: 20px;
+    font-size: 15px;
     font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: white;
-    padding: 5px;position: fixed;
+    padding: 10px;
+    position: fixed;
     top: 0;
     z-index: 1;
     width: 100%;
