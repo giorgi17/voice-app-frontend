@@ -1,16 +1,46 @@
 #cropped_image_preview {
     object-fit: contain;
     border-radius: 50%;
-    margin: 10px;
+    border: 1px solid black;
+    display: block;
+    margin: 20px auto;
+    margin-top: 10px;
+}
+
+.profile-edit-picture-section-items {
+    flex: 1 1 100%;
+    display: flex;
+    flex-direction: row;
+    min-width: 0;
+}
+
+.profile-edit-picture-section-title {
+    flex: 3 1 auto;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    min-width: 0px;
 }
 
 #cropped_image_file_input {
     margin: 10px;
+    margin-bottom: 40px;
+}
+
+#cropped_image_file_input input {
+    display: none;
+}
+
+#cropped_image_file_input button {
+    display: block;
+    margin: auto;
 }
 
 .profile-edit-picture-cropper-alert {
     width: 100%;
-    margin: 5px;
+    /* margin: 5px; */
+    margin-bottom: 20px;
 }
 
 #profile-edit-picture-cropper-warning {
@@ -35,4 +65,44 @@
 
 #profile-edit-picture-cropper-error-while-upload {
     display: none;
+}
+
+#profile-edit-picture-cropper-button {
+    display: block;
+    margin: auto !important;
+}
+
+#profile-edit-picture-cropper-container {
+    margin: auto;
+    margin-top: 100px;
+    background-color: white;
+    width: 1000px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    padding: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+    #profile-edit-picture-cropper-container {
+        margin-top: 42px;
+        margin-bottom: 60px;
+        min-height: 100vh;
+    }
+
+    .ReactCrop--fixed-aspect {
+        max-width: 100% !important;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    #profile-edit-picture-cropper-container {
+        width: 100%;
+    }
+}
+
+.ReactCrop--fixed-aspect {
+    display: block;
+    margin: auto;
+    background-color: white;
+    max-width: 60%;
+    margin-bottom: 20px;
 }

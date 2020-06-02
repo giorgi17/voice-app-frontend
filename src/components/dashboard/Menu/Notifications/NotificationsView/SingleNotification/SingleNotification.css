@@ -25,7 +25,7 @@
     border-radius: 50%;
     object-fit: cover;
     width: 48px;
-    height: 48px;
+    height: 48px !important;
     cursor: pointer;
 }
 
@@ -56,7 +56,7 @@
 
 .single-notification-image {
     width: 64px;
-    height: 48px;
+    height: 48px !important;
     object-fit: cover;
 }
 

@@ -10,10 +10,13 @@ class NotificationsView extends Component {
 
     constructor() {
         super();
+        this.notificationsViewContainerRef = React.createRef();
+        this.notificationsViewBackdropRef = React.createRef();
         this.state = {
             notifications: [],
             page: 0,
             hasMore: true
+            // previousActiveIcon
         }
     }
 
@@ -76,45 +79,64 @@ class NotificationsView extends Component {
         });
     }
 
+    documentClickEvenetListener = e => {
+        if (!this.notificationsViewContainerRef.current.contains(e.target) &&
+            !this.props.iconContainerRef.current.contains(e.target)) {
+            this.props.onClick(this.props.previousActiveIcon);
+            this.props.changeDisplayedContent(null);
+            this.props.notificationPanelClose();
+            // console.log(this.props.iconContainerRef);
+        }
+            
+    }
+
     componentDidMount() {
         this._isMounted = true;
+        document.body.addEventListener('click', this.documentClickEvenetListener, true); 
         this.getUserNotifications();
     }
 
     componentWillUnmount() {
         this._isMounted = false;
+        document.body.removeEventListener('click', this.documentClickEvenetListener, true); 
     }
 
     render() {
         return (
-            <div className="notifications-view-container">
+            <div className="notifications-view-container-backdrop" ref={this.notificationsViewBackdropRef}>
+                <div className="notifications-view-container" ref={this.notificationsViewContainerRef}>
 
-                        <InfiniteScroll
-                            height="100%"
-                            dataLength={this.state.notifications.length}
-                            next={this.getUserNotifications}
-                            hasMore={this.state.hasMore}
-                            loader={<h4>Loading...</h4>}
-                            endMessage={
-                                <p style={{ textAlign: "center" }}>
-                                <b><br />You have seen it all !</b>
-                                </p>
-                            }
-                            >
+                    <div className="notifications-view-menu-arrow">
+            
+                    </div>
 
-                            {this.state.notifications.map((data, index) => (
-                                        <SingleNotification _id={data._id}
-                                            action_taker_user_id={data.action_taker_user_id}
-                                            date={data.created_at}
-                                            seen={data.seen}
-                                            target={data.target}
-                                            text={data.text}
-                                            type={data.type}
-                                            key={data._id}
-                                            ></SingleNotification>
-                                    ))}
-                        </InfiniteScroll>
+                    <InfiniteScroll
+                        height="100%"
+                        dataLength={this.state.notifications.length}
+                        next={this.getUserNotifications}
+                        hasMore={this.state.hasMore}
+                        loader={<h4>Loading...</h4>}
+                        endMessage={
+                            <p style={{ textAlign: "center" }}>
+                            <b><br />You have seen it all !</b>
+                            </p>
+                        }
+                        >
 
+                        {this.state.notifications.map((data, index) => (
+                                    <SingleNotification _id={data._id}
+                                        action_taker_user_id={data.action_taker_user_id}
+                                        date={data.created_at}
+                                        seen={data.seen}
+                                        target={data.target}
+                                        text={data.text}
+                                        type={data.type}
+                                        key={data._id}
+                                        ></SingleNotification>
+                                ))}
+                    </InfiniteScroll>
+
+                </div>
             </div>
         );
     }

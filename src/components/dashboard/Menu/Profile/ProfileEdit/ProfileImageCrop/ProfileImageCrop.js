@@ -20,6 +20,7 @@ class ProfileImageCrop extends Component {
         this.imageWrongExtensionRef = React.createRef();
         this.imageUploadSuccessRef = React.createRef();
         this.imageUploadErrorRef = React.createRef();
+        this.fileSelectInputRef = React.createRef();
         this.state = {
             image: null,
             pixelCrop: null,
@@ -253,7 +254,10 @@ class ProfileImageCrop extends Component {
             <React.Fragment>
                 <img src={this.state.imageBlobSrc} width="91px" height="91px" id="cropped_image_preview" />
               <div id="cropped_image_file_input">
-                <input type="file" onChange={this.onSelectFile} />
+                <Button variant="contained" onClick={() => this.fileSelectInputRef.current.click()}>
+                  Choose file
+                </Button>
+                <input type="file" onChange={this.onSelectFile} ref={this.fileSelectInputRef} />
               </div>
               {this.state.src && (
                 <ReactCrop

@@ -7,6 +7,8 @@ import { connect } from "react-redux";
 import axios from 'axios'; 
 import ProfileImageCrop from './ProfileImageCrop/ProfileImageCrop';
 import { Alert, AlertTitle } from '@material-ui/lab';
+import HeaderDesktop from '../../HeaderDesktop/HeaderDesktop';
+import MenuResponsive from '../../../MenuResponsive/Menu';
 
 class ProfileEdit extends Component {
     _isMounted = false;
@@ -146,11 +148,12 @@ class ProfileEdit extends Component {
     }
 
     changeImageCropperDisplay = () => {
-        const computed = window.getComputedStyle(this.cropperDisplayRef.current).getPropertyValue("display");
-		if (computed === 'flex') 
-		    this.cropperDisplayRef.current.style.display = 'none';
-		else if (computed === 'none') 
-            this.cropperDisplayRef.current.style.display = 'flex';
+        // const computed = window.getComputedStyle(this.cropperDisplayRef.current).getPropertyValue("display");
+		// if (computed === 'flex') 
+		//     this.cropperDisplayRef.current.style.display = 'none';
+		// else if (computed === 'none') 
+        //     this.cropperDisplayRef.current.style.display = 'flex';
+        this.props.history.push('/account/edit/avatarImage');
     }
   
     componentDidMount() {
@@ -191,85 +194,103 @@ class ProfileEdit extends Component {
 
           
         return (
-            <div className="profile-edit-container">
-                <div id="profile-edit-go-back-container" onClick={() => this.props.changeDisplayedContent(<ProfileView changeDisplayedContent={this.props.changeDisplayedContent} ></ProfileView>)}>
-                    <span className="material-icons profile-edit-go-back-icon">
-                        arrow_back_ios
+            <React.Fragment>
+                <HeaderDesktop history={{...this.props.history}} menuName="profile" />
+                <MenuResponsive history={{...this.props.history}} menuName="profile" />
+
+                <div className="responsive-menu-section-name">
+                    <span className="material-icons" onClick={() => this.props.history.goBack()}>
+                        keyboard_backspace
+                    </span>
+
+                    <span className="profile-edit-general-section-title">
+                        Edit Profile
                     </span>
                 </div>
 
-                <div id="profile-edit-picture-cropper-container" ref={this.cropperDisplayRef}>
-                    <ProfileImageCrop avatarImageFullPath={this.state.userData.avatarImage}></ProfileImageCrop>
-                    {/* <Button variant="contained" type="submit" id="profile-edit-picture-cropper-button"
-                    className="profile-edit-activity-info-inputs" color="primary">Update picture</Button> */}
-                </div>
+                <div className="profile-edit-container">
+                    {/* <div id="profile-edit-go-back-container" onClick={() => this.props.changeDisplayedContent(<ProfileView changeDisplayedContent={this.props.changeDisplayedContent} ></ProfileView>)}>
+                        <span className="material-icons profile-edit-go-back-icon">
+                            arrow_back_ios
+                        </span>
+                    </div> */}
 
-                <div className="profile-edit-image-wrapper" onClick={this.changeImageCropperDisplay}>
-                    <span className="material-icons profile-edit-edit-image-icon">
-                        edit
-                    </span>
-                    <img src={this.state.userData.avatarImage} />
-                </div>
-             
-                <div className="profile-edit-activity-info-wrapper">
-                    <TextField id="profile-edit-activity-info-name" required name="name"
-                    className="profile-edit-activity-info-inputs" type="text" helperText={errors.name}
-                    label="Name" onChange={this.onChange} {...input_errors_name}
-                    value={this.state.userData.name} />
     
-                    <TextField id="profile-edit-activity-info-email" required name="email"
-                    className="profile-edit-activity-info-inputs" type="email"
-                    label="Email" disabled
-                    value={this.state.userData.email} />
-    
-                    <Button variant="contained" type="submit" onClick={this.changePasswordDisplay} id="profile-edit-activity-info-change-password-button"
-                    className="profile-edit-activity-info-inputs" color="primary">Change password</Button>
 
-                    <div id="profile-edit-activity-info-change-password-wrapper" ref={this.changePasswordRef} >
-                        <TextField id="profile-edit-activity-info-password" required name="password" {...input_errors_password}
-                        helperText={errors.password} value={this.state.userData.password}
-                        className="profile-edit-activity-info-inputs" type="password" onChange={this.onChange}
-                        label="Current password" />
-                        <span className="material-icons profile-edit-activity-info-password-visibility-icon" onClick={() => this.makePasswordVisible(1)}>
-                            {this.state.visibility1}
-                        </span>
+                    <div className="profile-edit-user-info-wrapper">
+                        <div className="profile-edit-image-wrapper" onClick={this.changeImageCropperDisplay}>
+                            <span className="material-icons profile-edit-edit-image-icon">
+                                edit
+                            </span>
+                            <img src={this.state.userData.avatarImage} />
+                        </div>
 
-                        <TextField id="profile-edit-activity-info-new-password" required name="newPassword" {...input_errors_newPassword}
-                        helperText={errors.newPassword} value={this.state.userData.newPassword}
-                        className="profile-edit-activity-info-inputs" type="password" onChange={this.onChange}
-                        label="New password" />
-                        <span className="material-icons profile-edit-activity-info-password-visibility-icon" onClick={() => this.makePasswordVisible(2)}>
-                            {this.state.visibility2}
-                        </span>
- 
-                        <TextField id="profile-edit-activity-info-new-password2" required name="newPassword2" {...input_errors_newPassword2}
-                        helperText={errors.newPassword2} value={this.state.userData.newPassword2}
-                        className="profile-edit-activity-info-inputs" type="password" onChange={this.onChange}
-                        label="Repeat new password" />
-                        <span className="material-icons profile-edit-activity-info-password-visibility-icon" onClick={() => this.makePasswordVisible(3)}>
-                            {this.state.visibility3}
-                        </span>
-
-                        <Button variant="contained" type="submit" id="profile-edit-activity-info-change-password-submit" onClick={this.onChangePasswordSubmit}
-                        className="profile-edit-activity-info-inputs" color="primary">Update password</Button>
+                        <div className="profile-edit-user-name-wrapper">
+                            {this.props.auth.user.name}
+                        </div>
                     </div>
+                    
+                
+                    <div className="profile-edit-activity-info-wrapper">
+                        <TextField id="profile-edit-activity-info-name" required name="name"
+                        className="profile-edit-activity-info-inputs" type="text" helperText={errors.name}
+                        label="Name" onChange={this.onChange} {...input_errors_name}
+                        value={this.state.userData.name} />
+        
+                        <TextField id="profile-edit-activity-info-email" required name="email"
+                        className="profile-edit-activity-info-inputs" type="email"
+                        label="Email" disabled
+                        value={this.state.userData.email} />
+        
+                        <Button variant="contained" type="submit" onClick={this.changePasswordDisplay} id="profile-edit-activity-info-change-password-button"
+                        className="profile-edit-activity-info-inputs" color="primary">Change password</Button>
 
-                    <Alert severity="success" id="profile-edit-activity-info-success" className="profile-edit-activity-info-alert" ref={this.profileInfoUpdateSuccessRef}>
-                        <AlertTitle>Success</AlertTitle>
-                        Successfully changed user information.
-                    </Alert>
+                        <div id="profile-edit-activity-info-change-password-wrapper" ref={this.changePasswordRef} >
+                            <TextField id="profile-edit-activity-info-password" required name="password" {...input_errors_password}
+                            helperText={errors.password} value={this.state.userData.password}
+                            className="profile-edit-activity-info-inputs" type="password" onChange={this.onChange}
+                            label="Current password" />
+                            <span className="material-icons profile-edit-activity-info-password-visibility-icon" onClick={() => this.makePasswordVisible(1)}>
+                                {this.state.visibility1}
+                            </span>
 
-                    <Alert severity="error" id="profile-edit-activity-info-error" className="profile-edit-activity-info-alert" ref={this.profileInfoUpdateErrorRef}>
-                        <AlertTitle>Error</AlertTitle>
-                        Error occured while changing user information.
-                    </Alert>
-
-                    <Button variant="contained" type="submit" onClick={this.onChangeUserDataSubmit}
-                    className="profile-edit-activity-info-inputs" color="primary">Update</Button>
-
-                </div>
+                            <TextField id="profile-edit-activity-info-new-password" required name="newPassword" {...input_errors_newPassword}
+                            helperText={errors.newPassword} value={this.state.userData.newPassword}
+                            className="profile-edit-activity-info-inputs" type="password" onChange={this.onChange}
+                            label="New password" />
+                            <span className="material-icons profile-edit-activity-info-password-visibility-icon" onClick={() => this.makePasswordVisible(2)}>
+                                {this.state.visibility2}
+                            </span>
     
-            </div>
+                            <TextField id="profile-edit-activity-info-new-password2" required name="newPassword2" {...input_errors_newPassword2}
+                            helperText={errors.newPassword2} value={this.state.userData.newPassword2}
+                            className="profile-edit-activity-info-inputs" type="password" onChange={this.onChange}
+                            label="Repeat new password" />
+                            <span className="material-icons profile-edit-activity-info-password-visibility-icon" onClick={() => this.makePasswordVisible(3)}>
+                                {this.state.visibility3}
+                            </span>
+
+                            <Button variant="contained" type="submit" id="profile-edit-activity-info-change-password-submit" onClick={this.onChangePasswordSubmit}
+                            className="profile-edit-activity-info-inputs" color="primary">Update password</Button>
+                        </div>
+
+                        <Alert severity="success" id="profile-edit-activity-info-success" className="profile-edit-activity-info-alert" ref={this.profileInfoUpdateSuccessRef}>
+                            <AlertTitle>Success</AlertTitle>
+                            Successfully changed user information.
+                        </Alert>
+
+                        <Alert severity="error" id="profile-edit-activity-info-error" className="profile-edit-activity-info-alert" ref={this.profileInfoUpdateErrorRef}>
+                            <AlertTitle>Error</AlertTitle>
+                            Error occured while changing user information.
+                        </Alert>
+
+                        <Button variant="contained" type="submit" onClick={this.onChangeUserDataSubmit}
+                        className="profile-edit-activity-info-inputs" color="primary">Update</Button>
+
+                    </div>
+        
+                </div>
+            </React.Fragment>
         );
     }
     

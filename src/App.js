@@ -9,7 +9,7 @@ import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
 import Welcome from './components/Welcome/Welcome';
 import About from './components/About/About';
-import Profile from './components/dashboard/UserProfile/UserProfile';
+import ProfileEdit from './components/dashboard/Menu/Profile/ProfileEdit/ProfileEdit';
 // import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { Provider } from "react-redux";
@@ -25,6 +25,8 @@ import Followings from './components/dashboard/UserProfile/Followings/Followings
 import SearchView from './components/dashboard/MenuResponsive/Search/SearchView/SearchView';
 import RecordVoiceView from './components/dashboard/MenuResponsive/RecordVoice/RecordVoiceView/RecordVoiceView';
 import NotificationsView from './components/dashboard/MenuResponsive/Notifications/NotificationsView/NotificationsView';
+import ProfileView from './components/dashboard/Menu/Profile/ProfileView/ProfileView';
+import ProfileEditPicture from './components/dashboard/Menu/Profile/ProfileEdit/ProfileEditPicture/ProfileEditPicture';
 
 import { Button } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -71,10 +73,12 @@ function App() {
             <Route exact path="/about" component={About} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/profile" component={Profile} />
+            {/* <Route exact path="/profile" component={Profile} /> */}
             <Route exact path='/profile/:userId' component={userProfile} />
             <Route exact path='/profile/:userId/followers' component={Followers} />
             <Route exact path='/profile/:userId/following' component={Followings} />
+            <Route exact path='/account/edit' component={ProfileEdit} />
+            <Route exact path='/account/edit/avatarImage' component={ProfileEditPicture} />
             <Route exact path='/search' component={SearchView} />
             <Route exact path='/new-post' component={RecordVoiceView} />
             <Route exact path='/notifications' component={NotificationsView} />

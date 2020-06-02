@@ -12,6 +12,7 @@ import { logoutUser } from '../../../actions/authActions';
 import ActivityCounter from './ActivityCounter/ActivityCounter';
 import PageCacher from '../../../utils/PageCacher';
 import MenuResponsive from '../MenuResponsive/Menu';  
+import HeaderDesktop from '../Menu/HeaderDesktop/HeaderDesktop';
 
 class UserProfile extends Component {
     _isMounted = false;
@@ -324,8 +325,8 @@ class UserProfile extends Component {
     render() {
         return (
             <React.Fragment>
-                <Header authenticated={this.props.auth.isAuthenticated} logoutMethod={this.onLogoutClick} aboutActive={true} />
-                <MenuResponsive history={{...this.props.history}} menuName="home" />
+                <HeaderDesktop history={{...this.props.history}} menuName="profile" />
+                <MenuResponsive history={{...this.props.history}} menuName="profile" />
 
                 <div className="responsive-menu-section-name">
                     <div className="user-profile-page-section-items">
@@ -361,6 +362,18 @@ class UserProfile extends Component {
                                             </Button>
                                         </div> : null
                                     }
+                                    {this.state.postAuthorData.user_id === this.props.auth.user.id ?
+                                         <div className="user-profile-page-info-edit-block">
+                                            <div className="user-profile-page-info-edit-block-edit-profile-button" 
+                                                onClick={() => this.props.history.push('/account/edit')}>
+                                                Edit Profile
+                                            </div>
+
+                                            <span className="material-icons user-profile-page-info-edit-block-settings-icon">
+                                                settings
+                                            </span>
+                                         </div> : null
+                                        }
 
                                     {/* <ul className="user-profile-page-basic-activity-info-wrapper">
                                         <li><strong>1880</strong> posts</li>

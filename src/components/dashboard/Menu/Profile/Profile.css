@@ -1,0 +1,17 @@
+.profile-icon {
+    width: 25px;
+    height: 25px !important;
+    border-radius: 50%;
+    box-sizing: unset;
+}
+
+#profile-container .active {
+    border: 1px solid black;
+    padding: 3px;
+}
+
+#profile-container {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+}

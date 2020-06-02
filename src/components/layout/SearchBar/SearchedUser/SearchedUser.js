@@ -25,7 +25,8 @@ class SearchedUser extends Component {
                         </div>
                 
                         <div className="user-search-result-profile-username">
-                        <strong>Username:</strong> {this.props.name}
+                        {/* <strong>Username:</strong> */}
+                         {this.props.name}
                         </div>
                 
                         <hr></hr>

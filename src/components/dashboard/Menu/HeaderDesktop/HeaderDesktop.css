@@ -1,0 +1,30 @@
+.header-desktop {
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    /* height: 50px; */
+    width: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 1px solid black;
+}
+
+.header-desktop-menu {
+    width: 1000px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.header-desktop img {
+    height: 65px;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+    .header-desktop {
+        display: none;
+    }
+}

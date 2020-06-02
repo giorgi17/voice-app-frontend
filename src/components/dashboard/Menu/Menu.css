@@ -1,4 +1,4 @@
-
+/*
 .menu-container {
     background: #fff;
     border-radius: 2px;
@@ -75,7 +75,6 @@
     width: 100%;
     min-height: 230px;
     min-width: 330px;
-    /* overflow: scroll; */
 }
 
 @media only screen and (max-width: 1100px) {
@@ -91,3 +90,4 @@
        margin-right: 0px;
     }
 }
+*/
