@@ -1,0 +1,50 @@
+.profile-edit-menu-responsive-title {
+    flex: 3 1 auto;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    min-width: 0px;
+}
+
+.profile-edit-menu-responsive-list-wrapper {
+    margin-top: 45px;
+}
+
+.profile-edit-menu-responsive-list-header {
+    font-weight: bold;
+    color: rgb(124, 119, 119);
+    display: flex;
+    padding: 15px;
+    border-bottom: 1px solid rgb(145, 142, 142);
+    background-color: rgb(224, 217, 217);
+}
+
+.profile-edit-menu-responsive-list-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid rgb(145, 142, 142);
+    cursor: pointer;
+}
+
+.profile-edit-menu-responsive-list-item-name {
+    flex: 3 1 auto;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    min-width: 0px;
+    text-align: left;
+}
+
+/* @media only screen and (min-width: 600px) {
+    .user-profile-page-basic-activity-info-wrapper-2 {
+      display: none;
+    }
+  
+    .user-profile-page-basic-activity-info-wrapper-2 .user-profile-page-basic-activity-info-wrapper {
+      display: none;
+    }
+  } */

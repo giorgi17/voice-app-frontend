@@ -135,29 +135,6 @@
     /* flex: 1 1 200px !important; */
 }
 
-.profile-edit-activity-info-password-visibility-icon {
-    cursor: pointer;
-    height: 30px;
-    margin-top: 30px;
-}
-
-.profile-edit-activity-info-password-visibility-icon:hover {
-    color: white;
-    opacity: 0.8;
-    transition: color 0.4s;
-}
-
-#profile-edit-activity-info-change-password-wrapper {
-    border: 1px solid black;
-    width: 100%;
-    display: none;
-    flex-wrap: wrap;
-    padding: 20px 10px 0px 10px;
-    margin-bottom: 20px;
-    transition: display 0.4s;
-    border-radius: 10px;
-}
-
 #profile-edit-activity-info-change-password-submit {
     margin-top: 30px !important;
     margin-bottom: 20px !important; 

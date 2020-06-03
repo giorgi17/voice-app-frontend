@@ -369,7 +369,11 @@ class UserProfile extends Component {
                                                 Edit Profile
                                             </div>
 
-                                            <span className="material-icons user-profile-page-info-edit-block-settings-icon">
+                                            <span className="material-icons user-profile-page-info-edit-block-settings-icon"
+                                                onClick={() => 
+                                                this.props.history.push('/account/options')}
+                                                // console.log('F')}
+                                                >
                                                 settings
                                             </span>
                                          </div> : null

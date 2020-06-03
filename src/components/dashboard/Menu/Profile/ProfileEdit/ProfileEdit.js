@@ -15,15 +15,15 @@ class ProfileEdit extends Component {
 
     constructor(props) {
         super(props);
-        this.cropperDisplayRef = React.createRef();
-        this.changePasswordRef = React.createRef();
+        // this.cropperDisplayRef = React.createRef();
+        // this.changePasswordRef = React.createRef();
         this.profileInfoUpdateSuccessRef = React.createRef();
         this.profileInfoUpdateErrorRef = React.createRef();      
         this.state = {
             visibility1: 'visibility',
             visibility2: 'visibility',
             visibility3: 'visibility',
-            changePasswordDisplay: false,
+            // changePasswordDisplay: false,
             profileIconActive: false,
             userData: {
                 name: '',
@@ -74,40 +74,6 @@ class ProfileEdit extends Component {
         });
     };
 
-    // Change password for current user
-    onChangePasswordSubmit = e => {
-        const newUserPassword = {
-            id: this.props.auth.user.id,
-            password: this.state.userData.password,
-            newPassword: this.state.userData.newPassword,
-            newPassword2: this.state.userData.newPassword2
-        };
-
-        axios
-        .post("/api/restricted-users/update-user-password", newUserPassword)
-        .then(res => {
-            if (this._isMounted) {
-                this.setState({userData: {
-                    ...this.state.userData,
-                    errors: {},
-                    password: '',
-                    newPassword: '',
-                    newPassword2: ''
-                }});
-                document.getElementById('profile-edit-activity-info-change-password-button').click();
-            }
-        }) 
-        .catch(err => {
-            let newErrors = err.response.data;
-            if (this._isMounted) {
-                this.setState({userData: {
-                    ...this.state.userData,
-                    errors: newErrors
-                }});
-            }
-        });
-    };
-
     onChange = e => {
         let userDataCopy = {...this.state.userData};
         userDataCopy[e.target.name] = e.target.value;
@@ -115,29 +81,6 @@ class ProfileEdit extends Component {
             this.setState({ userData: {...userDataCopy} });
         }
     };
-   
-    makePasswordVisible = (visibilityNumber) => {
-        let passwordInput = null;
-
-        if (visibilityNumber === 1) 
-            passwordInput = document.getElementById('profile-edit-activity-info-password');
-        else if (visibilityNumber === 2) 
-            passwordInput = document.getElementById('profile-edit-activity-info-new-password');
-        else if (visibilityNumber === 3) 
-            passwordInput = document.getElementById('profile-edit-activity-info-new-password2');
-
-        let visibilityStateNumber = 'visibility' + visibilityNumber;
-        if (passwordInput) {
-            if (passwordInput.type === "password") {
-                passwordInput.type = "text";
-                this.setState({[visibilityStateNumber]: 'visibility_off'})
-              } else {
-                passwordInput.type = "password";
-                this.setState({[visibilityStateNumber]: 'visibility'})
-              }
-
-        }
-    }
 
     changePasswordDisplay = () => {
         const computed = window.getComputedStyle(this.changePasswordRef.current).getPropertyValue("display");
@@ -241,38 +184,7 @@ class ProfileEdit extends Component {
                         className="profile-edit-activity-info-inputs" type="email"
                         label="Email" disabled
                         value={this.state.userData.email} />
-        
-                        <Button variant="contained" type="submit" onClick={this.changePasswordDisplay} id="profile-edit-activity-info-change-password-button"
-                        className="profile-edit-activity-info-inputs" color="primary">Change password</Button>
-
-                        <div id="profile-edit-activity-info-change-password-wrapper" ref={this.changePasswordRef} >
-                            <TextField id="profile-edit-activity-info-password" required name="password" {...input_errors_password}
-                            helperText={errors.password} value={this.state.userData.password}
-                            className="profile-edit-activity-info-inputs" type="password" onChange={this.onChange}
-                            label="Current password" />
-                            <span className="material-icons profile-edit-activity-info-password-visibility-icon" onClick={() => this.makePasswordVisible(1)}>
-                                {this.state.visibility1}
-                            </span>
-
-                            <TextField id="profile-edit-activity-info-new-password" required name="newPassword" {...input_errors_newPassword}
-                            helperText={errors.newPassword} value={this.state.userData.newPassword}
-                            className="profile-edit-activity-info-inputs" type="password" onChange={this.onChange}
-                            label="New password" />
-                            <span className="material-icons profile-edit-activity-info-password-visibility-icon" onClick={() => this.makePasswordVisible(2)}>
-                                {this.state.visibility2}
-                            </span>
-    
-                            <TextField id="profile-edit-activity-info-new-password2" required name="newPassword2" {...input_errors_newPassword2}
-                            helperText={errors.newPassword2} value={this.state.userData.newPassword2}
-                            className="profile-edit-activity-info-inputs" type="password" onChange={this.onChange}
-                            label="Repeat new password" />
-                            <span className="material-icons profile-edit-activity-info-password-visibility-icon" onClick={() => this.makePasswordVisible(3)}>
-                                {this.state.visibility3}
-                            </span>
-
-                            <Button variant="contained" type="submit" id="profile-edit-activity-info-change-password-submit" onClick={this.onChangePasswordSubmit}
-                            className="profile-edit-activity-info-inputs" color="primary">Update password</Button>
-                        </div>
+                  
 
                         <Alert severity="success" id="profile-edit-activity-info-success" className="profile-edit-activity-info-alert" ref={this.profileInfoUpdateSuccessRef}>
                             <AlertTitle>Success</AlertTitle>

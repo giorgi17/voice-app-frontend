@@ -27,6 +27,8 @@ import RecordVoiceView from './components/dashboard/MenuResponsive/RecordVoice/R
 import NotificationsView from './components/dashboard/MenuResponsive/Notifications/NotificationsView/NotificationsView';
 import ProfileView from './components/dashboard/Menu/Profile/ProfileView/ProfileView';
 import ProfileEditPicture from './components/dashboard/Menu/Profile/ProfileEdit/ProfileEditPicture/ProfileEditPicture';
+import Options from './components/dashboard/Menu/Profile/ProfileEdit/Options/Options';
+import ChangePassword from './components/dashboard/Menu/Profile/ProfileEdit/ChangePassword/ChangePassword';
 
 import { Button } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -79,6 +81,8 @@ function App() {
             <Route exact path='/profile/:userId/following' component={Followings} />
             <Route exact path='/account/edit' component={ProfileEdit} />
             <Route exact path='/account/edit/avatarImage' component={ProfileEditPicture} />
+            <Route exact path='/account/edit/password' component={ChangePassword} />
+            <Route exact path='/account/options' component={Options} />
             <Route exact path='/search' component={SearchView} />
             <Route exact path='/new-post' component={RecordVoiceView} />
             <Route exact path='/notifications' component={NotificationsView} />
