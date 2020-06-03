@@ -88,8 +88,9 @@
         min-height: 100vh;
     }
 
-    .ReactCrop--fixed-aspect {
-        max-width: 100% !important;
+    .ReactCrop-div-for-positioning {
+        width: auto !important;
+        margin: 0 !important;
     }
 }
 
@@ -100,9 +101,14 @@
 }
 
 .ReactCrop--fixed-aspect {
-    display: block;
-    margin: auto;
-    background-color: white;
-    max-width: 60%;
-    margin-bottom: 20px;
+    width: 100%;
+}
+
+.ReactCrop__image {
+    width: 100%;
+}
+
+.ReactCrop-div-for-positioning {
+    width: 60%;
+    margin: 0 auto;
 }

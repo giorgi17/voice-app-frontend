@@ -260,13 +260,15 @@ class ProfileImageCrop extends Component {
                 <input type="file" onChange={this.onSelectFile} ref={this.fileSelectInputRef} />
               </div>
               {this.state.src && (
-                <ReactCrop
-                  src={this.state.src}
-                  crop={this.state.crop}
-                  onImageLoaded={this.onImageLoaded}
-                  onComplete={this.onCropComplete}
-                  onChange={this.onCropChange}
-                />
+                <div className="ReactCrop-div-for-positioning">
+                    <ReactCrop
+                    src={this.state.src}
+                    crop={this.state.crop}
+                    onImageLoaded={this.onImageLoaded}
+                    onComplete={this.onCropComplete}
+                    onChange={this.onCropChange}
+                  />
+                </div>
               )}
 
               <Alert severity="error" id="profile-edit-picture-cropper-error" className="profile-edit-picture-cropper-alert" ref={this.moreThan16mbRef}>
