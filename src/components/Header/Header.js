@@ -47,7 +47,7 @@ class header extends Component {
                 <nav className="topnav" id="myTopnav">
                     <Link to="/" id="site-logo-link"><img src={Logo} id="site-logo" /></Link>
                     <Link to="/" className={`${this.props.homeActive ? "active" : ""}`}>Home</Link>
-                    <a href="#news">News</a>
+                    {/* <a href="#news">News</a> */}
                     {/* <a href="#contact" className={`${this.props.contactActive ? "active" : ""}`}>Contact</a> */}
                     <Link to="/about" className={`${this.props.aboutActive ? "active" : ""}`}>About</Link>
                     <a href="#" onClick={this.myFunction} className="icon" ref={this.responsiveMenuIconRef}>
@@ -59,7 +59,7 @@ class header extends Component {
                     { (this.props.authenticated) ? <a id="logout" onClick={this.props.logoutMethod}>Logout</a> : null }
                     { (!this.props.authenticated) ? <Link to="/register" id="topnav-register-button" className={`${this.props.registerActive ? "active" : ""}`}>Register</Link> : null }
                     { (!this.props.authenticated) ? <Link to="/login" id="topnav-login-button" className={`${this.props.loginActive ? "active" : ""}`}>Login</Link> : null }
-                    { this.state.showSearchIcon ? <Search/> : null}
+                    {/* { this.state.showSearchIcon ? <Search/> : null} */}
                 </nav>
             </React.Fragment>);
     }

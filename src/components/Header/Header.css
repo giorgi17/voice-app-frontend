@@ -6,6 +6,7 @@
     z-index: 5;
     /* position: relative; */
     position: fixed;
+    top: 0;
     width: 100%;
     min-height: 80px;
   }
@@ -47,9 +48,9 @@
 
   /* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
 @media screen and (max-width: 600px) {
-    .topnav {
+    /* .topnav {
       display: none;
-    }
+    } */
 
     .topnav a:not(:first-child) {display: none;}
     #logout {
