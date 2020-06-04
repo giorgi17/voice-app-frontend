@@ -1,5 +1,18 @@
-.user-profile-page-user-followers {
-    /* width: 500px;
-    height: 500px;
-    background-color: red; */
+.user-profile-page-user-followers-responsive {
+    /* background-color: white; */
+    height: 100vh;
+    /* overflow: scroll; */
+    margin-top: 45px;
+    margin-bottom: 50px;
+}
+
+.user-profile-page-user-followers-responsive-section-name {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.user-profile-page-user-followers-responsive-loading {
+    text-align: center;
+    display: none;
 }

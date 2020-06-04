@@ -6,6 +6,7 @@ import Notifications from './Notifications/Notifications';
 import RecordVoiceView from './RecordVoice/RecordVoiceView/RecordVoiceView';
 import Home from './Home/Home';
 import { connect } from "react-redux";
+import { setMenu } from '../../../actions/menuActions';
 
 class MenuNew extends Component { 
 
@@ -74,8 +75,12 @@ class MenuNew extends Component {
 
     componentDidMount() {
         // window.addEventListener("scroll", this.scrollListener);
-        if (this.props.menuName)
+        if (this.props.menuName) {
             this.setMenuIconActive(this.props.menuName);
+            this.props.setMenu(this.props.menuName)
+        } else {
+            this.setMenuIconActive(this.props.menu.currentMenu);
+        }
     }
 
     componentWillUnmount() {
@@ -102,9 +107,11 @@ class MenuNew extends Component {
 }
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.auth,
+    menu: state.menu
 });
 
 export default connect(
-    mapStateToProps
+    mapStateToProps,
+    { setMenu }
   )(MenuNew);

@@ -69,7 +69,7 @@ render() {
           <React.Fragment>
             {/* <Header authenticated={true} logoutMethod={this.onLogoutClick} homeActive={true} /> */}
             <HeaderResponsive />
-            <HeaderDesktop history={{...this.props.history}} />
+            <HeaderDesktop history={{...this.props.history}} menuName="home" />
             <MenuResponsive history={{...this.props.history}} menuName="home" />
             {/* <SearchBar /> */}
             <ContentContainer>

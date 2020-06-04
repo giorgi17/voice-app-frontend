@@ -19,7 +19,7 @@ import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
-import userProfile from './components/dashboard/UserProfile/UserProfile';
+import UserProfile from './components/dashboard/UserProfile/UserProfile';
 import Followers from './components/dashboard/UserProfile/Followers/Followers';
 import Followings from './components/dashboard/UserProfile/Followings/Followings';
 import SearchView from './components/dashboard/MenuResponsive/Search/SearchView/SearchView';
@@ -76,7 +76,7 @@ function App() {
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             {/* <Route exact path="/profile" component={Profile} /> */}
-            <Route exact path='/profile/:userId' component={userProfile} />
+            <Route exact path='/profile/:userId' component={UserProfile} />
             <Route exact path='/profile/:userId/followers' component={Followers} />
             <Route exact path='/profile/:userId/following' component={Followings} />
             <Route exact path='/account/edit' component={ProfileEdit} />

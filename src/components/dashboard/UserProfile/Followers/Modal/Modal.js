@@ -15,24 +15,34 @@ class Modal extends Component {
         this.state = {
             followers: [],
             page: 0,
-            hasMore: true
+            hasMore: true,
+            userIdQueryParam: ''
         }
     }
 
     goBackCloseModal = (e) => {
-        this.props.history.goBack();
+        if (this._isMounted) 
+            this.props.closeFollowersModal();
+            // this.mainModal.current.classList.remove("open");
+            // this.mainModal.current.style.display = 'none';
     }
 
     closeWithBackdrop = e => {
         if (this.mainModal) {
-            if (e.target === this.mainModal.current)
-                this.goBackCloseModal();
+            if (e.target === this.mainModal.current) {
+                if (this._isMounted) {
+                    this.props.closeFollowersModal();
+                    // this.mainModal.current.classList.remove("open");
+                }
+            }
         }
     }
 
     getFollowersData = () => {
         let dataToSend = {};
-        dataToSend.user_id = this.props.userId;
+        // dataToSend.user_id = this.props.userId;
+        const userIdQueryParam = window.location.href.split("/").pop();
+        dataToSend.user_id = userIdQueryParam;
         dataToSend.page = this.state.page;
 
         axios.post("/api/restricted-users/get-user-followers", dataToSend).then(response => {
@@ -64,6 +74,18 @@ class Modal extends Component {
         });
     }
 
+    componentDidUpdate() {
+        const userIdQueryParam = window.location.href.split("/").pop();
+
+        if (this.state.userIdQueryParam !== userIdQueryParam) {
+            if (this._isMounted) {
+                this.setState({userIdQueryParam, followers: [],
+                    page: 0,
+                    hasMore: true}, () => this.getFollowersData());
+            }
+        }
+    }
+
     componentDidMount() {
         this.getFollowersData();
         this._isMounted = true;
@@ -75,39 +97,42 @@ class Modal extends Component {
 
     render() {
         return  (
-            <div className="modal-component open" ref={this.mainModal} onClick={this.closeWithBackdrop}>
-                <div className="modal-component-window" ref={this.mainWindow}>
-                    <div className="modal-component-header">
-                        Followers
-                    <button className="modal-component-close" onClick={this.goBackCloseModal}>&times;</button>
-                </div>
-                    <div className="modal-component-body">
-                        <InfiniteScroll
-                                                    height="100%"
-                                                    dataLength={this.state.followers.length}
-                                                    next={this.getFollowersData}
-                                                    hasMore={this.state.hasMore}
-                                                    loader={<h4>Loading...</h4>}
-                                                    endMessage={
-                                                        <p style={{ textAlign: "center" }}>
-                                                        <b><br />You have seen it all !</b>
-                                                        </p>
-                                                    }
-                                                    >
-                                                    
-                                                    {/* Display fetched posts */}
-                                                    {this.state.followers.map((data, index) => (
+            <div className="user-profile-page-user-followers"> 
+                <div className={`modal-component ${this.props.showFollowersModal ? 'open' : ''}`}        
+                ref={this.mainModal} onClick={this.closeWithBackdrop}>
+                    <div className="modal-component-window" ref={this.mainWindow}>
+                        <div className="modal-component-header">
+                            Followers
+                        <button className="modal-component-close" onClick={this.goBackCloseModal}>&times;</button>
+                    </div>
+                        <div className="modal-component-body">
+                            <InfiniteScroll
+                                                        height="100%"
+                                                        dataLength={this.state.followers.length}
+                                                        next={this.getFollowersData}
+                                                        hasMore={this.state.hasMore}
+                                                        loader={<h4>Loading...</h4>}
+                                                        endMessage={
+                                                            <p style={{ textAlign: "center" }}>
+                                                            <b><br />You have seen it all !</b>
+                                                            </p>
+                                                        }
+                                                        >
+                                                        
+                                                        {/* Display fetched followers */}
+                                                        {this.state.followers.map((data, index) => (
 
-                                                        <Follower   
-                                                                user_id={data._id}
-                                                                profile_img={data.avatarImage}
-                                                                name={data.name}
-                                                                key={data._id}
-                                                                history={this.props.history}></Follower>
+                                                            <Follower   
+                                                                    user_id={data._id}
+                                                                    profile_img={data.avatarImage}
+                                                                    name={data.name}
+                                                                    key={data._id}
+                                                                    history={this.props.history}></Follower>
 
-                                                    ))}
-                    
-                                                </InfiniteScroll>
+                                                        ))}
+                        
+                                                    </InfiniteScroll>
+                        </div>
                     </div>
                 </div>
             </div>

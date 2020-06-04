@@ -7,7 +7,8 @@
     align-items: center;
     justify-content: flex-start;
     position: relative;
-    width: 100%;
+    width: 1000px;
+    margin: auto;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     /* position: absolute;
     top: 83px; */
@@ -26,6 +27,7 @@
 
   @media only screen and (max-width: 600px) {
     .user-profile-page {
+      width: 100%;
       padding: 0;
       margin-top: 40px;
     }

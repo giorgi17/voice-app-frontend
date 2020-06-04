@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import queryString from 'query-string';
 import Header from '../../Header/Header';
 import { logoutUser } from '../../../actions/authActions';
+import { setMenu } from '../../../actions/menuActions';
 import ActivityCounter from './ActivityCounter/ActivityCounter';
 import PageCacher from '../../../utils/PageCacher';
 import MenuResponsive from '../MenuResponsive/Menu';  
@@ -43,7 +44,8 @@ class UserProfile extends Component {
             hasMore: true,
             following: null,
             showFollowButton: false,
-            queryUserId: ''
+            queryUserId: '',
+            thisRoute: ''
         }
     }
 
@@ -80,10 +82,12 @@ class UserProfile extends Component {
         // Check if profile belongs to logged in user and if so, don't show follow button
         if (!this.state.postAuthorData.user_id || 
             this.state.postAuthorData.user_id === this.props.auth.user.id) {
-                PageCacher.cachePageUpdate(null, [
-                    {name: 'following', data: this.state.following},
-                    {name: 'showFollowButton', data: this.state.showFollowButton}
-                ], 'Posts')
+                this.setState({following: null, showFollowButton: false},() => {
+                    PageCacher.cachePageUpdate(null, [
+                        {name: 'following', data: this.state.following},
+                        {name: 'showFollowButton', data: this.state.showFollowButton}
+                    ], 'Posts');
+                })
                 return;
         } 
 
@@ -225,7 +229,17 @@ class UserProfile extends Component {
         
         if (this.state.queryUserId !== userIdQueryParam) {
             if (this._isMounted) {
+                // Set route name in state for "PageCacher.cachePageSaveScroll" to see while unmounting
+                const fullThisRoute = window.location.href.split("/");
+                fullThisRoute.splice(0,3);
+                const thisRoute = fullThisRoute.join('/');
+
+                const cachedData = PageCacher.cachePageOnMount('Posts');
+                const propertyNamesToBeCached = ['posts', 'page', 'postAuthorData', 'following',
+                    'showFollowButton', 'postAuthorStatistics'];
+
                 this.postsLoadingRef.current.innerHTML = 'Loading...';
+                this.postsLoadingRef.current.style.display = 'none';
                 this.setState({ 
                     postAuthorData: {
                         avatarImage: null,
@@ -237,11 +251,35 @@ class UserProfile extends Component {
                     page: 0,
                     hasMore: true,
                     following: true,
-                    queryUserId: userIdQueryParam
+                    queryUserId: userIdQueryParam,
+                    thisRoute: ''
                 }, () => {
-                    this.getUserInfo();
-                    this.getUserPosts();
-                    this.getUserStatistics();  
+                    if (PageCacher.areAllPropertiesCached(propertyNamesToBeCached, cachedData.data)) {
+                        console.log("CACHED!");
+                        this.setState({... cachedData.data}, () => {
+                            window.scrollTo(cachedData.scroll.scrollX, cachedData.scroll.scrollY);
+                            window.addEventListener('scroll', this.scrollListener);
+                            if (!this.state.hasMore) {
+                                this.postsLoadingRef.current.innerHTML = 'You\'ve seen all posts.';
+                                this.postsLoadingRef.current.style.display = 'block';
+                            }
+
+                        });
+                    } else {
+                        console.log("NOT CACHED!");
+                        // Getting query parameter
+                        // const parsed = queryString.parse(window.location.search);
+                        const params = this.props.match.params;
+                        if (params.userId) {
+                            this.setState({queryUserId: params.userId}, () => {
+                                PageCacher.cachePageUpdate(null, [{name: 'queryUserId', data: this.state.queryUserId}],
+                                         'Posts')
+                                this.getUserInfo();
+                                this.getUserPosts();
+                                this.getUserStatistics();
+                            });
+                        }
+                    }
                 })
             }
         }
@@ -275,6 +313,7 @@ class UserProfile extends Component {
 
     componentDidMount() {
         this._isMounted = true;
+        this.props.setMenu('profile');
         // window.addEventListener('scroll', this.scrollListener);        
 
         // Set route name in state for "PageCacher.cachePageSaveScroll" to see while unmounting
@@ -291,7 +330,11 @@ class UserProfile extends Component {
             console.log("CACHED!");
             this.setState({... cachedData.data}, () => {
                 window.scrollTo(cachedData.scroll.scrollX, cachedData.scroll.scrollY);
-                window.addEventListener('scroll', this.scrollListener);  
+                window.addEventListener('scroll', this.scrollListener); 
+                if (!this.state.hasMore) {
+                    this.postsLoadingRef.current.innerHTML = 'You\'ve seen all posts.';
+                    this.postsLoadingRef.current.style.display = 'block';
+                } 
             });
         } else {
             console.log("NOT CACHED!");
@@ -308,10 +351,6 @@ class UserProfile extends Component {
                 });
             }
         }
-
-        // this.getUserInfo();
-        // this.getUserPosts();
-        // this.getUserStatistics();
     }
 
     componentWillUnmount() {
@@ -452,10 +491,11 @@ class UserProfile extends Component {
 }
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.auth,
+    menu: state.menu
 });
 
 export default connect(
     mapStateToProps,
-    { logoutUser }
+    { logoutUser, setMenu }
   )(UserProfile);

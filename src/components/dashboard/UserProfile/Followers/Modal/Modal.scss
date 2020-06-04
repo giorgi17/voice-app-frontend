@@ -40,6 +40,7 @@ button {
   background: rgba(0,0,0,0.6);
   perspective: 100px;
   z-index: 6;
+  display: none;
   @include transition(opacity $duration ease-out);
   
   &.open {
