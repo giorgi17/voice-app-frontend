@@ -155,7 +155,7 @@ class ChangePassword extends Component {
                 <div className="responsive-menu-section-name">
                     <span className="material-icons profile-edit-change-password-responsive-back-icon"
                         onClick={() => this.props.history.goBack()}>
-                        keyboard_backspace
+                        arrow_back_ios
                     </span>
 
                     <span className="profile-edit-change-password-responsive-title">

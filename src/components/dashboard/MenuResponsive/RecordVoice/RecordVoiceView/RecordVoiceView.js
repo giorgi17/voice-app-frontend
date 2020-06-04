@@ -208,7 +208,7 @@ class RecordVoiceView extends Component {
                             <div className="responsive-upper-tab-go-back"
                                 onClick={this.goBackToDashboard}>
                                 <span className="material-icons">
-                                    keyboard_backspace
+                                arrow_back_ios
                                 </span>
                             </div>
                             <div className="responsive-upper-tab-title">

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './Options.css';
+import { connect } from "react-redux";
+import { logoutUser } from '../../../../../../actions/authActions';
 
 class Options extends Component {
 
@@ -52,6 +54,16 @@ class Options extends Component {
                                 keyboard_arrow_right
                             </span>
                         </span>
+
+                        <span className="profile-edit-menu-responsive-list-item profile-options-logout-item" onClick={() => this.props.logoutUser()}>
+                            <span className="profile-edit-menu-responsive-list-item-name profile-options-logout">
+                                Log Out
+                            </span>
+
+                            <span className="material-icons profile-edit-menu-responsive-list-item-arrow">
+                                keyboard_arrow_right
+                            </span>
+                        </span>
                     </div>
                     
                 </div>
@@ -60,4 +72,11 @@ class Options extends Component {
     }
 }
 
-export default Options;
+const mapStateToProps = state => ({
+    auth: state.auth
+  });
+  
+  export default connect(
+    mapStateToProps,
+    { logoutUser }
+  )(Options);

@@ -152,6 +152,9 @@ class Followers extends Component {
                     <MenuResponsive history={{...this.props.history}} />
 
                     <div className="responsive-menu-section-name">
+                        <span className="material-icons" onClick={() => this.props.history.goBack()}>
+                            arrow_back_ios
+                        </span>
                        <div className="user-profile-page-user-followers-responsive-section-name">
                             Followers
                        </div>

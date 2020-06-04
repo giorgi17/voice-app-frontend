@@ -14,6 +14,7 @@ import ActivityCounter from './ActivityCounter/ActivityCounter';
 import PageCacher from '../../../utils/PageCacher';
 import MenuResponsive from '../MenuResponsive/Menu';  
 import HeaderDesktop from '../Menu/HeaderDesktop/HeaderDesktop';
+import OptionsModal from '../Menu/Profile/ProfileEdit/Options/Modal/Modal';
 
 class UserProfile extends Component {
     _isMounted = false;
@@ -45,7 +46,8 @@ class UserProfile extends Component {
             following: null,
             showFollowButton: false,
             queryUserId: '',
-            thisRoute: ''
+            thisRoute: '',
+            showOptionsModal: false
         }
     }
 
@@ -311,6 +313,10 @@ class UserProfile extends Component {
         this.props.history.push('/dashboard');
     }
 
+    closeOptionsModal = () => {
+        this.setState({showOptionsModal: false});
+    }
+
     componentDidMount() {
         this._isMounted = true;
         this.props.setMenu('profile');
@@ -378,6 +384,10 @@ class UserProfile extends Component {
                         </div>
                     </div>
                 </div>
+
+                <OptionsModal showOptionsModal={this.state.showOptionsModal} 
+                    closeOptionsModal={this.closeOptionsModal} history={this.props.history} />
+
                 <div className="user-profile-page">
                         <div className="user-profile-page-user-pic-and-basic">
                             <div className="user-profile-page-profile-image-wrapper">
@@ -409,8 +419,12 @@ class UserProfile extends Component {
                                             </div>
 
                                             <span className="material-icons user-profile-page-info-edit-block-settings-icon"
-                                                onClick={() => 
-                                                this.props.history.push('/account/options')}
+                                                onClick={() => {
+                                                    if (window.innerWidth >= 600)
+                                                        this.setState({showOptionsModal: true});
+                                                    else
+                                                        this.props.history.push('/account/options')
+                                                }}
                                                 // console.log('F')}
                                                 >
                                                 settings

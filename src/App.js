@@ -76,16 +76,16 @@ function App() {
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             {/* <Route exact path="/profile" component={Profile} /> */}
-            <Route exact path='/profile/:userId' component={UserProfile} />
-            <Route exact path='/profile/:userId/followers' component={Followers} />
-            <Route exact path='/profile/:userId/following' component={Followings} />
-            <Route exact path='/account/edit' component={ProfileEdit} />
-            <Route exact path='/account/edit/avatarImage' component={ProfileEditPicture} />
-            <Route exact path='/account/edit/password' component={ChangePassword} />
-            <Route exact path='/account/options' component={Options} />
-            <Route exact path='/search' component={SearchView} />
-            <Route exact path='/new-post' component={RecordVoiceView} />
-            <Route exact path='/notifications' component={NotificationsView} />
+            <PrivateRoute exact path='/profile/:userId' component={UserProfile} />
+            <PrivateRoute exact path='/profile/:userId/followers' component={Followers} />
+            <PrivateRoute exact path='/profile/:userId/following' component={Followings} />
+            <PrivateRoute exact path='/account/edit' component={ProfileEdit} />
+            <PrivateRoute exact path='/account/edit/avatarImage' component={ProfileEditPicture} />
+            <PrivateRoute exact path='/account/edit/password' component={ChangePassword} />
+            <PrivateRoute exact path='/account/options' component={Options} />
+            <PrivateRoute exact path='/search' component={SearchView} />
+            <PrivateRoute exact path='/new-post' component={RecordVoiceView} />
+            <PrivateRoute exact path='/notifications' component={NotificationsView} />
 
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />

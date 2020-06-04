@@ -39,6 +39,15 @@
     text-align: left;
 }
 
+.profile-options-logout-item {
+    border-top: 1px solid rgb(145, 142, 142);
+    margin-top: 20px;
+}
+
+.profile-options-logout {
+    color: red;
+}
+
 /* @media only screen and (min-width: 600px) {
     .user-profile-page-basic-activity-info-wrapper-2 {
       display: none;

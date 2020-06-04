@@ -50,7 +50,7 @@ class ProfileEditPicture extends Component {
                 <div className="responsive-menu-section-name">
                     <div className="profile-edit-picture-section-items">
                         <span className="material-icons" onClick={() => this.props.history.goBack()}>
-                            keyboard_backspace
+                            arrow_back_ios
                         </span>
 
                         <span className="profile-edit-picture-section-title">

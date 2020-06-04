@@ -143,7 +143,7 @@ class ProfileEdit extends Component {
 
                 <div className="responsive-menu-section-name">
                     <span className="material-icons" onClick={() => this.props.history.goBack()}>
-                        keyboard_backspace
+                        arrow_back_ios
                     </span>
 
                     <span className="profile-edit-general-section-title">
