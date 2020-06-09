@@ -88,7 +88,6 @@ class ProfileImageCrop extends Component {
       form.append("avatarPictureOriginalName", this.state.originalFileName);
       form.append("id", this.props.auth.user.id);
       form.append("currentPicturePath", this.getCurrentImagePath(this.props.avatarImageFullPath));
-      
       axios
         .post("/api/restricted-users/update-user-avatar-picture", form)
         .then(res => {

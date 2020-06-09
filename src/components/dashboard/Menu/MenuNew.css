@@ -4,6 +4,10 @@
     justify-content: space-between;
 }
 
+.menu-container .mdl-badge[data-badge]:after {
+    right: -5px!important;
+}
+
 .menu-container-fixed {
     background: #fff;
     border-radius: 2px;

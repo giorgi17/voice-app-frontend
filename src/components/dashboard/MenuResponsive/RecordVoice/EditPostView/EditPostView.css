@@ -199,11 +199,6 @@
     margin-bottom: 20px;
 }
 
-.responsive-recordvoice-view-post-button-not-set {
-    opacity: 0.3;
-    cursor: unset;
-}
-
 #responsive-recordvoice-view-post-button-label {
     font-size: 20px;
     font-weight: 700;

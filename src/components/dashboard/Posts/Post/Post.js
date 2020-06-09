@@ -6,6 +6,9 @@ import { connect } from "react-redux";
 import CommentsSection from './CommentsSection/CommentsSection';
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import EditPostView from '../../Menu/RecordVoice/EditPostView /EditPostView';
+import PageCacher from '../../../../utils/PageCacher';
+import DeletePostView from '../../Menu/RecordVoice/DeletePostView/DeletePostView';
 
 
 class Post extends Component {
@@ -34,7 +37,11 @@ class Post extends Component {
                 dislikes: 0,
                 comments: 0,
                 views: 0
-            }
+            },
+            editModalOpen: false,
+            deleteModalOpen: false,
+            postPicture: '',
+            postDescription: ''
         }
     }
 
@@ -195,6 +202,14 @@ class Post extends Component {
     changeCommentsNumber = postInfo => {
         this.setState({postInfo});
     }
+    
+    closeEditModal = () => {
+        this.setState({editModalOpen: false});
+    }
+
+    closeDeleteModal = () => {
+        this.setState({deleteModalOpen: false});
+    }
 
     playAudio = () => {
         if (this._isMounted) {
@@ -208,10 +223,42 @@ class Post extends Component {
         }
     }
 
+    postEditEffect = (postPicture, postDescription) => {
+        let cacheDataToUpdate = [
+            {index: this.props.index, name: 'picture', data: postPicture},
+            {index: this.props.index, name: 'description', data: postDescription}
+        ]
+        if (postPicture) {
+            this.setState({postPicture, postDescription});
+        } else {
+            this.setState({postDescription});
+            cacheDataToUpdate = [
+                {index: this.props.index, name: 'description', data: postDescription}
+            ]
+        }
+        PageCacher.cachePageUpdate('posts', cacheDataToUpdate, 'Posts', true);
+    }
+
+    openEditPost = () => {
+        // Getting route information 
+        const fullThisRoute = window.location.href.split("/");
+        fullThisRoute.splice(0,3);
+        const thisRoute = fullThisRoute.join('/');
+
+        if (window.innerWidth >= 600)
+            this.setState({editModalOpen: true});
+        else
+            this.props.history.push(`/edit-post/${this.props.post_id}/${this.props.post_author_id}/${this.props.index}/${thisRoute}`);
+    }
+
     componentDidMount() {
         this._isMounted = true;
 
-        if (this.props.post_author_id === this.props.auth.user.id) {
+        this.setState({postPicture: this.props.picture,
+            postDescription: this.props.description});
+        console.log(this.props.auth.user.isAdmin);
+        if (this.props.post_author_id === this.props.auth.user.id ||
+            this.props.auth.user.isAdmin) {
             this.postEditDeleteRef.current.style.display = 'block';
             this.postEditOptionRef.current.style.display = 'block';
         }
@@ -247,7 +294,7 @@ class Post extends Component {
                             </span>
                             <span className="user-post-video-time">{this.props.audio_duration}</span>
                         </div>
-                        <img src={this.props.picture}></img>
+                        <img src={this.state.postPicture}></img>
 
                         <Link to={`/profile/${this.props.post_author_id}`}>
                             <div className="user-post-profile-image-wrapper"
@@ -271,11 +318,11 @@ class Post extends Component {
                         <div className="user-post-edit-options-modal-container" ref={this.postEditRef}>
                             <ul className="user-post-edit-options-modal-menu-items">
                                 <li className="user-post-edit-options-modal-menu-items-edit-post"
-                                        ref={this.postEditOptionRef}>
+                                        ref={this.postEditOptionRef} onClick={this.openEditPost}>
                                     Edit post
                                 </li>
                                 <li className="user-post-edit-options-modal-menu-items-delete-post"
-                                        ref={this.postEditDeleteRef}>
+                                        ref={this.postEditDeleteRef} onClick={() => this.setState({deleteModalOpen: true})}> 
                                     Delete post
                                 </li>
                                 <li className="user-post-edit-options-modal-menu-items-notifications-switch-post"
@@ -315,7 +362,7 @@ class Post extends Component {
                     <hr></hr>
         
                     <div className="user-post-description">
-                        <span>{this.props.description}</span>
+                        <span>{this.state.postDescription}</span>
                     </div>
 
                     <hr></hr>
@@ -330,6 +377,16 @@ class Post extends Component {
                     </div>
                     
                 </div>
+
+                {this.state.editModalOpen ? <EditPostView closeEditModal={this.closeEditModal}
+                    profile_picture={this.props.profile_picture} picture={this.props.picture}
+                    description={this.props.description} post_id={this.props.post_id}
+                    picture={this.props.picture} postEditEffect={this.postEditEffect}
+                    post_author_id={this.props.post_author_id} user_name={this.props.user_name}/> : null}
+
+                {this.state.deleteModalOpen ? <DeletePostView closeDeleteModal={this.closeDeleteModal}
+                 index={this.props.index} deleteSpecificElementFromArray={this.props.deleteSpecificElementFromArray}
+                 post_id={this.props.post_id} post_author_id={this.props.post_author_id} /> : null}
             </div>)
     }
     

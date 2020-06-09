@@ -76,8 +76,16 @@ class MenuNew extends Component {
     componentDidMount() {
         // window.addEventListener("scroll", this.scrollListener);
         if (this.props.menuName) {
-            this.setMenuIconActive(this.props.menuName);
-            this.props.setMenu(this.props.menuName)
+            if (this.props.menuName === 'profile') {
+                const userId = window.location.href.split("/").pop();
+                    if (userId === this.props.auth.user.id) {
+                        this.setMenuIconActive(this.props.menuName);
+                        this.props.setMenu(this.props.menuName);
+                    }
+            } else {
+                this.setMenuIconActive(this.props.menuName);
+                this.props.setMenu(this.props.menuName);
+            }
         } else {
             this.setMenuIconActive(this.props.menu.currentMenu);
         }

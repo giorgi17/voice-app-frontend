@@ -25,7 +25,7 @@ class Posts extends Component {
             following: false,
             myPosts: false
         },
-        filter: 'all'
+        filter: 'following'
     }
 
     // Fetch more posts from database according to page number
@@ -33,7 +33,8 @@ class Posts extends Component {
         if (this.postsLoadingRef.current)
             this.postsLoadingRef.current.style.display = 'block';
 
-        const currentFilter = this.state.filter;
+        // const currentFilter = this.state.filter;
+
         axios.get("/api/restricted-users/get-posts-with-page/?page=" + this.state.page
                  + "&user_id=" + this.props.auth.user.id + "&filter=" + this.state.filter).then(response => {
             if (this._isMounted) {
@@ -47,7 +48,7 @@ class Posts extends Component {
 
                 if (response.data.length > 0) {
                     this.postsLoadingRef.current.style.display = 'none';
-                    if (this.state.filter === currentFilter) {
+                    // if (this.state.filter === currentFilter) {
                         this.setState({
                             // posts: this.state.posts.concat(response.data),
                             posts: newUniquePostsArray,
@@ -61,10 +62,10 @@ class Posts extends Component {
                                 ], 'Posts');
                                 window.addEventListener('scroll', this.scrollListener); 
                             });
-                    }
+                    // }
                 } else {
                     this.postsLoadingRef.current.innerHTML = 'You\'ve seen all posts.';
-                    if (this.state.filter === currentFilter) {
+                    // if (this.state.filter === currentFilter) {
                         this.setState({
                             hasMore: false
                         }, () => {
@@ -76,7 +77,7 @@ class Posts extends Component {
                                 'Posts');
                                 window.addEventListener('scroll', this.scrollListener); 
                             });
-                    }
+                    // }
                 }
             }
           });
@@ -117,19 +118,36 @@ class Posts extends Component {
         // console.log(lastScrollY);
 
         if ((lastScrollY + 1000) >= height) {
-            console.log("RUN");
             // alert("you're at the bottom of the page");
             if (this.state.hasMore){
                 if (this._isMounted) {
                     window.removeEventListener('scroll', this.scrollListener); 
-                    this.fetchMoreData();
+                    if (this.props.auth.user.isAdmin) {
+                        this.setState({filter: 'all'}, () => {
+                            this.fetchMoreData();
+                        })
+                    } else {
+                        this.fetchMoreData();
+                    }
                 }
             }
         }
     }
 
+    deleteSpecificElementFromArray = index => {
+        const postsArrayCopy = [...this.state.posts];
+        postsArrayCopy.splice(index, 1);
+        this.setState({posts: postsArrayCopy}, () => {
+            // Update the posts data in cache
+            PageCacher.cachePageUpdate(null, [
+                {name: 'posts', data: this.state.posts}
+            ], 'Posts');
+        });
+    }
+
     componentDidMount() {
         this._isMounted = true;
+        console.log(this.state.filter);
         // window.addEventListener('scroll', this.scrollListener); 
 
         // Set route name in state for "PageCacher.cachePageSaveScroll" to see while unmounting
@@ -142,13 +160,19 @@ class Posts extends Component {
         const propertyNamesToBeCached = ['posts', 'page'];
         // console.log(cachedData);
   
-        if (PageCacher.areAllPropertiesCached(propertyNamesToBeCached, cachedData.data)){  
+        if (PageCacher.areAllPropertiesCached(propertyNamesToBeCached, cachedData.data)) {  
             this.setState({... cachedData.data}, () => {
                 window.scrollTo(cachedData.scroll.scrollX, cachedData.scroll.scrollY);
                 window.addEventListener('scroll', this.scrollListener);
             });
         } else {
-            this.fetchMoreData();
+            if (this.props.auth.user.isAdmin) {
+                this.setState({filter: 'all'}, () => {
+                    this.fetchMoreData();
+                })
+            } else {
+                this.fetchMoreData();
+            }
         }
     }
 
@@ -186,6 +210,7 @@ class Posts extends Component {
                         {/* Display fetched posts */}
                          {this.state.posts.map((data, index) => (
                             <Post   
+                                    index={index}
                                     post_id={data._id}
                                     picture={data.picture}
                                     audio={data.sound}
@@ -198,7 +223,9 @@ class Posts extends Component {
                                     disliked={data.disliked}
                                     created_at={data.created_at}
                                     notify={data.notify}
-                                    key={data._id}></Post>
+                                    key={data._id}
+                                    deleteSpecificElementFromArray={this.deleteSpecificElementFromArray}
+                                    ></Post>
                         ))}
 
                         <h4 className="user-profile-page-posts-loading" ref={this.postsLoadingRef}>

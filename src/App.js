@@ -29,6 +29,7 @@ import ProfileView from './components/dashboard/Menu/Profile/ProfileView/Profile
 import ProfileEditPicture from './components/dashboard/Menu/Profile/ProfileEdit/ProfileEditPicture/ProfileEditPicture';
 import Options from './components/dashboard/Menu/Profile/ProfileEdit/Options/Options';
 import ChangePassword from './components/dashboard/Menu/Profile/ProfileEdit/ChangePassword/ChangePassword';
+import EditPostView from './components/dashboard/MenuResponsive/RecordVoice/EditPostView/EditPostView';
 
 import { Button } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -85,6 +86,7 @@ function App() {
             <PrivateRoute exact path='/account/options' component={Options} />
             <PrivateRoute exact path='/search' component={SearchView} />
             <PrivateRoute exact path='/new-post' component={RecordVoiceView} />
+            <PrivateRoute exact path='/edit-post/:postId/:authorId/:index/:cacheRoute' component={EditPostView} />
             <PrivateRoute exact path='/notifications' component={NotificationsView} />
 
             <Switch>

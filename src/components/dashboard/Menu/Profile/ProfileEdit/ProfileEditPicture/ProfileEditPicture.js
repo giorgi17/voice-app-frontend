@@ -24,7 +24,7 @@ class ProfileEditPicture extends Component {
 
         axios.post("/api/restricted-users/get-user-profile-picture-for-notifications", dataToSend).then(response => {
             if (this._isMounted) {
-                this.setState({profilePicture: response.data.avatarImage});
+                this.setState({avatarImage: response.data.avatarImage});
             }
         }).catch( err => {
             console.log(err.message);
