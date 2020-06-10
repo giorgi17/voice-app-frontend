@@ -91,7 +91,7 @@ class AddNewPost extends Component {
                         </div>
                         
                         {/* <p>Some text in the Modal..</p> */}
-                        <RecordVoiceView profile_picture={this.state.profilePicture} />
+                        <RecordVoiceView profile_picture={this.state.profilePicture} postAdded={this.props.postAdded}/>
                     </div>
                 </div>
             </React.Fragment>

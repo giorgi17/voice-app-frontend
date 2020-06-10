@@ -172,6 +172,12 @@ class EditPostView  extends Component {
         }
 
         PageCacher.cachePageUpdate('posts', cacheDataToUpdate, 'Posts', true, route);
+        // Update Dashboard posts so deleted post deosn't come up
+        const cacheDataCopy = JSON.parse(localStorage.getItem('mainPageCacheObject'));
+        if (cacheDataCopy.hasOwnProperty('dashboard')) {
+            delete cacheDataCopy['dashboard'];
+            localStorage.setItem('mainPageCacheObject', JSON.stringify(cacheDataCopy));
+        }
     }
 
     goBackToDashboard = () => {
@@ -183,7 +189,7 @@ class EditPostView  extends Component {
         const postIdQueryParam = this.props.match.params.postId;
         const postAuthorIdQueryParam = this.props.match.params.authorId;
         const indexQueryParam = this.props.match.params.index;
-        const cacheRouteQueryParam = this.props.match.params.cacheRoute;
+        const cacheRouteQueryParam = decodeURIComponent(this.props.match.params.cacheRoute);
 
         if (postIdQueryParam && indexQueryParam && postAuthorIdQueryParam)
             this.fetchPostInfo(postIdQueryParam, postAuthorIdQueryParam, cacheRouteQueryParam,

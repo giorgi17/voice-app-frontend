@@ -226,6 +226,24 @@ class UserProfile extends Component {
         });
     }
 
+    deleteSpecificElementFromArray = index => {
+        const postsArrayCopy = [...this.state.posts];
+        postsArrayCopy.splice(index, 1);
+        this.setState({posts: postsArrayCopy}, () => {
+            // Update the posts data in cache
+            PageCacher.cachePageUpdate(null, [
+                {name: 'posts', data: this.state.posts}
+            ], 'Posts');
+
+            // Update dashboard posts so deleted post deosn't come up
+            const cacheDataCopy = JSON.parse(localStorage.getItem('mainPageCacheObject'));
+            if (cacheDataCopy.hasOwnProperty('dashboard')) {
+                delete cacheDataCopy['dashboard'];
+                localStorage.setItem('mainPageCacheObject', JSON.stringify(cacheDataCopy));
+            }
+        });
+    }
+
     componentDidUpdate() {
         const userIdQueryParam = this.props.match.params.userId;
         
@@ -474,19 +492,23 @@ class UserProfile extends Component {
                                             {this.state.posts.map((data, index) => (
                                                 
                                                     <Post   
+                                                            index={index}
                                                             post_id={data._id}
                                                             post_author_id={data.user_id}
                                                             picture={data.picture}
                                                             audio={data.sound}
                                                             description={data.description}
                                                             audio_duration={data.audio_duration}
+                                                            post_author_id={data.user_id}
                                                             profile_picture={data.profile_picture}
                                                             user_name={data.user_name}
                                                             liked={data.liked}
                                                             disliked={data.disliked}
                                                             created_at={data.created_at}
                                                             notify={data.notify}
-                                                            key={data._id}></Post>
+                                                            key={data._id}
+                                                            deleteSpecificElementFromArray={this.deleteSpecificElementFromArray}
+                                                            ></Post>
                                             ))}
 
                                             <h4 className="user-profile-page-posts-loading" ref={this.postsLoadingRef}>

@@ -23,7 +23,6 @@ class DeletePostView extends Component {
           axios
           .post("/api/restricted-users/delete-post", dataToSend)
           .then(res => {
-            console.log(res.data.message);
             this.props.deleteSpecificElementFromArray(this.props.index);
           }) 
           .catch(err => {

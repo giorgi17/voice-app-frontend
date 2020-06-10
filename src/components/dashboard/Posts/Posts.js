@@ -83,6 +83,12 @@ class Posts extends Component {
           });
     };
 
+    postAdded = () => {
+        this.setState({posts: [], page: 0, hasMore: true}, () => {
+            this.fetchMoreData();
+        });
+    }
+
     // Switching icon styles to "active" and displaying specific menu content on clicking icon
     setMenuIconActive = (iconName) => {
         const stateCopy = {...this.state.activeIcons};
@@ -142,12 +148,18 @@ class Posts extends Component {
             PageCacher.cachePageUpdate(null, [
                 {name: 'posts', data: this.state.posts}
             ], 'Posts');
+
+            // Update user profile posts so deleted post deosn't come up
+            const cacheDataCopy = JSON.parse(localStorage.getItem('mainPageCacheObject'));
+            if (cacheDataCopy.hasOwnProperty('profile/' + this.props.auth.user.id)) {
+                delete cacheDataCopy['profile/' + this.props.auth.user.id];
+                localStorage.setItem('mainPageCacheObject', JSON.stringify(cacheDataCopy));
+            }
         });
     }
 
     componentDidMount() {
         this._isMounted = true;
-        console.log(this.state.filter);
         // window.addEventListener('scroll', this.scrollListener); 
 
         // Set route name in state for "PageCacher.cachePageSaveScroll" to see while unmounting
@@ -192,7 +204,7 @@ class Posts extends Component {
                     isMyPostsActive={this.state.activeIcons.myPosts}
                     changeFilter={this.changeFilter}></PostsFilter> */}
 
-                <AddNewPost history={this.props.history} />
+                <AddNewPost history={this.props.history} postAdded={this.postAdded} />
 
                  {/* <InfiniteScroll
                         // height="100%"

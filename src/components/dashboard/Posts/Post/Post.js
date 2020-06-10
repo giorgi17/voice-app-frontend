@@ -237,6 +237,23 @@ class Post extends Component {
             ]
         }
         PageCacher.cachePageUpdate('posts', cacheDataToUpdate, 'Posts', true);
+
+        // delete cache information for user profile page or dashboard to fetch updated posts
+        const fullThisRoute = window.location.href.split("/");
+        fullThisRoute.splice(0,3);
+        const thisRoute = fullThisRoute.join('/');
+        const cacheDataCopy = JSON.parse(localStorage.getItem('mainPageCacheObject'));
+        if (thisRoute === 'profile/' + this.props.auth.user.id) {
+            if (cacheDataCopy.hasOwnProperty('dashboard')) {
+                delete cacheDataCopy['dashboard'];
+                localStorage.setItem('mainPageCacheObject', JSON.stringify(cacheDataCopy));
+            }
+        } else if (thisRoute === 'dashboard') {
+            if (cacheDataCopy.hasOwnProperty('profile/' + this.props.auth.user.id)) {
+                delete cacheDataCopy['profile/' + this.props.auth.user.id];
+                localStorage.setItem('mainPageCacheObject', JSON.stringify(cacheDataCopy));
+            }
+        }   
     }
 
     openEditPost = () => {
@@ -248,7 +265,7 @@ class Post extends Component {
         if (window.innerWidth >= 600)
             this.setState({editModalOpen: true});
         else
-            this.props.history.push(`/edit-post/${this.props.post_id}/${this.props.post_author_id}/${this.props.index}/${thisRoute}`);
+            this.props.history.push(`/edit-post/${this.props.post_id}/${this.props.post_author_id}/${this.props.index}/${encodeURIComponent(thisRoute)}`);
     }
 
     componentDidMount() {

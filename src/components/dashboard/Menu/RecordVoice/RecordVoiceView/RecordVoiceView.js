@@ -8,8 +8,10 @@ import { connect } from "react-redux";
 import axios from 'axios';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import EasyTimer from "easytimer";
+import PageCacher from '../../../../../utils/PageCacher';
 
 class RecordVoiceView extends Component {
+    _isMounted = false;
 
     constructor() {
         super();
@@ -85,33 +87,58 @@ class RecordVoiceView extends Component {
         axios
         .post("/api/restricted-users/add-new-post", form)
         .then(res => {
-            // hide everything and show the success message
-            this.addNewPostContainerRef.current.style.display = 'none';
-            this.afterAddPostSuccessMessageRef.current.style.display = 'block';
-            this.setState({afterMessage: res.data});
+            if (this._isMounted) {
+                // hide everything and show the success message
+                this.addNewPostContainerRef.current.style.display = 'none';
+                this.afterAddPostSuccessMessageRef.current.style.display = 'block';
+                this.setState({afterMessage: res.data.message});
 
-            // Bring back to adding new post after couple of seconds
-            setTimeout(() => {
-                this.addNewPostContainerRef.current.style.display = 'block';
-                this.afterAddPostSuccessMessageRef.current.style.display = 'none';
-            }, 3000);
+                // Add to cache
+                // PageCacher.cachePageArrayObjectUpdate('posts', [
+                //     {...res.data.post}
+                // ], 'Posts');
 
-            // Clear the inputs for new post
-            this.setState({imageBlob: null, audioBlob: null,
-                         description: '', audioBlobUrl: '',
-                         postImageSrc: 'https://voice-social-network.s3.us-east-2.amazonaws.com/post-pictures/stripes.png' });
+                if (res.data.post.user_id === this.props.auth.user.id) {
+                    const cacheDataCopy = JSON.parse(localStorage.getItem('mainPageCacheObject'));
+                    if (cacheDataCopy.hasOwnProperty('profile/' + this.props.auth.user.id)) {
+                        delete cacheDataCopy['profile/' + this.props.auth.user.id];
+                        localStorage.setItem('mainPageCacheObject', JSON.stringify(cacheDataCopy));
+                    }
+                }
+
+                this.props.postAdded();
+
+                // Bring back to adding new post after couple of seconds
+                setTimeout(() => {
+                    if (this._isMounted) {
+                        this.addNewPostContainerRef.current.style.display = 'block';
+                        this.afterAddPostSuccessMessageRef.current.style.display = 'none';
+                    }
+                }, 3000);
+
+                // Clear the inputs for new post
+                this.setState({imageBlob: null, audioBlob: null,
+                            description: '', audioBlobUrl: '',
+                            postImageSrc: 'https://voice-social-network.s3.us-east-2.amazonaws.com/post-pictures/stripes.png' });
+            }
         }) 
         .catch(err => {
-            // hide everything and show the error message
-            this.addNewPostContainerRef.current.style.display = 'none';
-            this.afterAddPostMessageRef.current.style.display = 'block';
-            this.setState({afterMessage: err.response.data.errors});
+            if (this._isMounted) {
+                // hide everything and show the error message
+                this.addNewPostContainerRef.current.style.display = 'none';
+                this.afterAddPostMessageRef.current.style.display = 'block';
+                if (err.response)
+                    this.setState({afterMessage: err.response.data.errors});
+                console.log(err);
 
-            // Bring back to adding new post after couple of seconds
-            setTimeout(() => {
-                this.addNewPostContainerRef.current.style.display = 'block';
-                this.afterAddPostMessageRef.current.style.display = 'none';
-            }, 3000);
+                // Bring back to adding new post after couple of seconds
+                setTimeout(() => {
+                    if (this._isMounted) {
+                        this.addNewPostContainerRef.current.style.display = 'block';
+                        this.afterAddPostMessageRef.current.style.display = 'none';
+                    }
+                }, 3000);
+            }
         });
     };
 
@@ -136,7 +163,15 @@ class RecordVoiceView extends Component {
 
     focusDescriptionTextInput = () => {
         this.descriptionRef.current.focus();
-      }    
+    }    
+
+    componentDidMount() {
+        this._isMounted = true;
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
 
     render() {
         return (

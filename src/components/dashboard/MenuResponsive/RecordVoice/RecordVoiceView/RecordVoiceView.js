@@ -105,12 +105,25 @@ class RecordVoiceView extends Component {
                 // hide everything and show the success message
                 this.addNewPostContainerRef.current.style.display = 'none';
                 this.afterAddPostSuccessMessageRef.current.style.display = 'block';
-                this.setState({afterMessage: res.data});
+                this.setState({afterMessage: res.data.message});
+
+                if (res.data.post.user_id === this.props.auth.user.id) {
+                    const cacheDataCopy = JSON.parse(localStorage.getItem('mainPageCacheObject'));
+                    if (cacheDataCopy.hasOwnProperty('profile/' + this.props.auth.user.id) ||
+                        cacheDataCopy.hasOwnProperty('dashboard/')) {
+
+                        delete cacheDataCopy['profile/' + this.props.auth.user.id];
+                        delete cacheDataCopy['dashboard'];
+                        localStorage.setItem('mainPageCacheObject', JSON.stringify(cacheDataCopy));
+                    }
+                }
 
                 // Bring back to adding new post after couple of seconds
                 setTimeout(() => {
-                    this.addNewPostContainerRef.current.style.display = 'block';
-                    this.afterAddPostSuccessMessageRef.current.style.display = 'none';
+                    if (this._isMounted) {
+                        this.addNewPostContainerRef.current.style.display = 'block';
+                        this.afterAddPostSuccessMessageRef.current.style.display = 'none';
+                    }
                 }, 3000);
 
                 // Clear the inputs for new post
@@ -128,8 +141,10 @@ class RecordVoiceView extends Component {
 
                 // Bring back to adding new post after couple of seconds
                 setTimeout(() => {
-                    this.addNewPostContainerRef.current.style.display = 'block';
-                    this.afterAddPostMessageRef.current.style.display = 'none';
+                    if (this._isMounted) {
+                        this.addNewPostContainerRef.current.style.display = 'block';
+                        this.afterAddPostMessageRef.current.style.display = 'none';
+                    }
                 }, 3000);
             }
         });
