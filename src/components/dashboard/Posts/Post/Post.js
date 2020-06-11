@@ -316,7 +316,8 @@ class Post extends Component {
                         <Link to={`/profile/${this.props.post_author_id}`}>
                             <div className="user-post-profile-image-wrapper"
                                 ref={this.profileImageRef}>
-                                <img src={this.props.profile_picture} />
+                                <img src={(this.props.auth.user.id === this.props.post_author_id)
+                                     ? this.props.auth.user.avatarImage : this.props.profile_picture} />
                             </div>
                         
                         

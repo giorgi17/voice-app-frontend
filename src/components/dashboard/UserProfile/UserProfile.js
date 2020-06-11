@@ -328,7 +328,8 @@ class UserProfile extends Component {
     }
 
     goBack = () => {
-        this.props.history.push('/dashboard');
+        // this.props.history.push('/dashboard');
+        this.props.history.goBack();
     }
 
     closeOptionsModal = () => {
@@ -409,7 +410,8 @@ class UserProfile extends Component {
                 <div className="user-profile-page">
                         <div className="user-profile-page-user-pic-and-basic">
                             <div className="user-profile-page-profile-image-wrapper">
-                                <img src={this.state.postAuthorData.avatarImage} />
+                                <img src={(this.props.auth.user.id === this.state.postAuthorData.user_id)
+                                    ? this.props.auth.user.avatarImage : this.state.postAuthorData.avatarImage} />
                             </div>
 
                             <div className="user-profile-page-info-wrapper">

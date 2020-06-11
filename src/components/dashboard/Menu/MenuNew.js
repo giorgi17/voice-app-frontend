@@ -103,7 +103,8 @@ class MenuNew extends Component {
                         {/* <RecordVoice onClick={this.setMenuIconActive} isRecordVoiceActive={this.state.activeIcons.recordVoice} changeDisplayedContent={this.changeDisplayedContent}/> */}
                         <Notifications onClick={this.setMenuIconActive} isNotificationActive={this.state.activeIcons.notification} changeDisplayedContent={this.changeDisplayedContent}
                             previousActiveIcon={this.state.previousActiveIcon} />
-                        <Profile onClick={this.goToProfileMenu} isProfileActive={this.state.activeIcons.profile} changeDisplayedContent={this.changeDisplayedContent} />
+                        <Profile onClick={this.goToProfileMenu} isProfileActive={this.state.activeIcons.profile} changeDisplayedContent={this.changeDisplayedContent}
+                            avatarImage={this.props.auth.user.avatarImage} />
 
                         {this.state.contentToDisplay}
                 </div>

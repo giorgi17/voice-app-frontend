@@ -14,24 +14,23 @@ class Profile extends Component {
         }
     }
 
-    fetchUserProfilePicture = () => {
-        let dataToSend = {};
+    // fetchUserProfilePicture = () => {
+    //     let dataToSend = {};
 
-        // Send id of the notification author to fetch his profile picture
-        dataToSend.id = this.props.auth.user.id;
+    //     // Send id of the notification author to fetch his profile picture
+    //     dataToSend.id = this.props.auth.user.id;
 
-        axios.post("/api/restricted-users/get-user-profile-picture-for-notifications", dataToSend).then(response => {
-            if (this._isMounted) {
-                this.setState({profilePicture: response.data.avatarImage});
-            }
-        }).catch( err => {
-            console.log(err.message);
-        });
-    }   
+    //     axios.post("/api/restricted-users/get-user-profile-picture-for-notifications", dataToSend).then(response => {
+    //         if (this._isMounted) {
+    //             this.setState({profilePicture: response.data.avatarImage});
+    //         }
+    //     }).catch( err => {
+    //         console.log(err.message);
+    //     });
+    // }   
 
     componentDidMount() {
         this._isMounted = true;
-        this.fetchUserProfilePicture();
     }
 
     componentWillUnmount() {
@@ -47,7 +46,7 @@ class Profile extends Component {
                 }
                 }
                 >
-                <img src={this.state.profilePicture}
+                <img src={this.props.avatarImage}
                     className={`material-icons profile-icon ${this.props.isProfileActive ? "active" : ""}`}>
                     
                 </img>

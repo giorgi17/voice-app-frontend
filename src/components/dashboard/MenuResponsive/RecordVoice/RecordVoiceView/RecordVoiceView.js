@@ -31,8 +31,7 @@ class RecordVoiceView extends Component {
             recordButtonText: 'Record',
             afterMessage: null,
             timer: new EasyTimer(),
-            currentRecordedTime: '00:00:00',
-            profilePicture: ''
+            currentRecordedTime: '00:00:00'
         }
       }
 
@@ -173,28 +172,12 @@ class RecordVoiceView extends Component {
         this.descriptionRef.current.focus();
     }    
 
-    fetchUserProfilePicture = () => {
-        let dataToSend = {};
-
-        // Send id of the notification author to fetch his profile picture
-        dataToSend.id = this.props.auth.user.id;
-
-        axios.post("/api/restricted-users/get-user-profile-picture-for-notifications", dataToSend).then(response => {
-            if (this._isMounted) {
-                this.setState({profilePicture: response.data.avatarImage});
-            }
-        }).catch( err => {
-            console.log(err.message);
-        });
-    }  
-
     goBackToDashboard = () => {
         this.props.history.push('/dashboard');
     }
 
     componentDidMount() {
         this._isMounted = true;
-        this.fetchUserProfilePicture();
     }
 
     componentWillUnmount() {
@@ -240,7 +223,7 @@ class RecordVoiceView extends Component {
                     </div>
 
                     <div className="responsive-recordvoice-view-post-user-info">
-                        <img src={this.state.profilePicture}></img>
+                        <img src={this.props.auth.user.avatarImage}></img>
 
                         <span className="responsive-recordvoice-view-post-user-info-username">
                             {this.props.auth.user.name}

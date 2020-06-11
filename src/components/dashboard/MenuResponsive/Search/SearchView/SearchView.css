@@ -42,3 +42,10 @@
     /* margin-top: 93px; */
     /* overflow: scroll; */
 }
+
+.responsive-search-view-search-results-default-text {
+    font-size: 20px;
+    font-weight: bold;
+    margin: auto;
+    text-align: center;
+}

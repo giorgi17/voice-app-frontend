@@ -6,6 +6,7 @@ import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { connect } from "react-redux";
+import { setCurrentUser } from '../../../../../../actions/authActions';
 
 const MAX_IMAGE_SIZE = 1024 * 1024 * 16;
 
@@ -96,6 +97,13 @@ class ProfileImageCrop extends Component {
             if (this._isMounted) {
               this.imageUploadSuccessRef.current.style.display = 'flex';
               this.imageUploadErrorRef.current.style.display = 'none';
+              const userStateCopied = {...this.props.auth.user};
+              userStateCopied.avatarImage = res.data.newPicture;
+              this.props.setCurrentUser(userStateCopied);  
+              localStorage.removeItem('jwtToken');
+
+              if (window.innerWidth <= 600)
+                this.props.history.push(`/profile/${this.props.auth.user.id}`);
             }
         }) 
         .catch(err => {
@@ -251,57 +259,77 @@ class ProfileImageCrop extends Component {
     render() {
         return (
             <React.Fragment>
-                <img src={this.state.imageBlobSrc} width="91px" height="91px" id="cropped_image_preview" />
-              <div id="cropped_image_file_input">
-                <Button variant="contained" onClick={() => this.fileSelectInputRef.current.click()}>
-                  Choose file
-                </Button>
-                <input type="file" onChange={this.onSelectFile} ref={this.fileSelectInputRef} />
-              </div>
-              {this.state.src && (
-                <div className="ReactCrop-div-for-positioning">
-                    <ReactCrop
-                    src={this.state.src}
-                    crop={this.state.crop}
-                    onImageLoaded={this.onImageLoaded}
-                    onComplete={this.onCropComplete}
-                    onChange={this.onCropChange}
-                  />
+              <div className="responsive-menu-section-name">
+                    <div className="profile-edit-picture-section-items">
+                        <span className="material-icons" onClick={() => this.props.history.goBack()}>
+                            arrow_back_ios
+                        </span>
+
+                        <span className="profile-edit-picture-section-title">
+                            Choose photo
+                        </span>
+
+                        <span className="profile-edit-picture-section-save-button" 
+                          onClick={this.uploadAvatarImage}>
+                            Save
+                        </span>
+                    </div>
                 </div>
-              )}
 
-              <Alert severity="error" id="profile-edit-picture-cropper-error" className="profile-edit-picture-cropper-alert" ref={this.moreThan16mbRef}>
-                <AlertTitle>Error</AlertTitle>
-                Image can't be more than 16mb.
-              </Alert>
+                <div id="profile-edit-picture-cropper-container">
+                    <img src={this.state.imageBlobSrc} width="91px" height="91px" id="cropped_image_preview" />
+                  <div id="cropped_image_file_input">
+                    <Button variant="contained" onClick={() => this.fileSelectInputRef.current.click()}>
+                      Choose file
+                    </Button>
+                    <input type="file" onChange={this.onSelectFile} ref={this.fileSelectInputRef} />
+                  </div>
+                  {this.state.src && (
+                    <div className="ReactCrop-div-for-positioning">
+                        <ReactCrop
+                        src={this.state.src}
+                        crop={this.state.crop}
+                        onImageLoaded={this.onImageLoaded}
+                        onComplete={this.onCropComplete}
+                        onChange={this.onCropChange}
+                      />
+                    </div>
+                  )}
 
-              <Alert severity="warning" id="profile-edit-picture-cropper-warning" className="profile-edit-picture-cropper-alert" ref={this.gifWontBeCroppedRef}>
-                <AlertTitle>Warning</AlertTitle>
-                Gif won't be cropped.
-              </Alert>
+                  <Alert severity="error" id="profile-edit-picture-cropper-error" className="profile-edit-picture-cropper-alert" ref={this.moreThan16mbRef}>
+                    <AlertTitle>Error</AlertTitle>
+                    Image can't be more than 16mb.
+                  </Alert>
 
-              <Alert severity="error" id="profile-edit-picture-cropper-error-uploading" className="profile-edit-picture-cropper-alert" ref={this.imageNotSetRef}>
-                <AlertTitle>Error</AlertTitle>
-                Please choose and crop an image.
-              </Alert>
+                  <Alert severity="warning" id="profile-edit-picture-cropper-warning" className="profile-edit-picture-cropper-alert" ref={this.gifWontBeCroppedRef}>
+                    <AlertTitle>Warning</AlertTitle>
+                    Gif won't be cropped.
+                  </Alert>
 
-              <Alert severity="error" id="profile-edit-picture-cropper-error-wrong-extension" className="profile-edit-picture-cropper-alert" ref={this.imageWrongExtensionRef}>
-                <AlertTitle>Error</AlertTitle>
-                Please only choose png, jpeg, jpg or gif.
-              </Alert>
+                  <Alert severity="error" id="profile-edit-picture-cropper-error-uploading" className="profile-edit-picture-cropper-alert" ref={this.imageNotSetRef}>
+                    <AlertTitle>Error</AlertTitle>
+                    Please choose and crop an image.
+                  </Alert>
 
-              <Alert severity="success" id="profile-edit-picture-cropper-success" className="profile-edit-picture-cropper-alert" ref={this.imageUploadSuccessRef}>
-                <AlertTitle>Success</AlertTitle>
-                Successfully uploaded new profile image.
-              </Alert>
+                  <Alert severity="error" id="profile-edit-picture-cropper-error-wrong-extension" className="profile-edit-picture-cropper-alert" ref={this.imageWrongExtensionRef}>
+                    <AlertTitle>Error</AlertTitle>
+                    Please only choose png, jpeg, jpg or gif.
+                  </Alert>
 
-              <Alert severity="error" id="profile-edit-picture-cropper-error-while-upload" className="profile-edit-picture-cropper-alert" ref={this.imageUploadErrorRef}>
-                <AlertTitle>Error</AlertTitle>
-                Error while uploading image.
-              </Alert>
+                  <Alert severity="success" id="profile-edit-picture-cropper-success" className="profile-edit-picture-cropper-alert" ref={this.imageUploadSuccessRef}>
+                    <AlertTitle>Success</AlertTitle>
+                    Successfully uploaded new profile image.
+                  </Alert>
 
-              <Button variant="contained" type="submit" id="profile-edit-picture-cropper-button"
-              onClick={this.uploadAvatarImage} className="profile-edit-activity-info-inputs" color="primary">Update picture</Button>
+                  <Alert severity="error" id="profile-edit-picture-cropper-error-while-upload" className="profile-edit-picture-cropper-alert" ref={this.imageUploadErrorRef}>
+                    <AlertTitle>Error</AlertTitle>
+                    Error while uploading image.
+                  </Alert>
+
+                  <Button variant="contained" type="submit" id="profile-edit-picture-cropper-button"
+                  onClick={this.uploadAvatarImage} className="profile-edit-activity-info-inputs" color="primary">Update picture</Button>
+
+              </div>
             </React.Fragment>
           )
     }
@@ -312,5 +340,6 @@ const mapStateToProps = state => ({
 });
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  { setCurrentUser }
 )(ProfileImageCrop);

@@ -11,30 +11,12 @@ class ProfileEditPicture extends Component {
     constructor(props) {
         super(props);      
         this.state = {
-            avatarImage: ''
+            
         }
     }
 
-
-    fetchUserProfilePicture = () => {
-        let dataToSend = {};
-
-        // Send id of the notification author to fetch his profile picture
-        dataToSend.id = this.props.auth.user.id;
-
-        axios.post("/api/restricted-users/get-user-profile-picture-for-notifications", dataToSend).then(response => {
-            if (this._isMounted) {
-                this.setState({avatarImage: response.data.avatarImage});
-            }
-        }).catch( err => {
-            console.log(err.message);
-        });
-    }   
-
     componentDidMount() {
         this._isMounted = true;
-
-        this.fetchUserProfilePicture();
     }
 
     componentWillUnmount() {
@@ -47,7 +29,7 @@ class ProfileEditPicture extends Component {
                 <HeaderDesktop history={{...this.props.history}} menuName="profile" />
                 <MenuResponsive history={{...this.props.history}} menuName="profile" />
 
-                <div className="responsive-menu-section-name">
+                {/* <div className="responsive-menu-section-name">
                     <div className="profile-edit-picture-section-items">
                         <span className="material-icons" onClick={() => this.props.history.goBack()}>
                             arrow_back_ios
@@ -57,13 +39,20 @@ class ProfileEditPicture extends Component {
                             Choose photo
                         </span>
                     </div>
-                </div>
+                </div> */}
 
-                <div id="profile-edit-picture-cropper-container">
-                    <ProfileImageCrop avatarImageFullPath={this.state.avatarImage}></ProfileImageCrop>
+                <ProfileImageCrop avatarImageFullPath={this.props.auth.user.avatarImage} 
+                    history={this.props.history}/>
+
+                {/* <div id="profile-edit-picture-cropper-container">
+                    <ProfileImageCrop avatarImageFullPath={this.props.auth.user.avatarImage}></ProfileImageCrop> */}
+                   
+                   
                     {/* <Button variant="contained" type="submit" id="profile-edit-picture-cropper-button"
                     className="profile-edit-activity-info-inputs" color="primary">Update picture</Button> */}
-                </div>
+                
+                
+                {/* </div> */}
             </React.Fragment>
         );
     }

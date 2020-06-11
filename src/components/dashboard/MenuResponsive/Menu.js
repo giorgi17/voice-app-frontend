@@ -5,6 +5,8 @@ import Profile from './Profile/Profile';
 import Notifications from './Notifications/Notifications';
 import Home from './Home/Home';
 import Search from './Search/Search';
+import { connect } from "react-redux";
+import { setMenu } from '../../../actions/menuActions';
 
 class Menu extends Component { 
 
@@ -17,7 +19,7 @@ class Menu extends Component {
                 // recordVoice: false,
                 profile: false,
                 notification: false,
-                home: true,
+                home: false,
                 search: false
             },
             contentToDisplay: null
@@ -80,8 +82,28 @@ class Menu extends Component {
         this.props.history.push("/notifications");
     }
 
+    goToProfileMenu = () => {
+        this.props.history.push("/profile/" + this.props.auth.user.id);
+    }
+
     componentDidMount() {
-        this.setMenuIconActive(this.props.menuName);
+        // this.setMenuIconActive(this.props.menuName);
+        if (this.props.menuName) {
+            if (this.props.menuName === 'profile') {
+                const userId = window.location.href.split("/").pop();
+                    if (userId === this.props.auth.user.id) {
+                        this.setMenuIconActive(this.props.menuName);
+                        this.props.setMenu(this.props.menuName);
+                    } else {
+                        this.setMenuIconActive(this.props.menu.currentMenu);
+                    }
+            } else {
+                this.setMenuIconActive(this.props.menuName);
+                this.props.setMenu(this.props.menuName);
+            }
+        } else {
+            this.setMenuIconActive(this.props.menu.currentMenu);
+        }
     }
 
     render () {
@@ -97,9 +119,10 @@ class Menu extends Component {
                     <Search onClick={this.goToSearchMenu} isSearchActive={this.state.activeIcons.search} changeDisplayedContent={this.changeDisplayedContent} />
                     {/* <RecordVoice onClick={this.gotToRecordVoiceMenu} isRecordVoiceActive={this.state.activeIcons.recordVoice}
                          changeDisplayedContent={this.changeDisplayedContent} /> */}
-                    <Profile onClick={this.setMenuIconActive} isProfileActive={this.state.activeIcons.profile} changeDisplayedContent={this.changeDisplayedContent}
-                         handleScroll={this.handleScroll} />
                     <Notifications onClick={this.gotToNotificationsMenu} isNotificationActive={this.state.activeIcons.notification} changeDisplayedContent={this.changeDisplayedContent} />
+
+                    <Profile onClick={this.goToProfileMenu} isProfileActive={this.state.activeIcons.profile} changeDisplayedContent={this.changeDisplayedContent}
+                         handleScroll={this.handleScroll} avatarImage={this.props.auth.user.avatarImage} />
                 </div>
 
             </div>
@@ -107,4 +130,12 @@ class Menu extends Component {
     }
 }
 
-export default Menu;
+const mapStateToProps = state => ({
+    auth: state.auth,
+    menu: state.menu
+});
+
+export default connect(
+    mapStateToProps,
+    { setMenu }
+  )(Menu);

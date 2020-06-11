@@ -29,8 +29,7 @@ class ChangePassword extends Component {
                 newPassword: '',
                 newPassword2: '',
                 errors: {}
-            },
-            profilePicture: ''
+            }
         }
     }   
 
@@ -109,24 +108,8 @@ class ChangePassword extends Component {
         }
     }
 
-    fetchUserProfilePicture = () => {
-        let dataToSend = {};
-
-        // Send id of the notification author to fetch his profile picture
-        dataToSend.id = this.props.auth.user.id;
-
-        axios.post("/api/restricted-users/get-user-profile-picture-for-notifications", dataToSend).then(response => {
-            if (this._isMounted) {
-                this.setState({profilePicture: response.data.avatarImage});
-            }
-        }).catch( err => {
-            console.log(err.message);
-        });
-    }   
-
     componentDidMount() {
         this._isMounted = true;
-        this.fetchUserProfilePicture();
     }
 
     componentWillUnmount() {
@@ -165,7 +148,7 @@ class ChangePassword extends Component {
 
                 <div id="profile-edit-activity-info-change-password-wrapper" ref={this.changePasswordRef} >
                     <div className="profile-edit-activity-info-change-password-user-info">
-                        <img src={this.state.profilePicture} />
+                        <img src={this.props.auth.user.avatarImage} />
                         <span>
                             {this.props.auth.user.name}
                         </span>
@@ -222,7 +205,8 @@ class ChangePassword extends Component {
 }
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.auth,
+    menu: state.menu
 });
 
 export default connect(

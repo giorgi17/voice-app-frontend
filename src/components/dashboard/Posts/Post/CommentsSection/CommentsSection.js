@@ -12,7 +12,6 @@ class CommentsSection extends Component {
         super();
         this.commentPostButtonRef = React.createRef();
         this.state = {
-            loggedInUserProfilePicture: '',
             commentInput: '',
             commentSent: false
         }
@@ -34,22 +33,6 @@ class CommentsSection extends Component {
             this.commentPostButtonRef.current.style.color = '#87766F';
             this.commentPostButtonRef.current.style.cursor = 'default';
         }
-    }
-
-    // Fetch logged in user profile picture
-    FetchLoggedInUserProfilePicture = () => {
-        let dataToSend = {};
-
-        // Send user id to fetch profile picture
-        dataToSend.user_id = this.props.auth.user.id;
-
-        axios.post("/api/restricted-users/get-logged-in-user-profile-picture-for-new-comment", dataToSend).then(response => {
-            if (this._isMounted) {
-                this.setState({loggedInUserProfilePicture: response.data.profilePicture});
-            }
-        }).catch( err => {
-            console.log(err);
-        });
     }
 
     // Add a new comment
@@ -82,7 +65,6 @@ class CommentsSection extends Component {
 
     componentDidMount() {
         this._isMounted = true;
-        this.FetchLoggedInUserProfilePicture();
     }
 
     componentWillUnmount() {
@@ -98,7 +80,7 @@ class CommentsSection extends Component {
                 <div className="post-comments-add-new-comment-wrapper">
                     <div className="post-comments-profile-image-wrapper">
                         <img className="post-comments-profile-image"
-                            src={this.state.loggedInUserProfilePicture}></img>
+                            src={this.props.auth.user.avatarImage}></img>
                     </div>
 
                     <div className="post-comments-comment-input">

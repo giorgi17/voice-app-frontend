@@ -14,24 +14,9 @@ class AddNewPost extends Component {
         this.modalCloseButtonRef = React.createRef();
         this.modalContentRef = React.createRef();
         this.state = {
-            profilePicture: ''
+   
         }
     }
-
-    fetchUserProfilePicture = () => {
-        let dataToSend = {};
-
-        // Send id of the notification author to fetch his profile picture
-        dataToSend.id = this.props.auth.user.id;
-
-        axios.post("/api/restricted-users/get-user-profile-picture-for-notifications", dataToSend).then(response => {
-            if (this._isMounted) {
-                this.setState({profilePicture: response.data.avatarImage});
-            }
-        }).catch( err => {
-            console.log(err.message);
-        });
-    }   
 
     // When the user clicks on the button, open the modal
     newPostButtonClick = () => {
@@ -57,7 +42,6 @@ class AddNewPost extends Component {
 
     componentDidMount() {
         this._isMounted = true;
-        this.fetchUserProfilePicture();
     }
 
     componentWillUnmount() {
@@ -69,7 +53,7 @@ class AddNewPost extends Component {
             <React.Fragment>
                 <div className="add-new-post">
                     <div className="add-new-post-top">
-                        <img src={this.state.profilePicture} className="add-new-post-top-profile-picture"/>
+                        <img src={this.props.auth.user.avatarImage} className="add-new-post-top-profile-picture"/>
                         <div className="add-new-post-top-post-open-button" ref={this.openModalButtonRef}
                             onClick={this.newPostButtonClick}>
                             <span className="add-new-post-top-post-open-button-label">Got something to say, {this.props.auth.user.name}?</span>
@@ -91,7 +75,7 @@ class AddNewPost extends Component {
                         </div>
                         
                         {/* <p>Some text in the Modal..</p> */}
-                        <RecordVoiceView profile_picture={this.state.profilePicture} postAdded={this.props.postAdded}/>
+                        <RecordVoiceView profile_picture={this.props.auth.user.avatarImage} postAdded={this.props.postAdded}/>
                     </div>
                 </div>
             </React.Fragment>

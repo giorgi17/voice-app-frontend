@@ -46,6 +46,8 @@ class SearchView extends Component {
                     </div>
 
                     <div className="responsive-search-view-search-results" ref={this.searchResultsDisplayRef}>
+                        {(this.state.searchResult.length === 0) ? <div className="responsive-search-view-search-results-default-text">Search for any user</div> : null}
+
                         {this.state.searchResult.map(data => (
                                 <SearchedUser user_id={data._id} name={data.name} avatarImage={data.avatarImage}
                                     key={data._id} closeSearchPanel={this.blackOverlayClicked}></SearchedUser>

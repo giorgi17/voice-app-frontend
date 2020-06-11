@@ -91,6 +91,11 @@
     .ReactCrop-div-for-positioning {
         width: auto !important;
         margin: 0 !important;
+        padding: 0 50px;
+    }
+
+    #profile-edit-picture-cropper-button {
+        display: none;
     }
 }
 
@@ -111,4 +116,9 @@
 .ReactCrop-div-for-positioning {
     width: 60%;
     margin: 0 auto;
+}
+
+.profile-edit-picture-section-save-button {
+    color: #4C96D7;
+    cursor: pointer;
 }
