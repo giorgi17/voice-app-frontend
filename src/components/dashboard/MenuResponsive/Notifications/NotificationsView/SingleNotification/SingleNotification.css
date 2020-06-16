@@ -30,10 +30,11 @@
 }
 
 .responsive-single-notification-text {
-    word-break: break-all;
-    height: 100%;
-    width: 40%;
     position: relative;
+    flex: 3 1 auto;
+    display: flex;
+    flex-wrap: wrap;
+    padding-right: 15px;
 }
 
 .responsive-single-notification-text p {
@@ -41,19 +42,58 @@
     margin: 0;
     margin-left: 10px;
     margin-top: 5px;
-    margin-right: 5px;
-    /* min-width: 220px; */
+    /* margin-right: 5px; */
     line-height: initial;
-    /* word-break: break-all; */
     word-wrap: break-word;
+    flex: 1 1 100%;
+
+    /* hide text if it more than N lines  */
+    overflow: hidden;
+    /* for set '...' in absolute position */
+    position: relative; 
+    /* use this value to count block height */
+    line-height: 1.2em;
+    /* max-height = line-height (1.2) * lines max number (3) */
+    max-height: 4.8em; 
+    /* fix problem when last visible word doesn't adjoin right side  */
+    text-align: justify;  
+    /* place for '...' */
+    margin-right: -1em;
+    padding-right: 1em;
+}
+
+.responsive-single-notification-text p:before {
+    /* points in the end */
+  content: '...';
+  /* absolute position */
+  position: absolute;
+  /* set position to right bottom corner of block */
+  right: 0;
+  bottom: 0;
+}
+
+.responsive-single-notification-text p:after {
+    /* points in the end */
+    content: '';
+    /* absolute position */
+    position: absolute;
+    /* set position to right bottom corner of text */
+    right: 0;
+    /* set width and height */
+    width: 1em;
+    height: 1em;
+    margin-top: 0.2em;
+    /* bg color = bg color under block */
+    background: #E4E9F1;
 }
 
 .responsive-single-notification-date-wrapper {
     display: block;
     font-size: 12px;
-    position: absolute;
-    bottom: 0px;
-    left: 10px;
+    margin-left: 10px;
+    margin-top: 5px;
+    margin-right: 5px;
+    flex: 1 1 100%;
 }
 
 .responsive-single-notification-image {

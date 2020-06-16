@@ -150,7 +150,7 @@
 .user-post-description {
     margin: 0px 10px 30px;
     /* word-wrap: break-word; */
-    word-break: break-all;
+    word-wrap: break-word;
     font-size: 14px;
 }
 

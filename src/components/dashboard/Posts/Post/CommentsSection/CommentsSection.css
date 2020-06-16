@@ -3,12 +3,10 @@
 }
 
 .post-comments-profile-image-wrapper {
-    display: inline-block;
     width: 32px;
     height: 32px;
     border-radius: 50%;
     margin-left: 5px;
-    margin-top: 15px;
 }
 
 .post-comments-profile-image {
@@ -22,29 +20,24 @@
     background-color: white;
     min-height: 34px;
     /* width: 260px; */
-    width: 80%;
+    /* width: 80%; */
     padding: 5px;
     position: relative;
+    flex: 3 1 auto;
 }
 
-.post-comments-comment-input .MuiTextField-root {
-    /* width: 210px; */
+.post-comments-comment-input .MuiTextField-root {  
     width: 100%;
-}
-
-@media only screen and (max-width: 320px) {
-    .post-comments-comment-input {
-        width: 70%;
-    }
 }
 
 .post-comments-post-button {
     margin-left: 5px;
-    position: absolute;
-    bottom: 5px;
+    margin-right: 10px;
 }
 
 .post-comments-add-new-comment-wrapper {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
 }

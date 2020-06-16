@@ -93,12 +93,12 @@ class CommentsSection extends Component {
                             onChange={this.controlCommentInput}
                             value={this.state.commentInput}
                             />
-
-                            <span className="material-icons post-comments-post-button" 
-                                ref={this.commentPostButtonRef} onClick={this.addNewComment}>
-                                send
-                            </span>
                     </div>
+
+                    <span className="material-icons post-comments-post-button" 
+                        ref={this.commentPostButtonRef} onClick={this.addNewComment}>
+                        send
+                    </span>
                 </div>
             </div>
         );
