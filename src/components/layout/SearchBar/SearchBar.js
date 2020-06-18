@@ -49,13 +49,13 @@ class SearchBar extends Component {
     }
       
     off = () => {
-        setTimeout(() => {
-            document.body.style.overflowY = "auto";
-            if (this.blackOverlayRef.current && this.searchResultsDisplayRef.current) {
-                this.blackOverlayRef.current.style.display = "none";
-                this.searchResultsDisplayRef.current.style.display = 'none';
-            }
-        }, 100);
+        // setTimeout(() => {
+        //     document.body.style.overflowY = "auto";
+        //     if (this.blackOverlayRef.current && this.searchResultsDisplayRef.current) {
+        //         this.blackOverlayRef.current.style.display = "none";
+        //         this.searchResultsDisplayRef.current.style.display = 'none';
+        //     }
+        // }, 100);
     }
 
     render() {

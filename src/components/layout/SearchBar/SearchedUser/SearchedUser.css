@@ -9,6 +9,7 @@
 }
 
 .user-search-result-profile-username {
+    flex: 3 1 auto;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -46,4 +47,15 @@
     margin: 0px;
     position: absolute;
     bottom: 0px;
+}
+
+.user-search-result-profile-delete-user {
+    margin-left: auto;
+    transition: color 0.4s;
+    display: none;
+}
+
+.user-search-result-profile-delete-user:hover {
+    color: red;
+    z-index: 10;
 }

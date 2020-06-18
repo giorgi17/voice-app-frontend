@@ -397,8 +397,8 @@ class Post extends Component {
                 </div>
 
                 {this.state.editModalOpen ? <EditPostView closeEditModal={this.closeEditModal}
-                    profile_picture={this.props.profile_picture} picture={this.props.picture}
-                    description={this.props.description} post_id={this.props.post_id}
+                    profile_picture={this.props.profile_picture} picture={this.state.postPicture}
+                    description={this.state.postDescription} post_id={this.props.post_id}
                     picture={this.props.picture} postEditEffect={this.postEditEffect}
                     post_author_id={this.props.post_author_id} user_name={this.props.user_name}/> : null}
 

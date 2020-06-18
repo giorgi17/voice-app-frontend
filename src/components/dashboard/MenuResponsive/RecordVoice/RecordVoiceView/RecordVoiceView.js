@@ -109,7 +109,7 @@ class RecordVoiceView extends Component {
                 if (res.data.post.user_id === this.props.auth.user.id) {
                     const cacheDataCopy = JSON.parse(localStorage.getItem('mainPageCacheObject'));
                     if (cacheDataCopy.hasOwnProperty('profile/' + this.props.auth.user.id) ||
-                        cacheDataCopy.hasOwnProperty('dashboard/')) {
+                        cacheDataCopy.hasOwnProperty('dashboard')) {
 
                         delete cacheDataCopy['profile/' + this.props.auth.user.id];
                         delete cacheDataCopy['dashboard'];

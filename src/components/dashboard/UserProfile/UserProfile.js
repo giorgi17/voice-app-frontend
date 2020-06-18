@@ -73,6 +73,12 @@ class UserProfile extends Component {
                     () => PageCacher.cachePageUpdate(null, [
                            {name: 'following', data: this.state.following}
                        ], 'Posts'));
+                // Delete dashboard cache
+                const cacheDataCopy = JSON.parse(localStorage.getItem('mainPageCacheObject'));
+                if (cacheDataCopy.hasOwnProperty('dashboard')) {
+                    delete cacheDataCopy['dashboard'];
+                    localStorage.setItem('mainPageCacheObject', JSON.stringify(cacheDataCopy));
+                }
             }
         }).catch( err => {
             console.log(err);
