@@ -35,7 +35,7 @@ class Followers extends Component {
         if (this.followersLoadingRef.current)
             this.followersLoadingRef.current.style.display = 'block';
 
-        axios.post("/api/restricted-users/get-user-followers", dataToSend).then(response => {
+        axios.post("http://localhost:8888/api/restricted-users/get-user-followers", dataToSend).then(response => {
             // Check if there were any new followers added after mounting this component which would 
             // cause database array to shift and remove any duplicate elements from array
             const newFollowersArray = [...this.state.followers, ...response.data];
@@ -117,7 +117,7 @@ class Followers extends Component {
 
         if (PageCacher.areAllPropertiesCached(propertyNamesToBeCached, cachedData.data)) {
             console.log("CACHED!");
-            this.setState({... cachedData.data}, () => {
+            this.setState({...cachedData.data}, () => {
                 window.scrollTo(cachedData.scroll.scrollX, cachedData.scroll.scrollY);
                 window.addEventListener('scroll', this.scrollListener); 
                 if (!this.state.hasMore) {

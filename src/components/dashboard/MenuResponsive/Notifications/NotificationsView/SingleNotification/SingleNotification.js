@@ -64,7 +64,7 @@ class SingleNotification extends Component {
         // Send id of the notification author to fetch his profile picture
         dataToSend.id = this.props.action_taker_user_id;
 
-        axios.post("/api/restricted-users/get-user-profile-picture-for-notifications", dataToSend).then(response => {
+        axios.post("http://localhost:8888/api/restricted-users/get-user-profile-picture-for-notifications", dataToSend).then(response => {
             if (this._isMounted) {
                 this.setState({profilePicture: response.data.avatarImage});
             }
@@ -79,7 +79,7 @@ class SingleNotification extends Component {
         // Send post id to receive post picture
         dataToSend.post_id = this.props.target;
 
-        axios.post("/api/restricted-users/get-post-picture-for-notifications", dataToSend).then(response => {
+        axios.post("http://localhost:8888/api/restricted-users/get-post-picture-for-notifications", dataToSend).then(response => {
             if (this._isMounted) {
                 this.setState({postPicture: response.data.postPicture});
                 this.notificationImageRef.current.style.display = 'block';

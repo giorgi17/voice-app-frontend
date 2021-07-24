@@ -45,7 +45,7 @@ class Modal extends Component {
         dataToSend.user_id = userIdQueryParam;
         dataToSend.page = this.state.page;
 
-        axios.post("/api/restricted-users/get-user-followers", dataToSend).then(response => {
+        axios.post("http://localhost:8888/api/restricted-users/get-user-followers", dataToSend).then(response => {
             // Check if there were any new followers added after mounting this component which would 
             // cause database array to shift and remove any duplicate elements from array
             const newFollowersArray = [...this.state.followers, ...response.data];

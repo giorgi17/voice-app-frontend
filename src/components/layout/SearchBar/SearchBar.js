@@ -35,7 +35,7 @@ class SearchBar extends Component {
             return;
         } else {
             this.searchResultsDisplayRef.current.style.display = 'block';
-            axios.post("/api/restricted-users/get-user-search-result-data", {searchText: input}).then(response => {
+            axios.post("http://localhost:8888/api/restricted-users/get-user-search-result-data", {searchText: input}).then(response => {
                 this.setState({searchResult: response.data.users}); 
             }).catch( err => {
                 console.log(err.message);

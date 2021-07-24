@@ -35,7 +35,7 @@ class Posts extends Component {
 
         // const currentFilter = this.state.filter;
 
-        axios.get("/api/restricted-users/get-posts-with-page/?page=" + this.state.page
+        axios.get("http://localhost:8888/api/restricted-users/get-posts-with-page/?page=" + this.state.page
                  + "&user_id=" + this.props.auth.user.id + "&filter=" + this.state.filter).then(response => {
             if (this._isMounted) {
                     // Check if there were any new posts added after mounting this component which would 
@@ -173,7 +173,7 @@ class Posts extends Component {
         // console.log(cachedData);
   
         if (PageCacher.areAllPropertiesCached(propertyNamesToBeCached, cachedData.data)) {  
-            this.setState({... cachedData.data}, () => {
+            this.setState({...cachedData.data}, () => {
                 window.scrollTo(cachedData.scroll.scrollX, cachedData.scroll.scrollY);
                 window.addEventListener('scroll', this.scrollListener);
             });

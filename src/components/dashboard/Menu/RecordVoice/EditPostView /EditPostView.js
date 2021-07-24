@@ -54,7 +54,7 @@ class EditPostView extends Component {
       form.append("description", this.state.description);
 
         axios
-        .post("/api/restricted-users/update-post", form)
+        .post("http://localhost:8888/api/restricted-users/update-post", form)
         .then(res => {
             if (this._isMounted) {
                 this.props.postEditEffect(res.data.picture, res.data.description);

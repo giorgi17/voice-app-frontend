@@ -32,7 +32,7 @@ class Following extends Component {
         // Send user id to determine wether he is following this user or not
         dataToSend.current_user_id = this.props.auth.user.id;
 
-        axios.post("/api/restricted-users/get-user-following-data", dataToSend).then(response => {
+        axios.post("http://localhost:8888/api/restricted-users/get-user-following-data", dataToSend).then(response => {
             if (this._isMounted) { 
                 this.setState({following: response.data.following});
                 this.followButtonRef.current.style.display = 'block';
@@ -56,7 +56,7 @@ class Following extends Component {
         dataToSend.current_user_id = this.props.auth.user.id;
         dataToSend.current_user_name = this.props.auth.user.name;
 
-        axios.post("/api/restricted-users/follow-or-unfollow", dataToSend).then(response => {
+        axios.post("http://localhost:8888/api/restricted-users/follow-or-unfollow", dataToSend).then(response => {
             if (this._isMounted) { 
                 this.setState({following: response.data.following});
             }
