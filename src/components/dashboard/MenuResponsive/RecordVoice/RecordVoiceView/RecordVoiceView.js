@@ -98,7 +98,7 @@ class RecordVoiceView extends Component {
       form.append("description", this.state.description);
 
         axios
-        .post("http://localhost:8888/api/restricted-users/add-new-post", form)
+        .post("/api/restricted-users/add-new-post", form)
         .then(res => {
             if (this._isMounted) {
                 // hide everything and show the success message

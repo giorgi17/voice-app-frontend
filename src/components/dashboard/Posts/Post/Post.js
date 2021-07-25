@@ -53,7 +53,7 @@ class Post extends Component {
         dataToSend.target = this.props.post_id;
         dataToSend.option = !this.state.notify;
 
-        axios.post("http://localhost:8888/api/restricted-users/change-notification-state-for-post", dataToSend).then(response => {
+        axios.post("/api/restricted-users/change-notification-state-for-post", dataToSend).then(response => {
             if (this._isMounted) {
                 // Close post edit menu
                 this.postEditRef.current.style.display = 'none';
@@ -113,7 +113,7 @@ class Post extends Component {
         dataToSend.current_user_name = this.props.auth.user.name;
         dataToSend.post_author_id = this.props.post_author_id;
 
-        axios.post("http://localhost:8888/api/restricted-users/post-dislike", dataToSend).then(response => {
+        axios.post("/api/restricted-users/post-dislike", dataToSend).then(response => {
             if (this._isMounted) {
                 const postInfo = {...this.state.postInfo};
                 if (response.data.disliked) {
@@ -140,7 +140,7 @@ class Post extends Component {
         dataToSend.current_user_name = this.props.auth.user.name;
         dataToSend.post_author_id = this.props.post_author_id;
 
-        axios.post("http://localhost:8888/api/restricted-users/post-like", dataToSend).then(response => {
+        axios.post("/api/restricted-users/post-like", dataToSend).then(response => {
             if (this._isMounted) {
                 const postInfo = {...this.state.postInfo};
                 if (response.data.liked) {
@@ -168,7 +168,7 @@ class Post extends Component {
         dataToSend.current_user_name = this.props.auth.user.name;
         dataToSend.post_author_id = this.props.post_author_id;
 
-        axios.post("http://localhost:8888/api/restricted-users/post-view", dataToSend).then(response => {
+        axios.post("/api/restricted-users/post-view", dataToSend).then(response => {
             if (this._isMounted) {
                 if (response.data.newView) {
                     const postInfo = {...this.state.postInfo};
@@ -188,7 +188,7 @@ class Post extends Component {
         // Send post id to fetch information about post
         dataToSend.post_id = this.props.post_id;
 
-        axios.post("http://localhost:8888/api/restricted-users/get-post-likes-dislikes-comments-views", dataToSend).then(response => {
+        axios.post("/api/restricted-users/get-post-likes-dislikes-comments-views", dataToSend).then(response => {
             if (this._isMounted) {
                 const postInfo = {...response.data};
                 this.setState({postInfo});

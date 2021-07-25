@@ -21,7 +21,7 @@ class Notifications extends Component {
         // Send user id to fetch notifications
         dataToSend.user_id = this.props.auth.user.id;
 
-        axios.post("http://localhost:8888/api/restricted-users/get-notification-number-data", dataToSend).then(response => {
+        axios.post("/api/restricted-users/get-notification-number-data", dataToSend).then(response => {
             if (this._isMounted) {
                 this.setState({notification: response.data.notification});
             }

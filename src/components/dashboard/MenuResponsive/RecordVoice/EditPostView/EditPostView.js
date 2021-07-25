@@ -62,7 +62,7 @@ class EditPostView  extends Component {
         form.append("description", this.state.description);
   
           axios
-          .post("http://localhost:8888/api/restricted-users/update-post", form)
+          .post("/api/restricted-users/update-post", form)
           .then(res => {
               if (this._isMounted) {
                   console.log(res.data);
@@ -113,7 +113,7 @@ class EditPostView  extends Component {
         // Send id of the notification author to fetch his profile picture
         dataToSend.id = this.state.post_author_id;
 
-        axios.post("http://localhost:8888/api/restricted-users/get-user-data", dataToSend).then(response => {
+        axios.post("/api/restricted-users/get-user-data", dataToSend).then(response => {
             if (this._isMounted) {
                 this.setState({profilePicture: response.data.avatarImage,
                     username: response.data.name});
@@ -147,7 +147,7 @@ class EditPostView  extends Component {
         dataToSend.post_id = post_id;
   
           axios
-          .post("http://localhost:8888/api/restricted-users/fetch-single-post", dataToSend)
+          .post("/api/restricted-users/fetch-single-post", dataToSend)
           .then(res => {
             if (this._isMounted) {
                 this.setState({postImageSrc: res.data.result.picture,

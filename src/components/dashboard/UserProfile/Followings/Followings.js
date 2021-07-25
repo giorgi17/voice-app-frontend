@@ -35,7 +35,7 @@ class Followings extends Component {
         if (this.followingLoadingRef.current)
             this.followingLoadingRef.current.style.display = 'block';
 
-        axios.post("http://localhost:8888/api/restricted-users/get-user-following", dataToSend).then(response => {
+        axios.post("/api/restricted-users/get-user-following", dataToSend).then(response => {
             // Check if there were any new followers added after mounting this component which would 
             // cause database array to shift and remove any duplicate elements from array
             const newFollowingArray = [...this.state.following, ...response.data];

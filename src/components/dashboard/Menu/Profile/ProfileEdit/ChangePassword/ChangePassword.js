@@ -51,7 +51,7 @@ class ChangePassword extends Component {
         };
 
         axios
-        .post("http://localhost:8888/api/restricted-users/update-user-password", newUserPassword)
+        .post("/api/restricted-users/update-user-password", newUserPassword)
         .then(res => {
             if (this._isMounted) {
                 this.setState({userData: {

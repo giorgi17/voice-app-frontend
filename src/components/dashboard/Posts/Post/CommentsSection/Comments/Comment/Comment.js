@@ -33,7 +33,7 @@ class Comment extends Component {
         // Send id of the comment author to fetch his profile picture
         dataToSend.id = this.props.comment_author_user_id;
 
-        axios.post("http://localhost:8888/api/restricted-users/get-user-profile-picture-for-notifications", dataToSend).then(response => {
+        axios.post("/api/restricted-users/get-user-profile-picture-for-notifications", dataToSend).then(response => {
             if (this._isMounted) {
                 this.setState({commentAuthorProfilePicture: response.data.avatarImage},
                     () => PageCacher.cachePageUpdate(null, [

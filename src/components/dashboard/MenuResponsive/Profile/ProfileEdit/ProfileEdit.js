@@ -44,7 +44,7 @@ class ProfileEdit extends Component {
         };
 
         axios
-        .post("http://localhost:8888/api/restricted-users/update-user-data", newUserInfo)
+        .post("/api/restricted-users/update-user-data", newUserInfo)
         .then(res => {
             if (this._isMounted) {
                 this.setState({userData: {
@@ -82,7 +82,7 @@ class ProfileEdit extends Component {
         };
 
         axios
-        .post("http://localhost:8888/api/restricted-users/update-user-password", newUserPassword)
+        .post("/api/restricted-users/update-user-password", newUserPassword)
         .then(res => {
             if (this._isMounted) {
                 this.setState({userData: {
@@ -157,7 +157,7 @@ class ProfileEdit extends Component {
         this._isMounted = true;
 
         // Fetch user data using id to be displayed in inputs
-        axios.post('http://localhost:8888/api/restricted-users/get-user-data', {id: this.props.auth.user.id}).then(res => {
+        axios.post('/api/restricted-users/get-user-data', {id: this.props.auth.user.id}).then(res => {
             if (this._isMounted) {
                 this.setState({userData: { ...this.state.userData, ...res.data}});
             }

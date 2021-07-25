@@ -32,7 +32,7 @@ class ProfileView extends Component {
         let dataToSend = {};
         dataToSend.user_id = this.props.auth.user.id;
 
-        axios.post("http://localhost:8888/api/restricted-users/get-user-statistics", dataToSend).then(response => {
+        axios.post("/api/restricted-users/get-user-statistics", dataToSend).then(response => {
             if (this._isMounted) { 
                 const postAuthorStatistics = {...this.state.postAuthorStatistics};
                 postAuthorStatistics.posts = response.data.posts;
@@ -54,7 +54,7 @@ class ProfileView extends Component {
         this._isMounted = true;
 
         // Fetch user data using id to be displayed in inputs
-        axios.post('http://localhost:8888/api/restricted-users/get-user-data',
+        axios.post('/api/restricted-users/get-user-data',
             {id: this.props.auth.user.id}).then(res => {
                 if (this._isMounted) {
                     this.setState({userData: { ...this.state.userData, ...res.data}});

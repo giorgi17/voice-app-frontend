@@ -67,7 +67,7 @@ class UserProfile extends Component {
         dataToSend.current_user_id = this.props.auth.user.id;
         dataToSend.current_user_name = this.props.auth.user.name;
 
-        axios.post("http://localhost:8888/api/restricted-users/follow-or-unfollow", dataToSend).then(response => {
+        axios.post("/api/restricted-users/follow-or-unfollow", dataToSend).then(response => {
             if (this._isMounted) { 
                 this.setState({following: response.data.following},
                     () => PageCacher.cachePageUpdate(null, [
@@ -106,7 +106,7 @@ class UserProfile extends Component {
         // Send user id to determine wether he is following this user or not
         dataToSend.current_user_id = this.props.auth.user.id;
 
-        axios.post("http://localhost:8888/api/restricted-users/get-user-following-data", dataToSend).then(response => {
+        axios.post("/api/restricted-users/get-user-following-data", dataToSend).then(response => {
             if (this._isMounted) { 
                 this.setState({following: response.data.following, showFollowButton: true},
                     () => PageCacher.cachePageUpdate(null, [
@@ -125,7 +125,7 @@ class UserProfile extends Component {
         let dataToSend = {};
         dataToSend.user_id = this.state.queryUserId;
 
-        axios.post("http://localhost:8888/api/restricted-users/get-user-statistics", dataToSend).then(response => {
+        axios.post("/api/restricted-users/get-user-statistics", dataToSend).then(response => {
             if (this._isMounted) { 
                 const postAuthorStatistics = {...this.state.postAuthorStatistics};
                 postAuthorStatistics.posts = response.data.posts;
@@ -157,7 +157,7 @@ class UserProfile extends Component {
         let dataToSend = {};
         dataToSend.user_id = this.state.queryUserId;
 
-        axios.post("http://localhost:8888/api/restricted-users/get-post-author-user-data", dataToSend).then(response => {
+        axios.post("/api/restricted-users/get-post-author-user-data", dataToSend).then(response => {
             if (this._isMounted) { 
                 this.setState({postAuthorData: response.data},
                     () => PageCacher.cachePageUpdate('postAuthorData', [
@@ -183,7 +183,7 @@ class UserProfile extends Component {
         if (this.postsLoadingRef.current)
             this.postsLoadingRef.current.style.display = 'block';
 
-        axios.post("http://localhost:8888/api/restricted-users/get-post-author-user-posts", dataToSend).then(response => {
+        axios.post("/api/restricted-users/get-post-author-user-posts", dataToSend).then(response => {
                 // Check if there were any new posts added after mounting this component which would 
                 // cause database array to shift and remove any duplicate elements from array
                 const newPostsArray = [...this.state.posts, ...response.data];

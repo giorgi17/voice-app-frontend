@@ -46,7 +46,7 @@ class Comments extends Component {
     fetchMoreNextComments = () => {
         this.circularProgressBarRef.current.style.display = 'inline-block';
 
-        axios.get("http://localhost:8888/api/restricted-users/get-next-comments-with-page/?page=" + this.state.page
+        axios.get("/api/restricted-users/get-next-comments-with-page/?page=" + this.state.page
         + "&post_id=" + this.props.post_id).then(response => {
 
                 this.circularProgressBarRef.current.style.display = 'none';
@@ -67,7 +67,7 @@ class Comments extends Component {
     // Fetch more previous comments from database according to page number
     fetchMoreComments = () => {
         this.circularProgressBarRef.current.style.display = 'inline-block';
-        axios.get("http://localhost:8888/api/restricted-users/get-comments-with-page/?page=" + this.state.page
+        axios.get("/api/restricted-users/get-comments-with-page/?page=" + this.state.page
                     + "&post_id=" + this.props.post_id).then(response => {
 
                 this.circularProgressBarRef.current.style.display = 'none';
@@ -135,7 +135,7 @@ class Comments extends Component {
 
         if (this.circularProgressBarRef.current)
             // this.circularProgressBarRef.current.style.display = 'inline-block';
-        axios.post("http://localhost:8888/api/restricted-users/fetch-initial-comments-for-post", dataToSend).then(response => {
+        axios.post("/api/restricted-users/fetch-initial-comments-for-post", dataToSend).then(response => {
             if (this.circularProgressBarRef.current)
                 // this.circularProgressBarRef.current.style.display = 'none';
             if (this._isMounted) {

@@ -50,7 +50,7 @@ class CommentsSection extends Component {
         dataToSend.current_user_name = this.props.auth.user.name;
         dataToSend.post_author_id = this.props.post_author_id;
 
-        axios.post("http://localhost:8888/api/restricted-users/add-new-comment", dataToSend).then(response => {
+        axios.post("/api/restricted-users/add-new-comment", dataToSend).then(response => {
             if (this._isMounted) {
                 const postInfo = {...this.props.comments_number};
                 postInfo.comments+=1;

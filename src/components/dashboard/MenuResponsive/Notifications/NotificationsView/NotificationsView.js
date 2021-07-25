@@ -31,7 +31,7 @@ class NotificationsView extends Component {
         if (this.notificationsLoadingRef.current)
             this.notificationsLoadingRef.current.style.display = 'block';
 
-        axios.post("http://localhost:8888/api/restricted-users/get-notification-data", dataToSend).then(response => {
+        axios.post("/api/restricted-users/get-notification-data", dataToSend).then(response => {
                 // Check if there were any new notifications added after mounting this component which would 
                 // cause database array to shift and remove any duplicate elements from array
                 const newNotificationsArray = [...this.state.notifications, ...response.data.notifications];
@@ -78,7 +78,7 @@ class NotificationsView extends Component {
         // Send notification ids as an array to make notifications 'seen'
         dataToSend.ids = unseenNotifications;
 
-        axios.post("http://localhost:8888/api/restricted-users/seen-notification", dataToSend).then(response => {
+        axios.post("/api/restricted-users/seen-notification", dataToSend).then(response => {
                 console.log(response);
         }).catch(e => {
             console.log(e.message);
