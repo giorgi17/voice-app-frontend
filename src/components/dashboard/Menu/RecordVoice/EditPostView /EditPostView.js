@@ -150,7 +150,7 @@ class EditPostView extends Component {
                             
                                 
                                 <div id="edit-recordvoice-view-post-image-wrapper">
-                                    <span className="material-icons" onClick={() => this.setState({ postImageSrc: 'https://voice-social-network.s3.us-east-2.amazonaws.com/post-pictures/stripes.png',
+                                    <span className="material-icons" onClick={() => this.setState({ postImageSrc: 'https://guthme.s3.eu-central-1.amazonaws.com/post-pictures/stripes.png',
                                                 imageBlob: null})}>
                                         close
                                     </span> 
@@ -182,7 +182,7 @@ class EditPostView extends Component {
                                     dims={{minWidth: 50, maxWidth: 3000, minHeight: 50, maxHeight: 3000}}
                                     onChange={blob => {this.changePostImage(blob)}}
                                     onError={errMsg => (console.log(errMsg))}
-                                    onClear={() => this.setState({ postImageSrc: 'https://voice-social-network.s3.us-east-2.amazonaws.com/post-pictures/stripes.png',
+                                    onClear={() => this.setState({ postImageSrc: 'https://guthme.s3.eu-central-1.amazonaws.com/post-pictures/stripes.png',
                                                 imageBlob: null})}
                                     // triggerReset={console.log("RESET!")}
                                 >

@@ -27,7 +27,7 @@ class RecordVoiceView extends Component {
             imageBlob: null,
             description: '',
             deviceFound: false,
-            postImageSrc: 'https://voice-social-network.s3.us-east-2.amazonaws.com/post-pictures/stripes.png',
+            postImageSrc: 'https://guthme.s3.eu-central-1.amazonaws.com/post-pictures/stripes.png',
             recordButtonText: 'Record',
             afterMessage: null,
             timer: new EasyTimer(),
@@ -128,7 +128,7 @@ class RecordVoiceView extends Component {
                 // Clear the inputs for new post
                 this.setState({imageBlob: null, audioBlob: null,
                             description: '', audioBlobUrl: '',
-                            postImageSrc: 'https://voice-social-network.s3.us-east-2.amazonaws.com/post-pictures/stripes.png' });
+                            postImageSrc: 'https://guthme.s3.eu-central-1.amazonaws.com/post-pictures/stripes.png' });
             }
         }) 
         .catch(err => {
@@ -257,7 +257,7 @@ class RecordVoiceView extends Component {
                         </div>
                         
                         <div id="responsive-recordvoice-view-post-image-wrapper">
-                            <span className="material-icons" onClick={() => this.setState({ postImageSrc: 'https://voice-social-network.s3.us-east-2.amazonaws.com/post-pictures/stripes.png',
+                            <span className="material-icons" onClick={() => this.setState({ postImageSrc: 'https://guthme.s3.eu-central-1.amazonaws.com/post-pictures/stripes.png',
                                         imageBlob: null})}>
                                 close
                             </span> 
@@ -299,7 +299,7 @@ class RecordVoiceView extends Component {
                             dims={{minWidth: 50, maxWidth: 3000, minHeight: 50, maxHeight: 3000}}
                             onChange={blob => {this.changePostImage(blob)}}
                             onError={errMsg => (console.log(errMsg))}
-                            onClear={() => this.setState({ postImageSrc: 'https://voice-social-network.s3.us-east-2.amazonaws.com/post-pictures/stripes.png',
+                            onClear={() => this.setState({ postImageSrc: 'https://guthme.s3.eu-central-1.amazonaws.com/post-pictures/stripes.png',
                                         imageBlob: null})}
                             // triggerReset={console.log("RESET!")}
                         >
